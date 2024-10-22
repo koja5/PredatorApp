@@ -1,0 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,200;8..144,300;8..144,400&display=swap");
+
+* {
+  font-family: "Roboto Flex", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d3eaff;
+}
+
+.line {
+  width: 1px;
+  height: 60%;
+  margin: 0 20px;
+  background-color: #bcbcbc;
+}
+
+#screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+header {
+  position: absolute;
+  width: 340px;
+  height: 35px;
+  padding: 0 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent;
+}
+
+header #time {
+  width: 20%;
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+header #controls {
+  width: 60%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header #controls p {
+  position: absolute;
+  width: 94px;
+  height: 24px;
+  background: black;
+  border-radius: 25px;
+}
+
+header #icons {
+  width: 20%;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+}
+
+header #icons svg {
+  margin: 0;
+  padding: 0;
+}
+
+header #icons svg:nth-child(1),
+header #icons svg:nth-child(2) {
+  margin-right: 5px;
+}
+
+#screen #cover {
+  width: 100%;
+  height: 25%;
+  background-image: url("../../../../assets/images/profile/cover.jpg");
+  background-blend-mode: multiply;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#screen #content {
+  position: relative;
+  width: 100%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+}
+
+#screen #content #user-avatar {
+  object-fit: cover;
+  position: absolute;
+  left: calc(50% - 60px);
+  top: -60px;
+  border: 5px solid white;
+  border-radius: 90%;
+}
+
+#screen #content #user-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 75px 0 0 0;
+  padding: 0;
+}
+
+#screen #content #user-location {
+  font-size: 16px;
+  color: #b4b4b0;
+  margin: 5px 0 0 0;
+  padding: 0;
+}
+
+#screen #content #user-description {
+  font-size: 16px;
+  color: #6c7171;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+
+#screen #content #user-general-values {
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0 0 0;
+}
+
+#screen #content #user-general-values p {
+  width: 30%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#screen #content #user-general-values p span:nth-child(1) {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+#screen #content #user-general-values p span:nth-child(2) {
+  font-size: 14px;
+  margin: 3px 0 0 0;
+  color: #6c7171;
+}
+
+#screen #content #follow-btn {
+  color: white;
+  height: 35px;
+  width: 110px;
+  margin: 20px 0 0 0;
+  border-radius: 15px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff7511;
+  cursor: pointer;
+}
+
+#screen #content #follow-btn:hover {
+  background: #f56700;
+}
+
+#screen #content #user-publications {
+  position: relative;
+  width: 100%;
+  margin: 20px 0 0 0;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(3, 1fr);
+  overflow: hidden;
+}
+
+#screen #content #user-publications img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.take-picture {
+  position: absolute;
+  bottom: 52px;
+  z-index: 99999999999;
+  border-radius: 100%;
+  width: 56px;
+  height: 56px;
+  font-size: 16px;
+  padding: 0px;
+}
+
+.take-picture {
+  --border-radius: 50px;
+}
