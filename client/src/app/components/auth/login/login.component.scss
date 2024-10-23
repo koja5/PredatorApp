@@ -1,1 +1,21 @@
 @import url("../auth.scss");
+
+.field-icon {
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-media img {
+  max-width: 38px;
+  border-radius: 50%;
+}
+
+.required-field {
+  font-size: 11px !important;
+}
+
+.invalid-error {
+  border: 1px solid red;
+}

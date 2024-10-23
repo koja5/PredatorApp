@@ -18,7 +18,8 @@ var connection = sql.connect();
 connection.getConnection(function (err, conn) {});
 
 /* GET api listing. */
-router.get("/", (req, res) => {
+router.get("/test", (req, res) => {
+  console.log("api works");
   res.send("api works");
 });
 

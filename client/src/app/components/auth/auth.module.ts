@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { SignInFormComponent } from './login/sign-in-form/sign-in-form.component';
+import { SignUpFormComponent } from './login/sign-up-form/sign-up-form.component';
+import { IonicModule } from '@ionic/angular';
+import { CommonCustomModule } from '../common/common-custom.module';
 
 const routes = [
   {
@@ -17,8 +21,15 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, FormsModule, RouterModule.forChild(routes)],
+  declarations: [LoginComponent, SignInFormComponent, SignUpFormComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    IonicModule,
+    CommonCustomModule,
+  ],
   providers: [],
   exports: [RouterModule],
 })

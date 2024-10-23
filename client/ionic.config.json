@@ -3,5 +3,19 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "proxies": [
+    {
+      "path": "/api/**",
+      "proxyUrl": "http://192.168.1.18:3001/api/",
+      "secure": false,
+      "changeOrigin": true
+    },
+    {
+      "path": "/__/**",
+      "proxyUrl": "http://192.168.1.18:3001/api/",
+      "secure": false,
+      "changeOrigin": true
+    }
+  ]
 }

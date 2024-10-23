@@ -1,0 +1,18 @@
+{
+    "/api/**": {
+        "target": "http://localhost:3001/api",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    },
+    "/__/**": {
+        "target": "http://localhost:3001/api",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

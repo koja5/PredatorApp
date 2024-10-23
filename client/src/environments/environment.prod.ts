@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  ENCRIPTY_KEY: 'PREDATOR_APP_2024',
 };

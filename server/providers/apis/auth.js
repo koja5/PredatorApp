@@ -21,6 +21,7 @@ connection.getConnection(function (err, conn) {});
 // #region AUTH
 
 router.post("/login", function (req, res, next) {
+  console.log(req.body);
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -28,8 +29,8 @@ router.post("/login", function (req, res, next) {
     }
 
     conn.query(
-      "select * from users WHERE (email = ? or username = ?) AND password = ?",
-      [req.body.email, req.body.email, sha1(req.body.password)],
+      "select * from users WHERE email = ? AND password = ?",
+      [req.body.email, sha1(req.body.password)],
       function (err, rows, fields) {
         conn.release();
         if (err) {
