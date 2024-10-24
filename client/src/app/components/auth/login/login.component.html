@@ -10,13 +10,13 @@
 
           <img src="./assets/icon/logo.png" class="logo">
 
-          <h2 class="title">Login</h2>
+          <h2 class="title">{{'login.loginTitle' | translate}}</h2>
           <div
             class="input-field {{(loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched) && submited) ? 'invalid-error' : ''}}">
             <div class="field-icon">
               <img src="./assets/icon/user.svg">
             </div>
-            <input type="text" name="email" formControlName="email" placeholder="email">
+            <input type="text" name="email" formControlName="email" placeholder="{{'login.email' | translate}}">
           </div>
 
 
@@ -26,7 +26,7 @@
               <img src="./assets/icon/password.svg">
             </div>
             <input type="{{passwordField}}" name="contraseña" formControlName="password" autocomplete="current-password"
-              placeholder="Password" id="id_password" required="yes">
+              placeholder="{{'login.password' | translate}}" id="id_password" required="yes">
             <div class="field-icon">
               <img src="./assets/icon/{{passwordFieldIcon}}.svg" (click)="showHidePassword()">
             </div>
@@ -37,21 +37,22 @@
             <ion-label class="required-field" *ngIf="loginForm.invalid && submited" color="danger">Danger</ion-label>
 
             <div class="alert-body" *ngIf="error">
-              <ion-label *ngIf="error === 'active'" color="danger">Not active</ion-label>
-              <ion-label *ngIf="error === 'exist'" color="danger">Not exists</ion-label>
-              <ion-label *ngIf="error === 'verified'" color="danger">Not verified</ion-label>
+              <ion-label *ngIf="error === 'exist'" color="danger">The account does not exist. Please check the
+                data.</ion-label>
+              <ion-label *ngIf="error === 'verified'" color="danger">The account does not verify. Please check your
+                email and verify it.</ion-label>
             </div>
           </div>
 
-          <a class="pass" href="#">Forgot your password?</a>
-          <button type="submit" class="btn solid">Sign in</button>
+          <a class="pass" href="#">{{'login.forgotPassword' | translate}}</a>
+          <button type="submit" class="btn solid">{{'login.login' | translate}}</button>
 
-          <!-- <p class="social-text">You can login with:</p> -->
 
-          <div class="divider my-2">
+          <!-- <div class="divider my-2">
             <div class="divider-text">oder</div>
-          </div>
+          </div> -->
 
+          <p class="social-text">{{'login.additionallPossibilityForLogin' | translate}}</p>
           <div class="social-media">
             <a href="#" class="social-icon" aria-label="Register with Google">
               <img src="./assets/icon/facebook.svg">
@@ -65,33 +66,32 @@
             </a>
           </div>
         </form>
-        <form action="" class="sign-up-form">
+        <form class="sign-up-form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
           <img src="./assets/icon/logo.png" class="logo">
-          <h2 class="title">Register</h2>
+          <h2 class="title">{{'login.signUpTitle' | translate}}</h2>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/user.svg">
             </div>
-            <input type="text" name="usuario" autocomplete="username" placeholder="Username" required="yes">
+            <input type="text" name="name" placeholder="name" formControlName="name">
           </div>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/phone.svg">
             </div>
-            <input type="text" name="usuario" autocomplete="username" placeholder="Username" required="yes">
+            <input type="text" name="phone" placeholder="phone" formControlName="phone">
           </div>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/email.svg">
             </div>
-            <input type="email" name="correo" autocomplete="email" placeholder="Email" required="yes">
+            <input type="email" name="email" placeholder="email" formControlName="email">
           </div>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/password.svg">
             </div>
-            <input type="password" name="contraseña" autocomplete="current-password" placeholder="Password" id="id_reg"
-              required="yes">
+            <input type="password" name="password" placeholder="Password" formControlName="password">
             <div class="field-icon">
               <img src="./assets/icon/{{passwordFieldIcon}}.svg" (click)="showHidePassword()">
             </div>
@@ -100,8 +100,7 @@
             <div class="field-icon">
               <img src="./assets/icon/password.svg">
             </div>
-            <input type="password" name="contraseña" autocomplete="current-password" placeholder="Password" id="id_reg"
-              required="yes">
+            <input type="password" name="re-password" placeholder="rePassword" formControlName="rePassword">
             <div class="field-icon">
               <img src="./assets/icon/{{passwordFieldIcon}}.svg" (click)="showHidePassword()">
             </div>
@@ -109,10 +108,11 @@
 
           <label class="check">
             <input type="checkbox" checked="checked">
-            <span class="checkmark"> I accept the <a href="terms.html">terms and services</a></span>
+            <span class="checkmark"> {{'login.iAccept' | translate}} <a href="terms.html">{{'login.termsAndServices' |
+                translate}}</a></span>
           </label>
-          <input type="submit" value="Create account" class="btn solid">
-          <p class="social-text">You can register with:</p>
+          <button type="submit" class="btn solid">{{'login.signUp' | translate}}</button>
+          <p class="social-text">{{'login.additionallPossibilityForLogin' | translate}}</p>
           <div class="social-media">
             <a href="#" class="social-icon" aria-label="Register with Google">
               <img src="./assets/icon/facebook.svg">
@@ -131,17 +131,18 @@
     <div class="panels-container">
       <div class="panel left-panel">
         <div class="content">
-          <h3>You don't have an account?</h3>
-          <p>Create your account right now to follow people and like publications</p>
-          <button class="btn transparent" id="sign-up-btn" (click)="changeMode()">Register</button>
+          <h3>{{'login.noHaveAccountYet' | translate}}</h3>
+          <p>{{'login.noHaveAccountText' | translate}}</p>
+          <button class="btn transparent" id="sign-up-btn" (click)="changeMode()">{{'login.signUp' |
+            translate}}</button>
         </div>
       </div>
 
       <div class="panel right-panel">
         <div class="content">
-          <h3>Already have an account?</h3>
-          <p>Login to see your notifications and post your favorite photos</p>
-          <button class="btn transparent" id="sign-in-btn" (click)="changeMode()">Sign in</button>
+          <h3>{{'login.alreadyHaveAccount' | translate}}</h3>
+          <p>{{'login.alreadyHaveAccountText' | translate}}</p>
+          <button class="btn transparent" id="sign-in-btn" (click)="changeMode()">{{'login.login' | translate}}</button>
         </div>
       </div>
     </div>

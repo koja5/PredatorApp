@@ -5,3 +5,31 @@
 .logo-header {
   width: 75px;
 }
+
+ion-tab-button,
+ion-menu-button {
+  background: #01193c;
+  color: #fff;
+}
+
+ion-tab-bar {
+  background: none;
+}
+
+ion-toolbar {
+  background: none !important;
+}
+
+.logout {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  text-align: center;
+}
+
+.logout-button .button-native {
+  background: none;
+  color: red;
+  border: 1px solid red;
+  min-width: 150px;
+}

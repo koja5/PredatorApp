@@ -23,12 +23,12 @@ var smtpTransport = nodemailer.createTransport({
   },
 });
 
-//#region SUPERADMIN
+//#region AUTH
 
-router.post("/sendNewGeneratedPassword", function (req, res, next) {
+router.post("/sendLinkForVerifyEmail", function (req, res, next) {
   var configuration = JSON.parse(
     fs.readFileSync(
-      __dirname + "/i18n/send_new_generated_password.json",
+      __dirname + "/i18n/send_link_for_verify_email.json",
       "utf-8"
     )
   );
@@ -36,11 +36,10 @@ router.post("/sendNewGeneratedPassword", function (req, res, next) {
   let subject = configuration.language.de.subject;
   let body = configuration.language.de.body;
 
-  body.greetings = body.greetings.replaceAll("#name", req.body.firstname);
+  body.greetings = body.greetings.replaceAll("#name", req.body.name);
 
-  body["loginLinkNow"] = process.env.link_client + "auth/login";
-
-  body["password"] = req.body.password;
+  body["verifyLink"] =
+    process.env.link_api + "auth/verifyEmail/" + sha1(req.body.email);
 
   sendMail(req.body.email, subject, body, configuration.template, res);
 });

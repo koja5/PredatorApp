@@ -191,7 +191,7 @@ form.sign-up-form {
 .check {
   display: block;
   position: relative;
-  margin: 12px 0;
+  margin: 12px;
   cursor: pointer;
   font-size: 16px;
   -webkit-user-select: none;
@@ -352,6 +352,7 @@ form.sign-up-form {
 .container.sign-up-mode .right-panel .content,
 .container.sign-up-mode .right-panel .image {
   transform: translateX(0px);
+  transform: translateY(45px);
 }
 
 .container.sign-up-mode .left-panel {
@@ -454,6 +455,13 @@ form.sign-up-form {
 
 /* MEDIA SCREEN */
 
+@media (max-height: 800px) {
+  .container.sign-up-mode form.sign-up-form {
+    display: block;
+    text-align: center;
+  }
+}
+
 @media (max-width: 870px) {
   .container {
     min-height: 800px;
@@ -488,7 +496,7 @@ form.sign-up-form {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 2.5rem 8%;
+    padding: 0rem 8%;
   }
 
   .panel .content {
@@ -576,12 +584,12 @@ form.sign-up-form {
   }
 
   .container:before {
-    bottom: 75%;
+    bottom: 80%;
     left: 50%;
   }
 
   .container.sign-up-mode:before {
-    bottom: 24%;
+    bottom: 15%;
     left: 50%;
   }
 }

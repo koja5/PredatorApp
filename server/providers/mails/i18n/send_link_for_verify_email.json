@@ -1,0 +1,36 @@
+{
+    "template": "send_link_for_verify_email.hjs",
+    "language": {
+        "en": {
+            "subject": "Verify your mail",
+            "body": {
+                "greetings": "Hey #name 👋",
+                "message": "Please verify your email address.",
+                "verifyButton": "Verify email →",
+                "notSureWhyReceived": "Not sure why you got this email? Please ingorize this email.",
+                "letUsKnow": "let us know",
+                "greetingsEnd": "Thanks,",
+                "team": "The PredatorTracker team",
+                "acceptOurTerms": "Use of our service and website is subject to our",
+                "terms": "Terms of Use",
+                "and": "and",
+                "privacyPolicy": "Privacy Policy"
+            }
+        },
+        "de": {
+            "subject": "Überprüfen Sie Ihre E-Mail",
+            "body": {
+                "greetings": "Hey #name 👋",
+                "message": "Bitte überprüfen Sie Ihre E-Mail-Adresse.",
+                "verifyButton": "E-Mail bestätigen →",
+                "notSureWhyReceived": "Sie sind sich nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte ignorieren Sie diese E-Mail.",
+                "greetingsEnd": "Danke,",
+                "team": "Das PredatorenTracker-Team",
+                "acceptOurTerms": "Die Nutzung unseres Dienstes und unserer Website unterliegt unseren",
+                "terms": "Nutzungsbedingungen",
+                "and": "und",
+                "privacyPolicy": "Datenschutzrichtlinie"
+            }
+        }
+    }
+}

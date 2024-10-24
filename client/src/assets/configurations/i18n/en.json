@@ -1,0 +1,21 @@
+{
+    "login": {
+        "loginTitle": "Login",
+        "email": "Email / Nutzername",
+        "emailIsRequired": "Email / Nutzername ist erforderlich",
+        "emailMustBeValid": "E-Mail muss eine gültige E-Mail-Adresse sein",
+        "password": "Passwort",
+        "forgotPassword": "Passwort vergessen?",
+        "passwordIsRequired": "Passwort wird benötigt",
+        "rememberMe": "Erinnere dich an mich",
+        "login": "Anmelden",
+        "newOnPlatform": "Neu auf unserer Plattform?",
+        "signUp": "Ein Konto erstellen",
+        "verifiedError": "Sie müssen Ihre E-Mail-Adresse verifizieren!",
+        "activeError": "Ihr Konto ist nicht aktiv!",
+        "notExistsError": "Das Konto existiert nicht!",
+        "or": "oder",
+        "signInWithGoogle": "Über Google anmelden",
+        "signInWithMicrosoft": "Über Microsoft anmelden"
+    }
+}

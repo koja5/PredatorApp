@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { NeedToApproveComponent } from './components/pages/need-to-approve/need-to-approve.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./components/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'page',
+    loadChildren: () =>
+      import('./components/pages/pages.module').then((m) => m.PagesModule),
   },
 ];
 

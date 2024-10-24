@@ -74,7 +74,7 @@
 
 :root {
   --bg-color: #fff;
-  --bg-round-a: #4481eb;
+  --bg-round-a: #01193c;
   --bg-round-b: #04befe;
   --panel-color: #fff;
   --title: #444;
@@ -82,7 +82,7 @@
   --input-icon: #8a8a8a;
   --input: #333;
   --input-hover: #222;
-  --btn-color: #5995fd;
+  --btn-color: #01193c;
   --btn-text: #fff;
   --btn-hover: #4d84e2;
   --social-text: #444;
@@ -96,6 +96,10 @@
   --pass-hover-color: #4d84e2;
   --keyboard-color: #e0e0e0;
   --key-letter: #333;
+  --ion-toolbar-background: #01193c !important;
+  --ion-color-primary: #01193c;
+  --ion-toolbar-color: #fff;
+  --opacity: 1;
 }
 
 :root[data-theme="dark"] {

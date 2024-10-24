@@ -67,6 +67,40 @@ router.post("/login", function (req, res, next) {
   });
 });
 
+router.post("/signUp", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "select * from users where email = ?",
+      [req.body.email],
+      function (err, rows, fields) {
+        if (rows.length) {
+          conn.release();
+          res.json(false);
+        } else {
+          req.body.password = sha1(req.body.password);
+          conn.query(
+            "INSERT INTO users set ?",
+            [req.body],
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                res.json(false);
+              } else {
+                makeRequest(req.body, "mail/sendLinkForVerifyEmail", res);
+              }
+            }
+          );
+        }
+      }
+    );
+  });
+});
+
 router.post("/forgotPassword", function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
@@ -85,6 +119,64 @@ router.post("/forgotPassword", function (req, res, next) {
         } else {
           // mail not exists
           res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get("/verifyEmail/:email", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log();
+
+    conn.query(
+      "update users set verify = 1 where sha1(email)",
+      [req.params.email],
+      function (err, rows, fields) {
+        conn.release();
+        console.log(err);
+        if (err) {
+          res.json(false);
+        } else {
+          res.redirect(
+            process.env.link_client +
+              "/page/need-to-approve/" +
+              sha1(req.params.email)
+          );
+        }
+      }
+    );
+  });
+});
+
+router.get("/checkIsNeedToActive/:email", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log();
+
+    conn.query(
+      "select * from users where email = ? and active = 0",
+      [req.params.email],
+      function (err, rows, fields) {
+        conn.release();
+        console.log(err);
+        if (err) {
+          res.json(false);
+        } else {
+          if (rows.length) {
+            res.json(true);
+          } else {
+            res.json(false);
+          }
         }
       }
     );

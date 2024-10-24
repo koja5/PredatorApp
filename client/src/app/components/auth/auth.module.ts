@@ -8,6 +8,7 @@ import { SignInFormComponent } from './login/sign-in-form/sign-in-form.component
 import { SignUpFormComponent } from './login/sign-up-form/sign-up-form.component';
 import { IonicModule } from '@ionic/angular';
 import { CommonCustomModule } from '../common/common-custom.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes = [
   {
@@ -29,6 +30,7 @@ const routes = [
     RouterModule.forChild(routes),
     IonicModule,
     CommonCustomModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [RouterModule],

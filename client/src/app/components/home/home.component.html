@@ -32,23 +32,30 @@
       <img class="logo-header" src="./assets/icon/logo.png">
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">This is the menu content.</ion-content>
+  <ion-content>
+
+    <div class="logout">
+      <ion-button class="logout-button" (click)="logout()">Logout</ion-button>
+    </div>
+  </ion-content>
 </ion-menu>
 
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="profile">
-        <ion-icon name="home-outline"></ion-icon>
+        <img src="./assets/icon/home.svg">
+        <label>Home</label>
       </ion-tab-button>
       <ion-tab-button tab="photos">
         <ion-icon name="images-outline"></ion-icon>
-
+        <ion-label>Photo</ion-label>
       </ion-tab-button>
       <ion-tab-button tab="menu">
         <div class="ion-page" id="main-content">
           <ion-toolbar>
-            <ion-menu-button></ion-menu-button>
+            <ion-menu-button>
+            </ion-menu-button>
           </ion-toolbar>
         </div>
 

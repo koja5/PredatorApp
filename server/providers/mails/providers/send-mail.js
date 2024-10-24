@@ -26,14 +26,14 @@ async function sendMail(to, subject, message, template = false, res) {
     );
     var hoganTemplate = hogan.compile(emailTemplate);
     var mailOptions = {
-      from: '"Fischereiverband"' + process.env.smtp_user,
+      from: '"Prädatoren Tracker"' + process.env.smtp_user,
       to: to,
       subject: subject,
       html: hoganTemplate.render(message),
     };
   } else {
     var mailOptions = {
-      from: '"Fischereiverband"' + process.env.smtp_user,
+      from: '"Prädatoren Tracker"' + process.env.smtp_user,
       to: to,
       subject: subject,
       text: message,

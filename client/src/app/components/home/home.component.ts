@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { addIcons } from 'ionicons';
 import { library, playCircle, radio, search } from 'ionicons/icons';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,10 @@ import { library, playCircle, radio, search } from 'ionicons/icons';
 export class HomeComponent {
   public imageSource: any;
 
-  constructor() {
+  constructor(
+    private _router: Router,
+    private _storageService: StorageService
+  ) {
     addIcons({ library, playCircle, radio, search });
   }
 
@@ -31,5 +36,10 @@ export class HomeComponent {
       // Any calls to load data go here
       event.target.complete();
     }, 2000);
+  }
+
+  logout() {
+    this._storageService.deleteToken();
+    this._router.navigate(['/auth/login']);
   }
 }

@@ -37,6 +37,10 @@ export class StorageService {
     return this.cookieService.get('token');
   }
 
+  deleteToken() {
+    this.cookieService.remove('token');
+  }
+
   getDecodeToken() {
     if (this.getToken()) {
       return this.helper.decodeToken(this.getToken()!).user;
@@ -64,5 +68,16 @@ export class StorageService {
       }
     }
     return body;
+  }
+
+  getSelectedLanguage(check?: boolean) {
+    const config = this.getLocalStorage('config');
+    if (config) {
+      if (config.app.appLanguage === 'rs' && check) {
+        return 'sr-Latn';
+      }
+      return config.app.appLanguage;
+    }
+    return 'de';
   }
 }

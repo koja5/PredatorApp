@@ -22,6 +22,13 @@ export class LoginComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
+  public signUpForm = this.formBuilder.group({
+    name: ['', [Validators.required]],
+    phone: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+    rePassword: ['', [Validators.required]],
+  });
 
   constructor(
     private _storageService: StorageService,
@@ -64,11 +71,27 @@ export class LoginComponent implements OnInit {
             this._storageService.setToken(data.token);
             this._roter.navigate(['/home/profile']);
           } else {
-            this.error = data.type;
+            if (data.type === 'active' && !data.value) {
+              this._roter.navigate([
+                '/page/need-to-approve/' + this.loginForm.value.email,
+              ]);
+            } else {
+              this.error = data.type;
+            }
           }
           this.submited = true;
         });
     }
     this.submited = true;
+  }
+
+  signUp() {
+    if (this.signUpForm.value.password != this.signUpForm.value.rePassword)
+      return;
+
+    delete this.signUpForm.value.rePassword;
+    this._service
+      .callPostMethod('/api/auth/signUp', this.signUpForm.value)
+      .subscribe((data) => {});
   }
 }
