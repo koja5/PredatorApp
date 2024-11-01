@@ -1,4 +1,9 @@
 {
+   "general": {
+      "areYouSure": "Bist du sicher?",
+      "yes": "Ja",
+      "no": "NEIN"
+   },
    "login": {
       "loginTitle": "Login",
       "login": "Anmelden",
@@ -25,5 +30,20 @@
       "noHaveAccountText": "Erstellen Sie jetzt Ihr Konto, um anderen zu folgen und Beiträge zu liken",
       "alreadyHaveAccount": "Sie haben bereits ein Konto?",
       "alreadyHaveAccountText": "Melden Sie sich an, um Ihre Benachrichtigungen anzuzeigen und Ihre Lieblingsfotos zu veröffentlichen"
+   },
+   "predatorForm": {
+      "predators": "Predator",
+      "totalNumber": "Anzahl Gesamt *",
+      "includingYoungAnimals": "davon Jungtiere",
+      "secondTitle": "Bitte nur sofern eindeutig erkennbar",
+      "includingFemaleAnimals": "davon weibliche Erwachsene",
+      "includingMaleAnimals": "davon männliche Erwachsene",
+      "typeOfWater": "Gewässerart",
+      "distanceToWater": "Abstand zu Gewässer",
+      "territory": "Revier",
+      "location": "Standort/Gewasser",
+      "activity": "Aktivität",
+      "comment": "Freier Kommentar",
+      "addMorePicture": "Add more"
    }
 }

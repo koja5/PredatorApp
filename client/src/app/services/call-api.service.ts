@@ -4,6 +4,7 @@ import { HelpService } from './help.service';
 import { StorageService } from './storage.service';
 import { RequestModel } from '../models/request.model';
 import { ParameterTypeEnum } from '../enums/parameter-type-enum';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,6 @@ export class CallApiService {
   }
 
   callApi(data: any, router?: any) {
-    if (data && data.request) {
-    }
     if (data && data.request && data.request.type === 'POST') {
       if (data.request.url) {
         data.body = this.helpService.postRequestDataParameters(
@@ -66,7 +65,7 @@ export class CallApiService {
         }
       }
     }
-    return false;
+    return new Subject();
   }
 
   callServerMethod(request: any, data: any, router?: any) {

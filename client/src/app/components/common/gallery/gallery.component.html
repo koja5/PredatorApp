@@ -1,0 +1,41 @@
+<div class="gallery">
+  <div class="photo" (click)="modal.isOpen =  true;" *ngFor="let item of gallery">
+    <img src="{{item}}" alt="{{item}}" />
+  </div>
+  <div class="photo">
+    <img src="https://unsplash.it/300/300?image=1072" alt="" />
+  </div>
+  <div class="photo more">
+    <span>+7 Photos</span>
+  </div>
+  <!-- <div class="add-more {{gallery ? '' : 'full-width'}}" (click)="addMorePhoto()">
+    <img src="./assets/icon/add-more-photo.svg">
+    <p>{{'predatorForm.addMorePicture' | translate}}</p>
+  </div> -->
+
+  <div class="add-more {{gallery ? '' : 'full-width'}}">
+    <div class="wrapper">
+      <div class="file-upload">
+        <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target)" />
+        <img src="./assets/icon/add-more-photo.svg">
+        <p>{{'predatorForm.addMorePicture' | translate}}</p>
+        <!-- <i class="fa fa-arrow-up"></i> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- [canDismiss]="canDismiss" -->
+<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.8" [breakpoints]="[0, 0.25, 0.5, 0.8]">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="close()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <gallery [items]="images" thumbs="true"></gallery>
+    </ion-content>
+  </ng-template>
+</ion-modal>

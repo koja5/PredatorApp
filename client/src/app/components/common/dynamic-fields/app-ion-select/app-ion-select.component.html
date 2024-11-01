@@ -1,0 +1,8 @@
+<ion-list>
+  <ion-item>
+    <ion-select [label]="label ? (label | translate) : ''" label-placement="floating" (ionChange)="change($event)"
+      [placeholder]="placeholder" [multiple]="config?.multiple" [value]="value">
+      <ion-select-option *ngFor="let item of data" [value]="item.id">{{item.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>

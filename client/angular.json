@@ -34,9 +34,12 @@
             "styles": [
               "src/global.scss",
               "src/theme/variables.scss",
-              "src/assets/fonts/font-awesome/css/font-awesome.min.css"
+              "src/assets/fonts/font-awesome/css/font-awesome.min.css",
+              "src/assets/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {

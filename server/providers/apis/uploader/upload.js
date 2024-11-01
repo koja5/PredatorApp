@@ -18,95 +18,83 @@ var connection = sql.connect();
 
 connection.getConnection(function (err, conn) {});
 
-router.post(
-  "/setObservationSheetAndUploadDocument",
-  multipartMiddleware,
-  auth,
-  function (req, res) {
-    connection.getConnection(function (err, conn) {
-      if (err) {
-        logger.log("error", err.sql + ". " + err.sqlMessage);
-        res.json(err);
-      }
+router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
 
-      if (req.body.date_time) {
-        req.body.date_time = new Date(req.body.date_time);
-      }
+    console.log(req.files);
 
-      req.body.id_owner = req.user.user.id;
+    req.body.id_user = req.user.user.id;
 
-      delete req.body.undefined;
-
-      conn.query(
-        "select * from observation_sheet where id = ?",
-        [req.body.id],
-        function (err, rows) {
-          if (!err) {
-            let documentPath = "";
-            if (rows.length) {
-              if (rows[0].documentation) {
-                if (
-                  rows[0].documentation.length >
-                    req.body.documentation.length &&
-                  req.files &&
-                  !Object.keys(req.files).length
-                ) {
-                  documentPath = req.body.documentation;
-                  const differentFiles = checkDifferent(
-                    rows[0].documentation,
-                    documentPath
-                  );
-                  deleteFiles(differentFiles);
-                } else if (
-                  rows[0].documentation.length === req.body.documentation.length
-                ) {
-                  documentPath = req.body.documentation;
-                } else {
-                  documentPath = rows[0].documentation
-                    .concat(";")
-                    .concat(
-                      req.files && req.files.documentation
-                        ? packDocumentsPath(req.files.documentation)
-                        : req.body.documentation
-                    );
-                }
+    conn.query(
+      "select * from predators where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        if (!err) {
+          let galleryPath = "";
+          if (rows.length) {
+            if (rows[0].gallery) {
+              if (
+                rows[0].gallery.length > req.body.gallery.length &&
+                req.files &&
+                !Object.keys(req.files).length
+              ) {
+                galleryPath = req.body.gallery;
+                const differentFiles = checkDifferent(
+                  rows[0].gallery,
+                  galleryPath
+                );
+                deleteFiles(differentFiles);
+              } else if (rows[0].gallery.length === req.body.gallery.length) {
+                galleryPath = req.body.gallery;
               } else {
-                documentPath =
-                  req.files && req.files.documentation
-                    ? packDocumentsPath(req.files.documentation)
-                    : req.body.documentation;
+                galleryPath = rows[0].gallery
+                  .concat(";")
+                  .concat(
+                    req.files && req.files.gallery
+                      ? packDocumentsPath(req.files.gallery)
+                      : req.body.gallery
+                  );
               }
-              // deleteFiles(differentFiles);
             } else {
-              documentPath =
-                req.files && req.files.documentation
-                  ? packDocumentsPath(req.files.documentation)
-                  : req.body.documentation;
+              galleryPath =
+                req.files && req.files.gallery
+                  ? packDocumentsPath(req.files.gallery)
+                  : req.body.gallery;
             }
-            req.body.documentation = documentPath;
-
-            conn.query(
-              "INSERT INTO observation_sheet set ? ON DUPLICATE KEY UPDATE ?",
-              [req.body, req.body],
-              function (err, rows) {
-                conn.release();
-                if (!err) {
-                  res.json(true);
-                } else {
-                  logger.log("error", err.sql + ". " + err.sqlMessage);
-                  res.json(false);
-                }
-              }
-            );
+            // deleteFiles(differentFiles);
           } else {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(false);
+            galleryPath =
+              req.files && req.files.gallery
+                ? packDocumentsPath(req.files.gallery)
+                : req.body.gallery;
           }
+          req.body.gallery = galleryPath;
+
+          conn.query(
+            "INSERT INTO predators set ? ON DUPLICATE KEY UPDATE ?",
+            [req.body, req.body],
+            function (err, rows) {
+              conn.release();
+              if (!err) {
+                res.json(true);
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
         }
-      );
-    });
-  }
-);
+      }
+    );
+  });
+});
 
 router.post("/deleteObservationSheetFile", auth, function (req, res) {
   connection.getConnection(function (err, conn) {

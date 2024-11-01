@@ -11,7 +11,9 @@ const express = require("express");
 
 //#region providers
 const general = require("./providers/apis/general");
+const user = require("./providers/apis/user");
 const admin = require("./providers/apis/admin");
+const upload = require("./providers/apis/uploader/upload");
 const superadmin = require("./providers/apis/superadmin");
 const auth = require("./providers/apis/auth");
 const mail = require("./providers/mails/mail-api");
@@ -56,6 +58,8 @@ app.use(cookieParser());
 //providers
 app.use("/api", general);
 app.use("/api/admin", admin);
+app.use("/api/user", user);
+app.use("/api/upload", upload);
 app.use("/api/superadmin", superadmin);
 app.use("/api/auth", auth);
 app.use("/api/mail", mail);

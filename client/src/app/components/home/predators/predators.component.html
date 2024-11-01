@@ -25,7 +25,28 @@
           <span>Following</span>
         </p>
       </div>
-      <ion-button class="take-picture" (click)="takePicture()"><ion-icon name="camera-outline"></ion-icon></ion-button>
+      <!-- <ion-button class="take-picture" (click)="takePicture()"><ion-icon name="camera-outline"></ion-icon></ion-button> -->
+      <div class="menu {{active}}">
+        <ul>
+          <li>
+            <a (click)="takePicture()">
+              <img src="./assets/icon/add-photo.svg">
+              <span>Take a picture</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="addManually()">
+              <img src="./assets/icon/add-without-photo.svg">
+              <span>Manually</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div #createNewEntryButton class="menu-btn-container take-picture" (click)="openAction()">
+        <button aria-pressed="false" aria-label="Open Menu" class="menu-btn">
+          <img src="./assets/icon/add.svg">
+        </button>
+      </div>
       <div id="user-publications">
         <img *ngIf="imageSource" src="{{imageSource}}">
         <img
@@ -55,4 +76,8 @@
       </div>
     </div>
   </div>
+
+
+  <app-predator-form #editFormComponent></app-predator-form>
+
 </body>

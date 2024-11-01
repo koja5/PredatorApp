@@ -10,11 +10,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './services/factory/httpLoaderFactory';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,

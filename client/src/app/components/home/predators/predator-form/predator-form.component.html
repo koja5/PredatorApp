@@ -1,0 +1,57 @@
+<ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <!-- <ion-item>
+        <ion-input label="Enter your name" labelPlacement="stacked" type="text" placeholder="Your name"
+          [(ngModel)]="name"></ion-input>
+      </ion-item> -->
+      <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.predator"
+        (changeEmit)="changeEmitPredator($event)"></app-ion-select>
+      <div class="row">
+        <div class="col-6">
+          <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.totalNumber"
+            (changeEmit)="changeEmitTotalNumber($event)"></app-ion-input>
+        </div>
+        <div class="col-6">
+          <app-ion-input [label]="'predatorForm.includingYoungAnimals'" [type]="'number'"
+            [value]="data.includingYoungAnimals" (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <app-ion-input [label]="'predatorForm.includingFemaleAnimals'" [type]="'number'"
+            [value]="data.includingFemaleAnimals"
+            (changeEmit)="changeEmitIncludingFemaleAnimals($event)"></app-ion-input>
+        </div>
+        <div class="col-6">
+          <app-ion-input [label]="'predatorForm.includingMaleAnimals'" [type]="'number'"
+            [value]="data.includingMaleAnimals" (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
+        </div>
+      </div>
+      <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters" [value]="data.typeOfWater"
+        (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
+      <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distanceToWater"
+        (changeEmit)="changeEmitDistanceToWater($event)"></app-ion-input>
+      <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.territory"
+        (changeEmit)="changeEmitTerritory($event)"></app-ion-select>
+      <app-ion-select [label]="'predatorForm.activity'" [data]="allItems.activities" [value]="data.activity"
+        (changeEmit)="changeEmitActivity($event)"></app-ion-select>
+      <app-ion-textarea [label]="'predatorForm.comment'" [value]="data.comment"
+        (changeEmit)="changeEmitComment($event)"></app-ion-textarea>
+
+      <app-gallery [value]="predatorNotes" (changeEmit)="changeGalleryImage($event)"></app-gallery>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -6,12 +6,18 @@ import { PhotosComponent } from './photos/photos.component';
 import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from 'src/app/home/home-routing.module';
 import { HomeComponent } from './home.component';
-import { ProfileComponent } from './profile/profile.component';
+import { PredatorsComponent } from './predators/predators.component';
+import { PredatorFormComponent } from './predators/predator-form/predator-form.component';
+import { DynamicFieldsModule } from '../common/dynamic-fields/dynamic-fields.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { GalleryModule } from 'ng-gallery';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonCustomModule } from '../common/common-custom.module';
 
 const routes = [
   {
-    path: 'profile',
-    component: ProfileComponent,
+    path: 'predators',
+    component: PredatorsComponent,
   },
   {
     path: 'photos',
@@ -20,7 +26,12 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent, PhotosComponent, ProfileComponent],
+  declarations: [
+    HomeComponent,
+    PhotosComponent,
+    PredatorsComponent,
+    PredatorFormComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,6 +40,9 @@ const routes = [
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
+    DynamicFieldsModule,
+    TranslateModule,
+    CommonCustomModule,
   ],
   providers: [],
   exports: [RouterModule],

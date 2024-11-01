@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
           this.loader = false;
           if (data && data.token) {
             this._storageService.setToken(data.token);
-            this._roter.navigate(['/home/profile']);
+            this._roter.navigate(['/home/predators']);
           } else {
             if (data.type === 'active' && !data.value) {
               this._roter.navigate([
