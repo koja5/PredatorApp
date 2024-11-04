@@ -39,8 +39,8 @@ export class PredatorFormComponent implements OnInit {
 
     this._service
       .callGetMethod('api/user/getAllPredatorNotes')
-      .subscribe((data) => {
-        this.predatorNotes = data;
+      .subscribe((data: PredatorFormModel) => {
+        this.data = data;
       });
   }
 
@@ -84,20 +84,42 @@ export class PredatorFormComponent implements OnInit {
     this.isModalOpen = false;
   }
 
+  packData(): FormData {
+    let data = new FormData();
+
+    for (let [key, value] of Object.entries(this.data)) {
+      data.append(key, value);
+    }
+
+    if (this.data.gallery) {
+      for (let i = 0; i < this.data.gallery.length; i++) {
+        data.append(
+          'gallery[]',
+          this.data.gallery[i],
+          this.data.gallery[i].name
+        );
+      }
+    }
+
+    return data;
+  }
+
   confirm() {
     this.isModalOpen = false;
 
-    let formData = new FormData();
-    for (let i = 0; i < this.data.gallery.length; i++) {
-      formData.append(
-        'gallery[]',
-        this.data.gallery[i],
-        this.data.gallery[i].name
-      );
-    }
+    // let formData = new FormData();
+    // for (let i = 0; i < this.data.gallery.length; i++) {
+    //   formData.append(
+    //     'gallery[]',
+    //     this.data.gallery[i],
+    //     this.data.gallery[i].name
+    //   );
+    // }
+
+    const data = this.packData();
 
     this._service
-      .callPostMethod('api/upload/setPredator', formData)
+      .callPostMethod('api/upload/setPredator', data)
       .subscribe((data) => {
         console.log(data);
       });
@@ -115,11 +137,11 @@ export class PredatorFormComponent implements OnInit {
   }
 
   changeEmitTypeOfWater(event: number) {
-    this.data.typeOfWater = event;
+    this.data.type_of_water = event;
   }
 
   changeEmitDistanceToWater(event: number) {
-    this.data.distanceToWater = event;
+    this.data.distance_to_water = event;
   }
 
   changeEmitTerritory(event: number) {
@@ -131,19 +153,19 @@ export class PredatorFormComponent implements OnInit {
   }
 
   changeEmitTotalNumber(event: number) {
-    this.data.totalNumber = event;
+    this.data.total_number = event;
   }
 
   changeEmitIncludingYoungAnimals(event: number) {
-    this.data.includingYoungAnimals = event;
+    this.data.including_young_animals = event;
   }
 
   changeEmitIncludingFemaleAnimals(event: number) {
-    this.data.includingFemaleAnimals = event;
+    this.data.including_female_animals = event;
   }
 
   changeEmitIncludingMaleAnimals(event: number) {
-    this.data.includingMaleAnimals = event;
+    this.data.including_male_animals = event;
   }
 
   changeEmitComment(event: string) {

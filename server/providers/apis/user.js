@@ -132,15 +132,19 @@ router.get("/getAllPredatorNotes", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query("select * from predators where id_user = ?", [req.user.user.id], function (err, rows, fields) {
-          conn.release();
-          if (err) {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(err);
-          } else {
-            res.json(rows);
+        conn.query(
+          "select * from predators where id_user = ?",
+          [req.user.user.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : {});
+            }
           }
-        });
+        );
       }
     });
   } catch (ex) {

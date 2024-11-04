@@ -16,32 +16,33 @@
         <ion-input label="Enter your name" labelPlacement="stacked" type="text" placeholder="Your name"
           [(ngModel)]="name"></ion-input>
       </ion-item> -->
+      
       <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.predator"
         (changeEmit)="changeEmitPredator($event)"></app-ion-select>
       <div class="row">
         <div class="col-6">
-          <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.totalNumber"
+          <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.total_number"
             (changeEmit)="changeEmitTotalNumber($event)"></app-ion-input>
         </div>
         <div class="col-6">
           <app-ion-input [label]="'predatorForm.includingYoungAnimals'" [type]="'number'"
-            [value]="data.includingYoungAnimals" (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
+            [value]="data.including_young_animals" (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
         </div>
       </div>
       <div class="row">
         <div class="col-6">
           <app-ion-input [label]="'predatorForm.includingFemaleAnimals'" [type]="'number'"
-            [value]="data.includingFemaleAnimals"
+            [value]="data.including_female_animals"
             (changeEmit)="changeEmitIncludingFemaleAnimals($event)"></app-ion-input>
         </div>
         <div class="col-6">
           <app-ion-input [label]="'predatorForm.includingMaleAnimals'" [type]="'number'"
-            [value]="data.includingMaleAnimals" (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
+            [value]="data.including_male_animals" (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
         </div>
       </div>
-      <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters" [value]="data.typeOfWater"
+      <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters" [value]="data.type_of_water"
         (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
-      <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distanceToWater"
+      <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distance_to_water"
         (changeEmit)="changeEmitDistanceToWater($event)"></app-ion-input>
       <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.territory"
         (changeEmit)="changeEmitTerritory($event)"></app-ion-select>

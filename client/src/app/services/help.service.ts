@@ -119,7 +119,7 @@ export class HelpService {
         return UserTypesEnum[item];
       }
     }
-    return UserTypesEnum[UserTypesEnum.admin];
+    return UserTypesEnum[UserTypesEnum.superadmin];
   }
 
   checkRights(rights: any) {

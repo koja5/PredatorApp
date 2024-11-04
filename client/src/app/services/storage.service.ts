@@ -48,6 +48,14 @@ export class StorageService {
     return false;
   }
 
+  setLocalStorage(key: string, value: any) {
+    if (typeof value === 'object') {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(key, value);
+    }
+  }
+
   getLocalStorage(key: string) {
     const storage = localStorage.getItem(key);
     if (storage?.startsWith('{') && storage?.endsWith('}')) {
@@ -55,6 +63,10 @@ export class StorageService {
     } else {
       return storage;
     }
+  }
+
+  removeLocalStorage(key: string) {
+    localStorage.removeItem(key);
   }
 
   getParametarsDateFromLocalStorageForApiRequest(params: any, body?: any) {
