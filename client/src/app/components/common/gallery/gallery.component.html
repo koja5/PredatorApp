@@ -2,11 +2,12 @@
   <div class="photo" (click)="modal.isOpen =  true;" *ngFor="let item of gallery">
     <img src="{{item}}" alt="{{item}}" />
   </div>
-  <div class="photo">
+
+  <!-- <div class="photo">
     <img src="https://unsplash.it/300/300?image=1072" alt="" />
-  </div>
-  <div class="photo more">
-    <span>+7 Photos</span>
+  </div> -->
+  <div class="photo more" *ngIf="getCountOfOtherPictures()">
+    <span>{{getCountOfOtherPictures()}} Photos</span>
   </div>
   <!-- <div class="add-more {{gallery ? '' : 'full-width'}}" (click)="addMorePhoto()">
     <img src="./assets/icon/add-more-photo.svg">

@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { PredatorFormComponent } from './predator-form/predator-form.component';
+import { CallApiService } from 'src/app/services/call-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-predators',
@@ -27,10 +29,21 @@ export class PredatorsComponent implements OnInit {
 
   public imageSource: any;
   public active = '';
+  public predators: any;
 
-  constructor() {}
+  constructor(private _service: CallApiService, private _router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPredators();
+  }
+
+  getPredators() {
+    this._service
+      .callGetMethod('/api/user/getAllPredatorNotes')
+      .subscribe((data) => {
+        this.predators = data;
+      });
+  }
 
   takePicture = async () => {
     this.active = '';
@@ -54,5 +67,33 @@ export class PredatorsComponent implements OnInit {
 
   addManually() {
     this.editFormComponent.open();
+  }
+
+  getImageForPreviewFromGallery(gallery: string) {
+    if (gallery) {
+      if (gallery.indexOf(';') != -1) {
+        return './assets/file-storage/' + gallery.split(';')[0];
+      } else {
+        return './assets/file-storage/' + gallery;
+      }
+    } else {
+      return './assets/icon/no-image.svg';
+    }
+  }
+
+  getMorePhotosIcon(gallery: string) {
+    if (
+      gallery &&
+      gallery.indexOf(';') != -1 &&
+      gallery.split(';').length > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  showDetails(id: number) {
+    this._router.navigate(['home/predator-details/' + id]);
   }
 }

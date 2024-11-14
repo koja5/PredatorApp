@@ -1,4 +1,4 @@
-export class PredatorModel {
+export class PredatorItemModel {
   id?: number;
   name?: string;
 }
@@ -19,7 +19,7 @@ export class ActivityModel {
 }
 
 export class DataPredatorsModel {
-  predators?: PredatorModel;
+  predators?: PredatorItemModel;
   typeOfWaters?: TypeOfWaterModel;
   territories?: TerritoryModel;
   activities?: ActivityModel;

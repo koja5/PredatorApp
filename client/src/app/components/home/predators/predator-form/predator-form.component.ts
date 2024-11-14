@@ -5,7 +5,7 @@ import { CallApiService } from 'src/app/services/call-api.service';
 import {
   ActivityModel,
   DataPredatorsModel,
-  PredatorModel,
+  PredatorItemModel,
   TerritoryModel,
   TypeOfWaterModel,
 } from './data-predators.model';
@@ -47,7 +47,7 @@ export class PredatorFormComponent implements OnInit {
   getAllPredators() {
     this._service
       .callGetMethod('api/user/getAllPredators')
-      .subscribe((data: PredatorModel) => {
+      .subscribe((data: PredatorItemModel) => {
         this.allItems.predators = data;
       });
   }

@@ -13,11 +13,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GalleryModule } from 'ng-gallery';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonCustomModule } from '../common/common-custom.module';
+import { PredatorDetailsComponent } from './predators/predator-details/predator-details.component';
 
 const routes = [
   {
     path: 'predators',
     component: PredatorsComponent,
+  },
+  {
+    path: 'predator-details/:id',
+    component: PredatorDetailsComponent,
   },
   {
     path: 'photos',
@@ -31,9 +36,11 @@ const routes = [
     PhotosComponent,
     PredatorsComponent,
     PredatorFormComponent,
+    PredatorDetailsComponent
   ],
   imports: [
     CommonModule,
+    GalleryModule,
     FormsModule,
     RouterModule.forChild(routes),
     CommonModule,

@@ -390,3 +390,13 @@ svg {
   left: 50%;
   z-index: -1;
 }
+
+#screen #content #user-publications .more-photos {
+  position: fixed;
+  width: 24px !important;
+  height: 24px !important;
+  text-align: end;
+  float: right;
+  overflow: hidden;
+  margin: 5px;
+}

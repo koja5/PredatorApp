@@ -116,7 +116,14 @@ export class GalleryComponent implements OnInit {
       item.progress = 0;
       this.files.push(item);
     }
+    this.packImagesToGallery();
     this.uploadFiles(0);
+  }
+
+  packImagesToGallery() {
+    for (let i = 0; i < this.files.length; i++) {
+      this.gallery.push(URL.createObjectURL(this.files[i]));
+    }
   }
 
   uploadFiles(index: number) {
@@ -129,5 +136,12 @@ export class GalleryComponent implements OnInit {
     }
 
     this.changeEmit.emit(this.files);
+  }
+
+  getCountOfOtherPictures() {
+    if (this.gallery.length > 2) {
+      return '+' + (this.gallery.length - 2);
+    }
+    return false;
   }
 }

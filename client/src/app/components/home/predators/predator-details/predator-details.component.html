@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Page Two</ion-title>
+    <ion-buttons slot="end">
+      <ion-button default-href="/">Edit</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div *ngIf="loader">
+    <app-loader></app-loader>
+  </div>
+  <div class="gallery-container">
+    <gallery *ngIf="images && images.length" [items]="images"></gallery>
+  </div>
+  <div class="information" *ngIf="!loader">
+    <div>
+      <ion-text>
+        {{'predatorForm.predators' | translate}}
+      </ion-text>
+      <p><b>{{data.name_of_predator}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.totalNumber' | translate}}
+      </ion-text>
+      <p><b>{{data.total_number}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.includingYoungAnimals' | translate}}
+      </ion-text>
+      <p><b>{{data.including_young_animals}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.includingFemaleAnimals' | translate}}
+      </ion-text>
+      <p><b>{{data.including_female_animals}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.includingMaleAnimals' | translate}}
+      </ion-text>
+      <p><b>{{data.including_male_animals}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.typeOfWater' | translate}}
+      </ion-text>
+      <p><b>{{data.name_of_type_of_water}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.distanceToWater' | translate}}
+      </ion-text>
+      <p><b>{{data.distance_to_water}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.territory' | translate}}
+      </ion-text>
+      <p><b>{{data.name_of_territory}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.activity' | translate}}
+      </ion-text>
+      <p><b>{{data.name_of_activity}}</b></p>
+    </div>
+    <div class="d-block">
+      <ion-text>
+        {{'predatorForm.comment' | translate}}
+      </ion-text>
+      <p class="pl-2"><b>{{data.comment}}</b></p>
+    </div>
+    <br> <br>
+  </div>
+</ion-content>
