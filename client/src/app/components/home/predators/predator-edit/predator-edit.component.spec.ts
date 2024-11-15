@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PredatorFormComponent } from './predator-form.component';
+import { PredatorEditComponent } from './predator-edit.component';
 
-describe('PredatorFormComponent', () => {
-  let component: PredatorFormComponent;
-  let fixture: ComponentFixture<PredatorFormComponent>;
+describe('PredatorEditComponent', () => {
+  let component: PredatorEditComponent;
+  let fixture: ComponentFixture<PredatorEditComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PredatorFormComponent ],
+      declarations: [ PredatorEditComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PredatorFormComponent);
+    fixture = TestBed.createComponent(PredatorEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

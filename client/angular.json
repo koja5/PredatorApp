@@ -35,7 +35,8 @@
               "src/global.scss",
               "src/theme/variables.scss",
               "src/assets/fonts/font-awesome/css/font-awesome.min.css",
-              "src/assets/css/bootstrap.min.css"
+              "src/assets/css/bootstrap.min.css",
+              "node_modules/ol/ol.css"
             ],
             "scripts": [
               "src/assets/js/bootstrap.min.js"

@@ -3,11 +3,11 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="cancel()">Cancel</ion-button>
+          <ion-button (click)="cancel()">{{'general.cancel' | translate}}</ion-button>
         </ion-buttons>
-        <ion-title>Welcome</ion-title>
+        <ion-title><img class="title-logo" src="./assets/icon/logo.png"></ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          <ion-button (click)="confirm()" [strong]="true">{{'general.confirm' | translate}}</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -16,8 +16,8 @@
         <ion-input label="Enter your name" labelPlacement="stacked" type="text" placeholder="Your name"
           [(ngModel)]="name"></ion-input>
       </ion-item> -->
-      
-      <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.predator"
+
+      <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.id_predator"
         (changeEmit)="changeEmitPredator($event)"></app-ion-select>
       <div class="row">
         <div class="col-6">
@@ -26,7 +26,8 @@
         </div>
         <div class="col-6">
           <app-ion-input [label]="'predatorForm.includingYoungAnimals'" [type]="'number'"
-            [value]="data.including_young_animals" (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
+            [value]="data.including_young_animals"
+            (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
         </div>
       </div>
       <div class="row">
@@ -40,19 +41,23 @@
             [value]="data.including_male_animals" (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
         </div>
       </div>
-      <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters" [value]="data.type_of_water"
-        (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
+      <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters"
+        [value]="data.id_type_of_water" (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
       <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distance_to_water"
         (changeEmit)="changeEmitDistanceToWater($event)"></app-ion-input>
-      <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.territory"
+      <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.id_territory"
         (changeEmit)="changeEmitTerritory($event)"></app-ion-select>
-      <app-ion-select [label]="'predatorForm.activity'" [data]="allItems.activities" [value]="data.activity"
+      <app-ion-select [label]="'predatorForm.activity'" [data]="allItems.activities" [value]="data.id_activity"
         (changeEmit)="changeEmitActivity($event)"></app-ion-select>
       <app-ion-textarea [label]="'predatorForm.comment'" [value]="data.comment"
         (changeEmit)="changeEmitComment($event)"></app-ion-textarea>
 
-      <app-gallery [value]="predatorNotes" (changeEmit)="changeGalleryImage($event)"></app-gallery>
+      <app-gallery [value]="data.gallery" (changeEmit)="changeGalleryImage($event)"></app-gallery>
 
     </ion-content>
+
+    <div class="predator-delete">
+      <button class="btn btn-sm btn-outline-danger">{{'predatorForm.deletePredatorData' | translate}}</button>
+    </div>
   </ng-template>
 </ion-modal>

@@ -32,14 +32,24 @@ export class GalleryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    for (let i = 0; i < this.value.length; i++) {
-      const gallery = this.value[i].gallery
-        ? this.value[i].gallery.split(';')
-        : [];
-      for (let j = 0; j < gallery.length; j++) {
-        this.gallery.push('./assets/file-storage/' + gallery[i]);
+    if (this.value) {
+      if (this.value.indexOf(';') != -1) {
+        const gallery = this.value.split(';');
+        for (let i = 0; i < gallery.length; i++) {
+          this.gallery.push('./assets/file-storage/' + gallery[i]);
+        }
+      } else {
+        this.gallery.push('./assets/file-storage/' + this.value);
       }
     }
+    // for (let i = 0; i < this.value.length; i++) {
+    //   const gallery = this.value[i].gallery
+    //     ? this.value[i].gallery.split(';')
+    //     : [];
+    //   for (let j = 0; j < gallery.length; j++) {
+    //     this.gallery.push('./assets/file-storage/' + gallery[i]);
+    //   }
+    // }
 
     // this.images = [
     //   new ImageItem({

@@ -2,7 +2,11 @@
    "general": {
       "areYouSure": "Bist du sicher?",
       "yes": "Ja",
-      "no": "NEIN"
+      "no": "NEIN",
+      "edit": "Bearbeiten",
+      "back": "Zurück",
+      "cancel": "Stornieren",
+      "confirm": "Bestätigen"
    },
    "login": {
       "loginTitle": "Login",
@@ -31,6 +35,10 @@
       "alreadyHaveAccount": "Sie haben bereits ein Konto?",
       "alreadyHaveAccountText": "Melden Sie sich an, um Ihre Benachrichtigungen anzuzeigen und Ihre Lieblingsfotos zu veröffentlichen"
    },
+   "navigation": {
+      "home": "Heim",
+      "photo": "Foto"
+   },
    "predatorForm": {
       "predators": "Predator",
       "totalNumber": "Anzahl Gesamt *",
@@ -44,6 +52,7 @@
       "location": "Standort/Gewasser",
       "activity": "Aktivität",
       "comment": "Freier Kommentar",
-      "addMorePicture": "Add more"
+      "addMorePicture": "Add more",
+      "deletePredatorData": "Raubtierdaten löschen"
    }
 }

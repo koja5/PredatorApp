@@ -10,26 +10,32 @@ import {
   TypeOfWaterModel,
 } from './data-predators.model';
 import { ImageItem } from 'ng-gallery';
-import { PredatorFormModel } from './predator-form.model';
+import { PredatorEditModel } from './predator-edit.model';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-predator-form',
-  templateUrl: './predator-form.component.html',
-  styleUrls: ['./predator-form.component.scss'],
+  selector: 'app-predator-edit',
+  templateUrl: './predator-edit.component.html',
+  styleUrls: ['./predator-edit.component.scss'],
 })
-export class PredatorFormComponent implements OnInit {
+export class PredatorEditComponent implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
 
   public message =
     'This modal example uses triggers to automatically open a modal when the button is clicked.';
   public name!: string;
   public isModalOpen = false;
-  public data = new PredatorFormModel();
+  public data = new PredatorEditModel();
   public allItems = new DataPredatorsModel();
   public isGalleryOpen = false;
   public predatorNotes: any;
 
-  constructor(private _service: CallApiService) {}
+  constructor(
+    private _service: CallApiService,
+    private _activatedRouter: ActivatedRoute,
+    private _location: Location
+  ) {}
 
   ngOnInit() {
     this.getAllPredators();
@@ -37,11 +43,17 @@ export class PredatorFormComponent implements OnInit {
     this.getAllTerritories();
     this.getAllActivities();
 
-    this._service
-      .callGetMethod('api/user/getAllPredatorNotes')
-      .subscribe((data: PredatorFormModel) => {
-        this.data = data;
-      });
+    if (this._activatedRouter.snapshot.params.id) {
+      this._service
+        .callGetMethod(
+          'api/user/getPredatorForEditById',
+          this._activatedRouter.snapshot.params.id
+        )
+        .subscribe((data: PredatorEditModel) => {
+          this.data = data;
+        });
+      this.isModalOpen = true;
+    }
   }
 
   getAllPredators() {
@@ -82,6 +94,10 @@ export class PredatorFormComponent implements OnInit {
 
   cancel() {
     this.isModalOpen = false;
+
+    if (this._activatedRouter.snapshot.params.id) {
+      this._location.back();
+    }
   }
 
   packData(): FormData {
@@ -91,7 +107,9 @@ export class PredatorFormComponent implements OnInit {
       data.append(key, value);
     }
 
-    if (this.data.gallery) {
+    if (this.data.gallery && this.data.gallery.indexOf(';') == -1) {
+      // this.data.gallery = this.data.gallery.split(';');
+
       for (let i = 0; i < this.data.gallery.length; i++) {
         data.append(
           'gallery[]',
@@ -106,6 +124,7 @@ export class PredatorFormComponent implements OnInit {
 
   confirm() {
     this.isModalOpen = false;
+    this._location.back();
 
     // let formData = new FormData();
     // for (let i = 0; i < this.data.gallery.length; i++) {
@@ -121,7 +140,8 @@ export class PredatorFormComponent implements OnInit {
     this._service
       .callPostMethod('api/upload/setPredator', data)
       .subscribe((data) => {
-        console.log(data);
+        if (this._activatedRouter.snapshot.params.id) {
+        }
       });
   }
 
@@ -133,11 +153,11 @@ export class PredatorFormComponent implements OnInit {
   }
 
   changeEmitPredator(event: number) {
-    this.data.predator = event;
+    this.data.id_predator = event;
   }
 
   changeEmitTypeOfWater(event: number) {
-    this.data.type_of_water = event;
+    this.data.id_type_of_water = event;
   }
 
   changeEmitDistanceToWater(event: number) {
@@ -145,11 +165,11 @@ export class PredatorFormComponent implements OnInit {
   }
 
   changeEmitTerritory(event: number) {
-    this.data.territory = event;
+    this.data.id_territory = event;
   }
 
   changeEmitActivity(event: number) {
-    this.data.activity = event;
+    this.data.id_activity = event;
   }
 
   changeEmitTotalNumber(event: number) {

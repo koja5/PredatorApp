@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
+      <ion-back-button default-href="/" [text]="('general.back' | translate)"></ion-back-button>
     </ion-buttons>
-    <ion-title>Page Two</ion-title>
+    <ion-title><img class="title-logo" src="./assets/icon/logo.png"></ion-title>
     <ion-buttons slot="end">
-      <ion-button default-href="/">Edit</ion-button>
+      <ion-button (click)="predatorEdit()">{{'general.edit' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -71,12 +71,15 @@
       </ion-text>
       <p><b>{{data.name_of_activity}}</b></p>
     </div>
-    <div class="d-block">
+    <div class="d-block mb-2">
       <ion-text>
         {{'predatorForm.comment' | translate}}
       </ion-text>
       <p class="pl-2"><b>{{data.comment}}</b></p>
     </div>
-    <br> <br>
   </div>
+
+
+  <div id="map" class="map"></div>
+
 </ion-content>

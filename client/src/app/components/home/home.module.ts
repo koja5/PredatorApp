@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from 'src/app/home/home-routing.module';
 import { HomeComponent } from './home.component';
 import { PredatorsComponent } from './predators/predators.component';
-import { PredatorFormComponent } from './predators/predator-form/predator-form.component';
+import { PredatorEditComponent } from './predators/predator-edit/predator-edit.component';
 import { DynamicFieldsModule } from '../common/dynamic-fields/dynamic-fields.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { GalleryModule } from 'ng-gallery';
@@ -25,6 +25,10 @@ const routes = [
     component: PredatorDetailsComponent,
   },
   {
+    path: 'predator-edit/:id',
+    component: PredatorEditComponent,
+  },
+  {
     path: 'photos',
     component: PhotosComponent,
   },
@@ -35,8 +39,8 @@ const routes = [
     HomeComponent,
     PhotosComponent,
     PredatorsComponent,
-    PredatorFormComponent,
-    PredatorDetailsComponent
+    PredatorEditComponent,
+    PredatorDetailsComponent,
   ],
   imports: [
     CommonModule,

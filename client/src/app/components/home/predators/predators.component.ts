@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { PredatorFormComponent } from './predator-form/predator-form.component';
+import { PredatorEditComponent } from './predator-edit/predator-edit.component';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { Router } from '@angular/router';
 
@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 })
 export class PredatorsComponent implements OnInit {
   @ViewChild('createNewEntryButton') createNewEntryButton!: ElementRef;
-  @ViewChild(PredatorFormComponent)
-  editFormComponent!: PredatorFormComponent;
+  @ViewChild(PredatorEditComponent)
+  editFormComponent!: PredatorEditComponent;
 
   @HostListener('document:mousedown', ['$event'])
   onGlobalClick(event: any): void {
