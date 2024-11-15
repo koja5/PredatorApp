@@ -18,6 +18,9 @@
   </div>
   <div class="information" *ngIf="!loader">
     <div>
+      <google-map height="600px" width="200" [options]="options"> </google-map>
+    </div>
+    <div>
       <ion-text>
         {{'predatorForm.predators' | translate}}
       </ion-text>
@@ -78,5 +81,6 @@
       <p class="pl-2"><b>{{data.comment}}</b></p>
     </div>
     <br> <br>
+
   </div>
 </ion-content>

@@ -14,6 +14,7 @@ import { GalleryModule } from 'ng-gallery';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonCustomModule } from '../common/common-custom.module';
 import { PredatorDetailsComponent } from './predators/predator-details/predator-details.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 const routes = [
   {
@@ -36,7 +37,7 @@ const routes = [
     PhotosComponent,
     PredatorsComponent,
     PredatorFormComponent,
-    PredatorDetailsComponent
+    PredatorDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +51,7 @@ const routes = [
     DynamicFieldsModule,
     TranslateModule,
     CommonCustomModule,
+    GoogleMapsModule,
   ],
   providers: [],
   exports: [RouterModule],

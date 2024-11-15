@@ -14,6 +14,12 @@ export class PredatorDetailsComponent implements OnInit {
   public images: any = [];
   public loader = true;
 
+  options: google.maps.MapOptions = {
+    mapId: 'DEMO_MAP_ID',
+    center: { lat: -31, lng: 147 },
+    zoom: 10,
+  };
+
   constructor(
     private _service: CallApiService,
     private _activatedRouter: ActivatedRoute
