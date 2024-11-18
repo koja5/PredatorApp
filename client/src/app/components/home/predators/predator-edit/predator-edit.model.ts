@@ -1,4 +1,5 @@
 export class PredatorEditModel {
+  id?: number;
   id_predator?: number;
   total_number?: number;
   including_young_animals?: number;

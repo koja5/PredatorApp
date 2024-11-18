@@ -6,7 +6,9 @@
       "edit": "Bearbeiten",
       "back": "Zurück",
       "cancel": "Stornieren",
-      "confirm": "Bestätigen"
+      "confirm": "Bestätigen",
+      "close": "Schließen",
+      "photos": "Fotos"
    },
    "login": {
       "loginTitle": "Login",

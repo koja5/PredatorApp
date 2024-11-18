@@ -66,7 +66,7 @@ export class PredatorsComponent implements OnInit {
   }
 
   addManually() {
-    this.editFormComponent.open();
+    this._router.navigate(['home/predator-edit/new']);
   }
 
   getImageForPreviewFromGallery(gallery: string) {

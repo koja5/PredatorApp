@@ -8,7 +8,7 @@ $green: #39d69c;
 .gallery {
   margin: 16px;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   border: 1px dotted lightgray;
   padding: 16px;
   border-radius: 10px;
@@ -19,7 +19,7 @@ $green: #39d69c;
   align-items: center;
   width: 70px;
   height: 70px;
-  margin-right: 5px;
+  // margin-right: 5px;
   border-radius: 10px;
   overflow: hidden;
 
@@ -49,6 +49,7 @@ $green: #39d69c;
   border-radius: 10px;
   text-align: center;
   width: 70px;
+  margin-left: 10px;
 }
 
 .add-more img {
@@ -101,4 +102,12 @@ $green: #39d69c;
       color: #2590eb;
     }
   }
+}
+
+.remove-photo {
+  width: 22px !important;
+  position: fixed;
+  text-align: end;
+  margin-left: 35px;
+  margin-bottom: 63px;
 }

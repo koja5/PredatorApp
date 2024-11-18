@@ -11,7 +11,7 @@ import {
 } from './data-predators.model';
 import { ImageItem } from 'ng-gallery';
 import { PredatorEditModel } from './predator-edit.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -34,6 +34,7 @@ export class PredatorEditComponent implements OnInit {
   constructor(
     private _service: CallApiService,
     private _activatedRouter: ActivatedRoute,
+    private _router: Router,
     private _location: Location
   ) {}
 
@@ -43,7 +44,7 @@ export class PredatorEditComponent implements OnInit {
     this.getAllTerritories();
     this.getAllActivities();
 
-    if (this._activatedRouter.snapshot.params.id) {
+    if (this._activatedRouter.snapshot.params.id != 'new') {
       this._service
         .callGetMethod(
           'api/user/getPredatorForEditById',
@@ -52,8 +53,9 @@ export class PredatorEditComponent implements OnInit {
         .subscribe((data: PredatorEditModel) => {
           this.data = data;
         });
-      this.isModalOpen = true;
     }
+
+    this.isModalOpen = true;
   }
 
   getAllPredators() {
@@ -93,11 +95,7 @@ export class PredatorEditComponent implements OnInit {
   }
 
   cancel() {
-    this.isModalOpen = false;
-
-    if (this._activatedRouter.snapshot.params.id) {
-      this._location.back();
-    }
+    this.backToPreviousPage();
   }
 
   packData(): FormData {
@@ -107,7 +105,7 @@ export class PredatorEditComponent implements OnInit {
       data.append(key, value);
     }
 
-    if (this.data.gallery && this.data.gallery.indexOf(';') == -1) {
+    if (this.data.gallery && typeof this.data.gallery != 'string') {
       // this.data.gallery = this.data.gallery.split(';');
 
       for (let i = 0; i < this.data.gallery.length; i++) {
@@ -123,24 +121,27 @@ export class PredatorEditComponent implements OnInit {
   }
 
   confirm() {
-    this.isModalOpen = false;
-    this._location.back();
-
-    // let formData = new FormData();
-    // for (let i = 0; i < this.data.gallery.length; i++) {
-    //   formData.append(
-    //     'gallery[]',
-    //     this.data.gallery[i],
-    //     this.data.gallery[i].name
-    //   );
-    // }
+    this.backToPreviousPage();
 
     const data = this.packData();
 
     this._service
       .callPostMethod('api/upload/setPredator', data)
+      .subscribe((data) => {});
+  }
+
+  backToPreviousPage() {
+    this.isModalOpen = false;
+    this._location.back();
+  }
+
+  deletePredator() {
+    this._service
+      .callPostMethod('/api/user/deletePredator', this.data)
       .subscribe((data) => {
-        if (this._activatedRouter.snapshot.params.id) {
+        if (data) {
+          this.isModalOpen = false;
+          this._router.navigate(['home/predators']);
         }
       });
   }
