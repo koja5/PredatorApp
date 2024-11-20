@@ -16,4 +16,6 @@ export class PredatorModel {
   name_of_activity: string;
   comment?: string;
   gallery?: any;
+  longitude: number;
+  latitude: number;
 }

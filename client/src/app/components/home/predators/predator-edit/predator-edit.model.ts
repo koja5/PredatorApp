@@ -11,4 +11,6 @@ export class PredatorEditModel {
   id_activity?: number;
   comment?: string;
   gallery?: any;
+  longitude?: number;
+  latitude?: number;
 }

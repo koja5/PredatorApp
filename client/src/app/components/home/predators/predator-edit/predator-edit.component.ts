@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CallApiService } from 'src/app/services/call-api.service';
@@ -13,6 +13,7 @@ import { ImageItem } from 'ng-gallery';
 import { PredatorEditModel } from './predator-edit.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-predator-edit',
@@ -21,6 +22,7 @@ import { Location } from '@angular/common';
 })
 export class PredatorEditComponent implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
+  @Input() gallery: any;
 
   public message =
     'This modal example uses triggers to automatically open a modal when the button is clicked.';
@@ -38,13 +40,15 @@ export class PredatorEditComponent implements OnInit {
     private _location: Location
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getAllPredators();
     this.getAllTypeOfWaters();
     this.getAllTerritories();
     this.getAllActivities();
 
-    if (this._activatedRouter.snapshot.params.id != 'new') {
+    if (this.gallery) {
+      this.data.gallery = this.gallery;
+    } else if (this._activatedRouter.snapshot.params.id != 'new') {
       this._service
         .callGetMethod(
           'api/user/getPredatorForEditById',
@@ -53,6 +57,11 @@ export class PredatorEditComponent implements OnInit {
         .subscribe((data: PredatorEditModel) => {
           this.data = data;
         });
+    } else {
+      const geolocation = await Geolocation.getCurrentPosition();
+
+      this.data.longitude = geolocation.coords.longitude;
+      this.data.latitude = geolocation.coords.latitude;
     }
 
     this.isModalOpen = true;

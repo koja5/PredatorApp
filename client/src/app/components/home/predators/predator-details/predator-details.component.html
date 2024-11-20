@@ -79,7 +79,5 @@
     </div>
   </div>
 
-
-  <div id="map" class="map"></div>
-
+  <app-map *ngIf="data.longitude && data.latitude" [longitude]="data.longitude" [latitude]="data.latitude"></app-map>
 </ion-content>

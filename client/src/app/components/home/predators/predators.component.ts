@@ -30,6 +30,7 @@ export class PredatorsComponent implements OnInit {
   public imageSource: any;
   public active = '';
   public predators: any;
+  public loader = true;
 
   constructor(private _service: CallApiService, private _router: Router) {}
 
@@ -38,10 +39,12 @@ export class PredatorsComponent implements OnInit {
   }
 
   getPredators() {
+    this.loader = true;
     this._service
       .callGetMethod('/api/user/getAllPredatorNotes')
       .subscribe((data) => {
         this.predators = data;
+        this.loader = false;
       });
   }
 
@@ -55,6 +58,11 @@ export class PredatorsComponent implements OnInit {
     });
 
     this.imageSource = image.dataUrl;
+
+    // this._router.navigate([
+    //   'home/predator-edit/new?gallery=' + this.imageSource,
+    // ]);
+    // this.editFormComponent.open();
   };
 
   openAction() {

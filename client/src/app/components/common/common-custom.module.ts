@@ -6,12 +6,13 @@ import { IonicModule } from '@ionic/angular';
 import { GalleryComponent } from './gallery/gallery.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { GalleryModule } from 'ng-gallery';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
-  declarations: [LoaderComponent, GalleryComponent],
+  declarations: [LoaderComponent, GalleryComponent, MapComponent],
   imports: [CommonModule, IonicModule, TranslateModule, GalleryModule],
   providers: [],
   bootstrap: [],
-  exports: [LoaderComponent, GalleryComponent],
+  exports: [LoaderComponent, GalleryComponent, MapComponent],
 })
 export class CommonCustomModule {}

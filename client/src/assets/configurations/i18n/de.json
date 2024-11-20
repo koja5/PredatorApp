@@ -8,7 +8,10 @@
       "cancel": "Stornieren",
       "confirm": "Bestätigen",
       "close": "Schließen",
-      "photos": "Fotos"
+      "photos": "Fotos",
+      "takeAPicture": "Machen Sie ein Foto",
+      "manually": "Manually",
+      "startTakingPhotos": "Fangen Sie an, Fotos zu machen"
    },
    "login": {
       "loginTitle": "Login",

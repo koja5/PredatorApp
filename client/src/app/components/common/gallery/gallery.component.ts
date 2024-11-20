@@ -43,6 +43,9 @@ export class GalleryComponent implements OnInit {
 
   ngOnChanges() {
     if (this.value) {
+      // if (this.value.startsWith('data:image')) {
+      //   this.gallery.push(this.value);
+      // } else
       if (this.value.indexOf(';') != -1) {
         const gallery = this.value.split(';');
         for (let i = 0; i < gallery.length; i++) {
@@ -58,33 +61,6 @@ export class GalleryComponent implements OnInit {
   close() {
     this.modal.isOpen = !this.modal.isOpen;
   }
-
-  canDismiss = async () => {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: this._translate.instant('general.areYouSure'),
-      buttons: [
-        {
-          text: this._translate.instant('general.yes'),
-          role: 'confirm',
-        },
-        {
-          text: this._translate.instant('general.no'),
-          role: 'cancel',
-        },
-      ],
-    });
-
-    actionSheet.present();
-
-    const { role } = await actionSheet.onWillDismiss();
-
-    if (role === 'confirm') {
-      return true;
-    } else {
-      this.modal.isOpen = true;
-      return false;
-    }
-  };
 
   addMorePhoto = async () => {
     const image = await Camera.getPhoto({
@@ -110,16 +86,8 @@ export class GalleryComponent implements OnInit {
     this.uploadFiles(0);
   }
 
-  packImagesToGallery() {
-    for (let i = 0; i < this.files.length; i++) {
-      this.gallery.push(URL.createObjectURL(this.files[i]));
-    }
-  }
-
   uploadFiles(index: number) {
     let formData = new FormData();
-
-    console.log(formData);
 
     for (let i = 0; i < this.files.length; i++) {
       formData.append('files[]', this.files[i], this.files[i].name);
@@ -144,6 +112,12 @@ export class GalleryComponent implements OnInit {
           thumb: this.gallery[i],
         })
       );
+    }
+  }
+
+  packImagesToGallery() {
+    for (let i = 0; i < this.files.length; i++) {
+      this.gallery.push(URL.createObjectURL(this.files[i]));
     }
   }
 

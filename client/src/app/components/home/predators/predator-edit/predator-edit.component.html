@@ -53,10 +53,11 @@
         (changeEmit)="changeEmitComment($event)"></app-ion-textarea>
 
       <app-gallery [value]="data.gallery" (changeEmit)="changeGalleryImage($event)"></app-gallery>
+      <app-map [longitude]="data.longitude!" [latitude]="data.latitude!"></app-map>
 
     </ion-content>
 
-    <div class="predator-delete">
+    <div class="predator-delete mt-4" *ngIf="data.id">
       <button class="btn btn-sm btn-outline-danger" (click)="deletePredator()">{{'predatorForm.deletePredatorData' |
         translate}}</button>
     </div>

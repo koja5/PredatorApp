@@ -132,6 +132,13 @@ body {
 }
 
 img {
+  // margin-top: -87px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -47px;
+  margin-top: -38px;
+  overflow: hidden;
+  transform-origin: 60px;
   width: 90px;
-  margin-top: -87px;
 }
