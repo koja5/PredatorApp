@@ -50,20 +50,20 @@
       <app-loader *ngIf="loader"></app-loader>
       <div class="no-data" *ngIf="!loader && (!predators || !predators.length)">
         <img src="./assets/icon/capture-photo.png">
-        <h6 class="pt-2">{{'general.startTakingPhotos' | translate}}</h6>
+        <h6>{{'general.startTakingPhotos' | translate}}</h6>
       </div>
       <div *ngIf="!loader&&predators.length" id="user-publications">
         <div *ngFor="let item of predators">
           <img *ngIf="getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg" class="more-photos">
           <img src="{{getImageForPreviewFromGallery(item.gallery)}}" (click)="showDetails(item.id)">
         </div>
-        <img *ngIf="imageSource" src="{{imageSource}}">
-        <!-- <img *ngIf="imageSource" src="{{imageSource}}"> !-->
+        <!-- <img *ngIf="imageSource" src="{{imageSource}}"> -->
       </div>
     </div>
   </div>
 
 
-  <app-predator-edit *ngIf="imageSource" #editFormComponent [gallery]="imageSource"></app-predator-edit>
+  <app-predator-edit *ngIf="imageSource" #editFormComponent [gallery]="imageSource"
+    (refreshEmit)="refresh()"></app-predator-edit>
 
 </body>

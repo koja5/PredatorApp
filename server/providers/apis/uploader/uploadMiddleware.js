@@ -17,8 +17,6 @@ const upload = multer({ storage: storage });
 
 // Custom file upload middleware
 const uploadMiddleware = (req, res, next) => {
-  console.log("USAO SAM U MIDDLEWARE!");
-  console.log(upload);
   // Use multer upload instance
   upload.array("files", 5)(req, res, (err) => {
     if (err) {

@@ -57,6 +57,8 @@ export class PredatorsComponent implements OnInit {
       source: CameraSource.Camera,
     });
 
+    console.log(image);
+
     this.imageSource = image.dataUrl;
 
     // this._router.navigate([
@@ -103,5 +105,9 @@ export class PredatorsComponent implements OnInit {
 
   showDetails(id: number) {
     this._router.navigate(['home/predator-details/' + id]);
+  }
+
+  refresh() {
+    this.getPredators();
   }
 }

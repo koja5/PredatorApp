@@ -75,9 +75,10 @@
       <ion-text>
         {{'predatorForm.comment' | translate}}
       </ion-text>
-      <p class="pl-2"><b>{{data.comment}}</b></p>
+      <p class="pl-2"><b class="text-break">{{data.comment}}</b></p>
     </div>
   </div>
 
-  <app-map *ngIf="data.longitude && data.latitude" [longitude]="data.longitude" [latitude]="data.latitude"></app-map>
+  <app-map *ngIf="data && data.longitude && data.latitude" [longitude]="data.longitude"
+    [latitude]="data.latitude"></app-map>
 </ion-content>

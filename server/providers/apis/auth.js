@@ -80,16 +80,23 @@ router.post("/signUp", function (req, res, next) {
       function (err, rows, fields) {
         if (rows.length) {
           conn.release();
-          res.json(false);
+          res.json({
+            type: "exist-account",
+            value: 0,
+          });
         } else {
           req.body.password = sha1(req.body.password);
+          delete req.body.rePassword;
           conn.query(
             "INSERT INTO users set ?",
             [req.body],
             function (err, rows, fields) {
               conn.release();
               if (err) {
-                res.json(false);
+                res.json({
+                  type: "exist-account",
+                  value: 0,
+                });
               } else {
                 makeRequest(req.body, "mail/sendLinkForVerifyEmail", res);
               }
@@ -110,12 +117,11 @@ router.post("/forgotPassword", function (req, res, next) {
 
     conn.query(
       "select * from users where email = ?",
-      [req.body.data.email],
+      [req.body.email],
       function (err, rows, fields) {
         conn.release();
         if (rows.length) {
-          req.body.data["lang"] = req.body.lang;
-          makeRequest(req.body.data, "mail/resetPasswordLink", res);
+          makeRequest(req.body, "mail/resetPasswordLink", res);
         } else {
           // mail not exists
           res.json(false);
@@ -132,10 +138,10 @@ router.get("/verifyEmail/:email", function (req, res, next) {
       res.json(err);
     }
 
-    console.log();
+    console.log(req.params);
 
     conn.query(
-      "update users set verify = 1 where sha1(email)",
+      "update users set verify = 1, active = 1 where sha1(email)",
       [req.params.email],
       function (err, rows, fields) {
         conn.release();
@@ -143,11 +149,7 @@ router.get("/verifyEmail/:email", function (req, res, next) {
         if (err) {
           res.json(false);
         } else {
-          res.redirect(
-            process.env.link_client +
-              "/page/need-to-approve/" +
-              sha1(req.params.email)
-          );
+          res.redirect(process.env.link_client + "auth/login");
         }
       }
     );
@@ -221,6 +223,8 @@ router.post("/resetPassword", function (req, res, next) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       res.json(err);
     }
+
+    console.log(req.body);
 
     conn.query(
       "update users set password = ? where sha1(lower(email)) = ?",

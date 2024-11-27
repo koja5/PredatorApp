@@ -181,6 +181,12 @@ header #icons svg:nth-child(2) {
   background: #f56700;
 }
 
+#user-publications {
+  border-top: 1px solid lightgray;
+  box-shadow: 0 -6px 8px -6px lightgray;
+  border-bottom: none;
+}
+
 #screen #content #user-publications {
   position: relative;
   width: 100%;
@@ -407,5 +413,5 @@ svg {
 }
 
 .no-data img {
-  width: 75px;
+  width: 105px;
 }

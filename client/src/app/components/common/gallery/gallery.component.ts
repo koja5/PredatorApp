@@ -17,6 +17,7 @@ import {
   YoutubeItem,
   IframeItem,
 } from 'ng-gallery';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-gallery',
@@ -39,68 +40,85 @@ export class GalleryComponent implements OnInit {
     private _translate: TranslateService
   ) {}
 
-  ngOnInit() {}
-
-  ngOnChanges() {
+  ngOnInit() {
     if (this.value) {
-      // if (this.value.startsWith('data:image')) {
-      //   this.gallery.push(this.value);
-      // } else
-      if (this.value.indexOf(';') != -1) {
-        const gallery = this.value.split(';');
-        for (let i = 0; i < gallery.length; i++) {
-          this.gallery.push('./assets/file-storage/' + gallery[i]);
+      if (typeof this.value == 'string') {
+        if (this.value.startsWith('data:image')) {
+          // const blob = new Blob([this.value], { type: 'image/png' });
+          const blob = this.b64toBlob(
+            this.value.split('data:image/png;base64,')[1]
+          );
+          this.files.push(new File([blob], 'name.png', { type: 'image/png' }));
+          this.packImagesToGallery();
+          this.appendFormData();
+        } else if (this.value.indexOf(';') != -1) {
+          const gallery = this.convertGalleryStringToGalleryArray();
+          for (let i = 0; i < gallery.length; i++) {
+            this.gallery.push(environment.GALLERY_STORAGE + gallery[i]);
+          }
+        } else {
+          this.gallery.push(environment.GALLERY_STORAGE + this.value);
         }
-      } else {
-        this.gallery.push('./assets/file-storage/' + this.value);
       }
+
       this.packImageForPreview();
     }
+  }
+
+  ngOnChanges() {
+    // this.gallery = [];
+    // if (this.value) {
+    //   if (this.value.indexOf(';') != -1) {
+    //     const gallery = this.convertGalleryStringToGalleryArray();
+    //     for (let i = 0; i < gallery.length; i++) {
+    //       this.gallery.push(environment.GALLERY_STORAGE + gallery[i]);
+    //     }
+    //   } else {
+    //     if (typeof this.value == 'string') {
+    //       if (this.value.startsWith('data:image')) {
+    //         this.gallery.push(this.value);
+    //         this.changeEmit.emit({
+    //           gallery: this.convertGalleryArrayToGalleryString(),
+    //           uploaded: this.files,
+    //         });
+    //       } else {
+    //         this.gallery.push(environment.GALLERY_STORAGE + this.value);
+    //       }
+    //     }
+    //   }
+    //   this.packImageForPreview();
+    // }
   }
 
   close() {
     this.modal.isOpen = !this.modal.isOpen;
   }
 
-  addMorePhoto = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Prompt,
-    });
-
-    this.gallery.push(image.dataUrl);
-  };
-
   fileBrowseHandler(events: any) {
     this.prepareFilesList(events.files);
   }
 
   prepareFilesList(files: Array<any>) {
+    // this.files = [];
     for (const item of files) {
       item.progress = 0;
       this.files.push(item);
     }
     this.packImagesToGallery();
-    this.uploadFiles(0);
+    this.appendFormData();
   }
 
-  uploadFiles(index: number) {
+  appendFormData() {
     let formData = new FormData();
 
     for (let i = 0; i < this.files.length; i++) {
       formData.append('files[]', this.files[i], this.files[i].name);
     }
 
-    this.changeEmit.emit(this.files);
-  }
-
-  getCountOfOtherPictures() {
-    if (this.gallery.length > 2) {
-      return '+' + (this.gallery.length - 2);
-    }
-    return false;
+    this.changeEmit.emit({
+      gallery: this.gallery,
+      uploaded: this.files,
+    });
   }
 
   packImageForPreview() {
@@ -131,6 +149,46 @@ export class GalleryComponent implements OnInit {
   removePhoto(index: number) {
     this.gallery.splice(index, 1);
     this.files.splice(index, 1);
-    this.changeEmit.emit(this.gallery);
+    this.changeEmit.emit({
+      gallery: this.convertGalleryArrayToGalleryString(),
+      uploaded: this.files,
+    });
+  }
+
+  convertGalleryStringToGalleryArray() {
+    return this.value.split(';');
+  }
+
+  convertGalleryArrayToGalleryString() {
+    let gallery = '';
+    for (let i = 0; i < this.gallery.length; i++) {
+      if (this.gallery[i].includes(environment.GALLERY_STORAGE)) {
+        gallery += this.gallery[i].split(environment.GALLERY_STORAGE)[1];
+        if (i < this.gallery.length - 1) {
+          gallery += ';';
+        }
+      }
+    }
+    return gallery;
+  }
+
+  b64toBlob(b64Data: any, contentType: string = '', sliceSize = 512) {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
   }
 }

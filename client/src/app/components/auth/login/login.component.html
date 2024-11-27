@@ -25,26 +25,24 @@
             <div class="field-icon">
               <img src="./assets/icon/password.svg">
             </div>
-            <input type="{{passwordField}}" name="contraseña" formControlName="password" autocomplete="current-password"
+            <input type="{{passwordField}}" name="password" formControlName="password" autocomplete="current-password"
               placeholder="{{'login.password' | translate}}" id="id_password" required="yes">
             <div class="field-icon">
               <img src="./assets/icon/{{passwordFieldIcon}}.svg" (click)="showHidePassword()">
             </div>
-
           </div>
 
           <div>
             <ion-label class="required-field" *ngIf="loginForm.invalid && submited" color="danger">Danger</ion-label>
 
             <div class="alert-body" *ngIf="error">
-              <ion-label *ngIf="error === 'exist'" color="danger">The account does not exist. Please check the
-                data.</ion-label>
-              <ion-label *ngIf="error === 'verified'" color="danger">The account does not verify. Please check your
-                email and verify it.</ion-label>
+              <ion-label *ngIf="error === 'exist'" color="danger">{{'login.accountNotExist' | translate}}</ion-label>
+              <ion-label *ngIf="error === 'verified'" color="danger">{{'login.accountNotVerified' |
+                translate}}</ion-label>
             </div>
           </div>
 
-          <a class="pass" href="#">{{'login.forgotPassword' | translate}}</a>
+          <a class="pass" routerLink="/auth/forgot-password">{{'login.forgotPassword' | translate}}</a>
           <button type="submit" class="btn solid">{{'login.login' | translate}}</button>
 
 
@@ -73,25 +71,26 @@
             <div class="field-icon">
               <img src="./assets/icon/user.svg">
             </div>
-            <input type="text" name="name" placeholder="name" formControlName="name">
+            <input type="text" name="name" placeholder="{{'login.name' | translate}}" formControlName="name">
           </div>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/phone.svg">
             </div>
-            <input type="text" name="phone" placeholder="phone" formControlName="phone">
+            <input type="text" name="phone" placeholder="{{'login.phone' | translate}}" formControlName="phone">
           </div>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/email.svg">
             </div>
-            <input type="email" name="email" placeholder="email" formControlName="email">
+            <input type="email" name="email" placeholder="{{'login.email' | translate}}" formControlName="email">
           </div>
           <div class="input-field">
             <div class="field-icon">
               <img src="./assets/icon/password.svg">
             </div>
-            <input type="password" name="password" placeholder="Password" formControlName="password">
+            <input type="{{passwordField}}" name="password" placeholder="{{'login.password' | translate}}"
+              formControlName="password">
             <div class="field-icon">
               <img src="./assets/icon/{{passwordFieldIcon}}.svg" (click)="showHidePassword()">
             </div>
@@ -100,18 +99,35 @@
             <div class="field-icon">
               <img src="./assets/icon/password.svg">
             </div>
-            <input type="password" name="re-password" placeholder="rePassword" formControlName="rePassword">
+            <input type="{{passwordField}}" name="re-password" placeholder="{{'login.rePassword' | translate}}"
+              formControlName="rePassword">
             <div class="field-icon">
               <img src="./assets/icon/{{passwordFieldIcon}}.svg" (click)="showHidePassword()">
             </div>
           </div>
 
+          <div class="alert-body" *ngIf="error">
+            <ion-label *ngIf="error === 'exist-account'" color="danger">{{'login.accountExists' |
+              translate}}</ion-label>
+            <ion-label *ngIf="error === 'created-account'" color="success">{{'login.successfullyCreatedAccount' |
+              translate}}</ion-label>
+            <ion-label *ngIf="signUpForm.value.password != signUpForm.value.rePassword"
+              color="danger">{{'login.bothPasswordNeedToBeSame' |
+              translate}}</ion-label>
+          </div>
+          <ion-label *ngIf="!isAcceptTermsAndPrivacy" color="danger">{{'login.pleaseAcceptTermsAndPrivacyPolicy' |
+            translate}}</ion-label>
+          <ion-label *ngIf="submited && !this.signUpForm.valid" color="danger">{{'login.pleaseFillFields' |
+            translate}}</ion-label>
+
           <label class="check">
-            <input type="checkbox" checked="checked">
+            <input type="checkbox" [(ngModel)]="isAcceptTermsAndPrivacy" [ngModelOptions]="{standalone: true}"
+              name="terms-and-privacy" [checked]="isAcceptTermsAndPrivacy">
             <span class="checkmark"> {{'login.iAccept' | translate}} <a href="terms.html">{{'login.termsAndServices' |
                 translate}}</a></span>
           </label>
-          <button type="submit" class="btn solid">{{'login.signUp' | translate}}</button>
+          <button type="submit" class="btn solid" [disabled]="!isAcceptTermsAndPrivacy ? true : false">{{'login.signUp'
+            | translate}}</button>
           <p class="social-text">{{'login.additionallPossibilityForLogin' | translate}}</p>
           <div class="social-media">
             <a href="#" class="social-icon" aria-label="Register with Google">
@@ -125,6 +141,8 @@
               <img src="./assets/icon/microsoft.svg">
             </a>
           </div>
+
+
         </form>
       </div>
     </div>

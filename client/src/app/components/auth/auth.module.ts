@@ -9,6 +9,7 @@ import { SignUpFormComponent } from './login/sign-up-form/sign-up-form.component
 import { IonicModule } from '@ionic/angular';
 import { CommonCustomModule } from '../common/common-custom.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes = [
   {
@@ -19,10 +20,20 @@ const routes = [
     path: 'forgot-password',
     component: ForgotPasswordComponent,
   },
+  {
+    path: 'reset-password/:email',
+    component: ResetPasswordComponent,
+  },
 ];
 
 @NgModule({
-  declarations: [LoginComponent, SignInFormComponent, SignUpFormComponent],
+  declarations: [
+    LoginComponent,
+    SignInFormComponent,
+    SignUpFormComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

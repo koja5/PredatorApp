@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
     rePassword: ['', [Validators.required]],
   });
+  public isAcceptTermsAndPrivacy = true;
 
   constructor(
     private _storageService: StorageService,
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
 
   changeMode() {
     if (this.mode === '') {
+      this.error = null;
       this.mode = 'sign-up-mode';
     } else {
       this.mode = '';
@@ -86,12 +88,26 @@ export class LoginComponent implements OnInit {
   }
 
   signUp() {
-    if (this.signUpForm.value.password != this.signUpForm.value.rePassword)
+    this.submited = true;
+    if (
+      !this.signUpForm.valid ||
+      this.signUpForm.value.password != this.signUpForm.value.rePassword ||
+      !this.isAcceptTermsAndPrivacy
+    )
       return;
 
-    delete this.signUpForm.value.rePassword;
     this._service
       .callPostMethod('/api/auth/signUp', this.signUpForm.value)
-      .subscribe((data) => {});
+      .subscribe((data: any) => {
+        this.submited = false;
+        if (data.type) {
+          this.error = data.type;
+        } else {
+          this.error = 'created-account';
+          setTimeout(() => {
+            this.mode = '';
+          }, 2000);
+        }
+      });
   }
 }

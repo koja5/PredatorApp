@@ -4,24 +4,12 @@
     <img src="./assets/icon/remove.svg" class="remove-photo" (click)="removePhoto(i)">
   </div>
 
-  <!-- <div class="photo">
-    <img src="https://unsplash.it/300/300?image=1072" alt="" />
-  </div> -->
-  <!-- <div class="photo more" *ngIf="getCountOfOtherPictures()">
-    <span>{{getCountOfOtherPictures()}} {{'general.photos' | translate}}</span>
-  </div> -->
-  <!-- <div class="add-more {{gallery ? '' : 'full-width'}}" (click)="addMorePhoto()">
-    <img src="./assets/icon/add-more-photo.svg">
-    <p>{{'predatorForm.addMorePicture' | translate}}</p>
-  </div> -->
-
   <div class="add-more {{gallery ? '' : 'full-width'}}">
     <div class="wrapper">
       <div class="file-upload">
         <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target)" />
         <img src="./assets/icon/add-more-photo.svg">
         <p>{{'predatorForm.addMorePicture' | translate}}</p>
-        <!-- <i class="fa fa-arrow-up"></i> -->
       </div>
     </div>
   </div>

@@ -1,0 +1,2 @@
+<ion-alert #alert trigger="present-alert" header="{{text ? text : ('general.areYouSure' | translate)}}"
+  [buttons]="alertButtons" (didDismiss)="setResult($event)"></ion-alert>

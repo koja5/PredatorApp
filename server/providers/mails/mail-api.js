@@ -55,6 +55,8 @@ router.post("/resetPasswordLink", function (req, res, next) {
 
   body = getMessage(configuration, req.body.lang);
 
+  console.log(req.body);
+
   // generate reset password
   body["reset_password_link"] =
     process.env.link_client +
