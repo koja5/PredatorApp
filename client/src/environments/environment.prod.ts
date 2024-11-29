@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   ENCRIPTY_KEY: 'PREDATOR_APP_2024',
-  GALLERY_STORAGE: './assets/file-storage/',
+  GALLERY_STORAGE: 'https://praedatoren.app/assets/file-storage/',
 };

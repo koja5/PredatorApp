@@ -16,6 +16,7 @@
    "login": {
       "loginTitle": "Login",
       "login": "Anmelden",
+      "logout": "Abmelden",
       "name": "Ihr Name",
       "phone": "Telefon",
       "email": "Email / Nutzername",
@@ -46,7 +47,7 @@
       "noHaveAccountYet": "Sie haben kein Konto?",
       "noHaveAccountText": "Erstellen Sie jetzt Ihr Konto, um anderen zu folgen und Beiträge zu liken",
       "alreadyHaveAccount": "Sie haben bereits ein Konto?",
-      "alreadyHaveAccountText": "Melden Sie sich an, um Ihre Benachrichtigungen anzuzeigen und Ihre Lieblingsfotos zu veröffentlichen",
+      "alreadyHaveAccountText": "Melden Sie sich für weitere Optionen an.",
       "pleaseFillEmailAddress": "Bitte geben Sie die E-Mail-Adresse ein, die Sie beim Erstellen Ihres Kontos verwendet haben.",
       "accountNotExist": "Das Konto existiert nicht. Bitte überprüfen Sie die gegeben.",
       "accountNotVerified": "Das Konto wird nicht überprüft. Bitte überprüfen Sie Ihre E-Mail senden und bestätigen.",
@@ -58,7 +59,8 @@
    },
    "navigation": {
       "home": "Heim",
-      "photo": "Foto"
+      "photo": "Foto",
+      "location": "Standort"
    },
    "predatorForm": {
       "predators": "Predator",

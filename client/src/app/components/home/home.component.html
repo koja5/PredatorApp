@@ -28,14 +28,14 @@
 </ion-content>
 <ion-menu side="end" contentId="main-content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar class="text-center">
       <img class="logo-header" src="./assets/icon/logo.png">
     </ion-toolbar>
   </ion-header>
   <ion-content>
 
     <div class="logout">
-      <ion-button class="logout-button" (click)="logout()">Logout</ion-button>
+      <ion-button class="logout-button" (click)="logout()">{{'login.logout' | translate}}</ion-button>
     </div>
   </ion-content>
 </ion-menu>
@@ -48,8 +48,10 @@
         <label>{{'navigation.home' | translate}}</label>
       </ion-tab-button>
       <ion-tab-button tab="photos">
-        <ion-icon name="images-outline"></ion-icon>
-        <ion-label>{{'navigation.photo' | translate}}</ion-label>
+        <!-- <ion-icon name="images-outline"></ion-icon>
+        <ion-label>{{'navigation.photo' | translate}}</ion-label> -->
+        <img src="./assets/icon/location.svg">
+        <label>{{'navigation.location' | translate}}</label>
       </ion-tab-button>
       <ion-tab-button tab="menu">
         <div class="ion-page" id="main-content">

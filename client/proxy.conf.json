@@ -2,7 +2,7 @@
     "/api/**": {
         "target": "http://localhost:3001/api",
         "secure": false,
-        "changeOrigin": true,
+        "changeOrigin": false,
         "pathRewrite": {
             "^/api": ""
         }
@@ -10,7 +10,7 @@
     "/__/**": {
         "target": "http://localhost:3001/api",
         "secure": false,
-        "changeOrigin": true,
+        "changeOrigin": false,
         "pathRewrite": {
             "^/api": ""
         }

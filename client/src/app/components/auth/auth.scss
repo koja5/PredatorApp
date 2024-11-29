@@ -10,11 +10,12 @@ body {
 }
 
 .container {
-  position: relative;
   width: 100%;
   min-height: 100vh;
   background-color: var(--bg-color);
   overflow: hidden;
+  max-width: none !important;
+  position: sticky;
 }
 
 .container:before {
@@ -506,6 +507,7 @@ form.sign-up-form {
 
   .panel h3 {
     font-size: 1.2rem;
+    text-align: center;
   }
 
   .panel p {
@@ -580,7 +582,7 @@ form.sign-up-form {
   }
 
   .panel p {
-    opacity: 0;
+    opacity: 1;
   }
 
   .container:before {

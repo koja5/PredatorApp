@@ -9,6 +9,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { PredatorEditComponent } from './predator-edit/predator-edit.component';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-predators',
@@ -82,9 +83,9 @@ export class PredatorsComponent implements OnInit {
   getImageForPreviewFromGallery(gallery: string) {
     if (gallery) {
       if (gallery.indexOf(';') != -1) {
-        return './assets/file-storage/' + gallery.split(';')[0];
+        return environment.GALLERY_STORAGE + gallery.split(';')[0];
       } else {
-        return './assets/file-storage/' + gallery;
+        return environment.GALLERY_STORAGE + gallery;
       }
     } else {
       return './assets/icon/no-image.svg';

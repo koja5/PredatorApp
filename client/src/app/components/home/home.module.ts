@@ -14,6 +14,7 @@ import { GalleryModule } from 'ng-gallery';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonCustomModule } from '../common/common-custom.module';
 import { PredatorDetailsComponent } from './predators/predator-details/predator-details.component';
+import { PredatorProfileUserComponent } from './predators/predator-profile-user/predator-profile-user.component';
 
 const routes = [
   {
@@ -41,6 +42,7 @@ const routes = [
     PredatorsComponent,
     PredatorEditComponent,
     PredatorDetailsComponent,
+    PredatorProfileUserComponent,
   ],
   imports: [
     CommonModule,
