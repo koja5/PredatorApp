@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,200;8..144,300;8..144,400&display=swap");
 
+@media (pointer: fine), (pointer: none) {
+  #screen {
+    max-width: 900px;
+  }
+}
+
 * {
   font-family: "Roboto Flex", sans-serif;
 }
@@ -8,7 +14,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #d3eaff;
+  background: #f7f7f7;
 }
 
 .line {
@@ -415,4 +421,8 @@ svg {
 
 .no-data img {
   width: 105px;
+}
+
+.predator-image {
+  cursor: pointer;
 }

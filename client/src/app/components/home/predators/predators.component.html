@@ -7,7 +7,7 @@
     <div id="content">
      
       <app-predator-profile-user></app-predator-profile-user>
-      
+
       <div class="menu {{active}}">
         <ul>
           <li>
@@ -37,7 +37,7 @@
       <div *ngIf="!loader&&predators.length" id="user-publications">
         <div *ngFor="let item of predators">
           <img *ngIf="getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg" class="more-photos">
-          <img src="{{getImageForPreviewFromGallery(item.gallery)}}" (click)="showDetails(item.id)">
+          <img class="predator-image" src="{{getImageForPreviewFromGallery(item.gallery)}}" (click)="showDetails(item.id)">
         </div>
         <!-- <img *ngIf="imageSource" src="{{imageSource}}"> -->
       </div>

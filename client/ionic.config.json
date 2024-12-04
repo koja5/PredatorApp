@@ -6,14 +6,18 @@
   "type": "angular",
   "proxies": [
     {
+      "path": "/api",
+      "proxyUrl": "http://praedatoren.app:3003/api/"
+    },
+    {
       "path": "/api/**",
-      "proxyUrl": "http://192.168.1.18:3001/api/",
+      "proxyUrl": "http://praedatoren.app:3003/api/",
       "secure": false,
       "changeOrigin": true
     },
     {
       "path": "/__/**",
-      "proxyUrl": "http://192.168.1.18:3001/api/",
+      "proxyUrl": "http://praedatoren.app:3003/api/",
       "secure": false,
       "changeOrigin": true
     }

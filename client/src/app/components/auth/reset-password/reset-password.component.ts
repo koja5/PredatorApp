@@ -53,11 +53,11 @@ export class ResetPasswordComponent implements OnInit {
         return;
       }
       this._service
-        .callPostMethod('api/auth/resetPassword', {
+        .callPostMethod('/api/auth/resetPassword', {
           email: this._activatedRouter.snapshot.params.email,
           password: this.form.value.password,
         })
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           if (data) {
             this.responseMessage = {
               value: true,

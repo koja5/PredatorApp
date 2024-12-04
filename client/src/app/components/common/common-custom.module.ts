@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GalleryModule } from 'ng-gallery';
 import { MapComponent } from './map/map.component';
 import { QuestionAlertComponent } from './question-alert/question-alert.component';
+import { NoDataComponent } from './no-data/no-data.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { QuestionAlertComponent } from './question-alert/question-alert.componen
     GalleryComponent,
     MapComponent,
     QuestionAlertComponent,
+    NoDataComponent,
   ],
   imports: [CommonModule, IonicModule, TranslateModule, GalleryModule],
   providers: [],
@@ -24,6 +26,7 @@ import { QuestionAlertComponent } from './question-alert/question-alert.componen
     GalleryComponent,
     MapComponent,
     QuestionAlertComponent,
+    NoDataComponent,
   ],
 })
 export class CommonCustomModule {}

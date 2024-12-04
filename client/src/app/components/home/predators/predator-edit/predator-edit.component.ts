@@ -65,7 +65,7 @@ export class PredatorEditComponent implements OnInit {
       this.loader = true;
       this._service
         .callGetMethod(
-          'api/user/getPredatorForEditById',
+          '/api/user/getPredatorForEditById',
           this._activatedRouter.snapshot.params.id
         )
         .subscribe((data: any) => {
@@ -90,7 +90,7 @@ export class PredatorEditComponent implements OnInit {
 
   getAllPredators() {
     this._service
-      .callGetMethod('api/user/getAllPredators')
+      .callGetMethod('/api/user/getAllPredators')
       .subscribe((data: PredatorItemModel) => {
         this.allItems.predators = data;
       });
@@ -98,7 +98,7 @@ export class PredatorEditComponent implements OnInit {
 
   getAllTypeOfWaters() {
     this._service
-      .callGetMethod('api/user/getAllTypeOfWaters')
+      .callGetMethod('/api/user/getAllTypeOfWaters')
       .subscribe((data: TypeOfWaterModel) => {
         this.allItems.typeOfWaters = data;
       });
@@ -106,7 +106,7 @@ export class PredatorEditComponent implements OnInit {
 
   getAllTerritories() {
     this._service
-      .callGetMethod('api/user/getAllTerritories')
+      .callGetMethod('/api/user/getAllTerritories')
       .subscribe((data: TerritoryModel) => {
         this.allItems.territories = data;
       });
@@ -114,7 +114,7 @@ export class PredatorEditComponent implements OnInit {
 
   getAllActivities() {
     this._service
-      .callGetMethod('api/user/getAllActivities')
+      .callGetMethod('/api/user/getAllActivities')
       .subscribe((data: ActivityModel) => {
         this.allItems.activities = data;
       });
@@ -135,11 +135,14 @@ export class PredatorEditComponent implements OnInit {
   save() {
     const data = this.packData();
 
-    this._service
-      .callPostMethod('api/upload/setPredator', data)
-      .subscribe((data) => {
+    this._service.callPostMethod('/api/upload/setPredator', data).subscribe(
+      (data: any) => {
         this.backToPreviousPage();
-      });
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   packData(): FormData {
@@ -171,7 +174,7 @@ export class PredatorEditComponent implements OnInit {
   deletePredator() {
     this._service
       .callPostMethod('/api/user/deletePredator', this.data)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         if (data) {
           this.isModalOpen = false;
           setTimeout(() => {

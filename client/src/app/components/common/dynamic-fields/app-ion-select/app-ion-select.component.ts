@@ -23,7 +23,7 @@ export class AppIonSelectComponent implements OnInit {
 
   getData() {
     if (this.config) {
-      this._service.callApi(this.config).subscribe((data) => {
+      this._service.callApi(this.config).subscribe((data: any) => {
         this.data = data;
       });
     }

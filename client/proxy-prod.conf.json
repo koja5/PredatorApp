@@ -1,0 +1,18 @@
+{
+    "/api/**": {
+        "target": "http://praedatoren.app:3003/api/",
+        "secure": false,
+        "changeOrigin": false,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    },
+    "/__/**": {
+        "target": "http://praedatoren.app:3003/api/",
+        "secure": false,
+        "changeOrigin": false,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

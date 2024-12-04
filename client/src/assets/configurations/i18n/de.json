@@ -11,7 +11,9 @@
       "photos": "Fotos",
       "takeAPicture": "Machen Sie ein Foto",
       "manually": "Manually",
-      "startTakingPhotos": "Fangen Sie an, Fotos zu machen"
+      "startTakingPhotos": "Fangen Sie an, Fotos zu machen",
+      "dataNotFoundText1": "Die angeforderten Informationen wurden nicht gefunden.",
+      "dataNotFoundText2": "Bitte versuchen Sie es erneut oder wenden Sie sich an einen Administrator."
    },
    "login": {
       "loginTitle": "Login",

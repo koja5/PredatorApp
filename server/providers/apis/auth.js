@@ -28,8 +28,6 @@ router.post("/login", function (req, res, next) {
       return res.json(err);
     }
 
-    console.log("USAO SAM OVDEEEE!");
-
     conn.query(
       "select * from users WHERE email = ? AND password = ?",
       [req.body.email, sha1(req.body.password)],

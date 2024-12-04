@@ -169,7 +169,7 @@ router.get("/getPredatorById/:id", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              res.json(rows.length ? rows[0] : {});
+              res.json(rows.length ? rows[0] : false);
             }
           }
         );

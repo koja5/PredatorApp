@@ -8,7 +8,7 @@ export class AuthService {
   constructor(private _service: CallApiService) {}
 
   login(data: any) {
-    this._service.callPostMethod('/api/auth/login', data)?.subscribe((data) => {
+    this._service.callPostMethod('/api/auth/login', data)?.subscribe((data: any) => {
       return data;
     });
   }

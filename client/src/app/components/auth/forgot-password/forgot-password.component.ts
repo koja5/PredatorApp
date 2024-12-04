@@ -33,8 +33,8 @@ export class ForgotPasswordComponent implements OnInit {
     this.submited = false;
     if (this.form.valid) {
       this._service
-        .callPostMethod('api/auth/forgotPassword', this.form.value)
-        .subscribe((data) => {
+        .callPostMethod('/api/auth/forgotPassword', this.form.value)
+        .subscribe((data: any) => {
           if (data) {
             this.responseMessage = {
               value: true,

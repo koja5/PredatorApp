@@ -63,8 +63,6 @@ export class LoginComponent implements OnInit {
     this.submited = false;
     this.loader = true;
     if (this.loginForm.valid) {
-      console.log(this.loginForm);
-
       this._service
         .callPostMethod('/api/auth/login', this.loginForm.value)
         .subscribe((data: any) => {

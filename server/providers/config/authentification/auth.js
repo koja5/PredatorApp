@@ -7,12 +7,17 @@ const verifyToken = (req, res, next) => {
     req.query.token ||
     req.headers["x-access-token"] ||
     req.headers["cookie"];
+
+  console.log(token);
+
   if (token.startsWith("token")) {
     token = token.toString().split("=")[1];
     var lastChar = token[token.length - 1];
     if (lastChar === ";") {
       token = token.substring(0, token.length - 1);
     }
+  } else if (token.startsWith("Bearer")) {
+    token = token.toString().split("Bearer ")[1];
   } else {
     const itemCookie = token.toString().split(" ");
     for (let i = 0; i < itemCookie.length; i++) {

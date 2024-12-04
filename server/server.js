@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Methods",
     "POST, PUT, OPTIONS, DELETE, GET"
   );
-  res.header("Access-Control-Allow-Origin", "");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("SameSite", "None");
   res.header(
     "set-cookie",

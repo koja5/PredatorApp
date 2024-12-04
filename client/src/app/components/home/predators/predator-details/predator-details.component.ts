@@ -24,7 +24,7 @@ export class PredatorDetailsComponent implements OnInit {
     private _router: Router
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.getData();
   }
 
@@ -36,30 +36,34 @@ export class PredatorDetailsComponent implements OnInit {
         this._activatedRouter.snapshot.params.id
       )
       .subscribe((data: any) => {
-        this.data = data;
-        this.packGallery();
+        if (data) {
+          this.data = data;
+          this.packGallery();
+        }
         this.loader = false;
       });
   }
 
   packGallery() {
-    if (this.data.gallery.indexOf(';')) {
-      const gallery = this.data.gallery.split(';');
-      for (let i = 0; i < gallery.length; i++) {
+    if (this.data && this.data.gallery) {
+      if (this.data.gallery.indexOf(';')) {
+        const gallery = this.data.gallery.split(';');
+        for (let i = 0; i < gallery.length; i++) {
+          this.images.push(
+            new ImageItem({
+              src: './assets/file-storage/' + gallery[i],
+              thumb: './assets/file-storage/' + gallery[i],
+            })
+          );
+        }
+      } else {
         this.images.push(
           new ImageItem({
-            src: './assets/file-storage/' + gallery[i],
-            thumb: './assets/file-storage/' + gallery[i],
+            src: './assets/file-storage/' + this.data.gallery,
+            thumb: './assets/file-storage/' + this.data.gallery,
           })
         );
       }
-    } else {
-      this.images.push(
-        new ImageItem({
-          src: './assets/file-storage/' + this.data.gallery,
-          thumb: './assets/file-storage/' + this.data.gallery,
-        })
-      );
     }
   }
 

@@ -1,10 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HelpService } from './help.service';
 import { StorageService } from './storage.service';
 import { RequestModel } from '../models/request.model';
 import { ParameterTypeEnum } from '../enums/parameter-type-enum';
-import { Subject } from 'rxjs';
+import { from, map, Observable, Subject } from 'rxjs';
+import { isPlatform } from '@ionic/angular';
+import { CapacitorHttp, HttpOptions } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,15 @@ export class CallApiService {
     private _storageService: StorageService
   ) {
     this.headers = new HttpHeaders();
+    this.headers.append('Access-Control-Allow-Origin', '*');
+    this.headers.append(
+      'Access-Control-Allow-Methods',
+      'DELETE, POST, GET, OPTIONS'
+    );
+    this.headers.append(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization, X-Requested-With'
+    );
   }
 
   callApi(data: any, router?: any) {
@@ -83,18 +94,127 @@ export class CallApiService {
     }
   }
 
+  // callPostMethod(
+  //   api: string,
+  //   data?: any,
+  //   serializeType?: string,
+  //   headerMapValues?: Map<string, string>
+  // ) {
+  //   if (serializeType) {
+  //     this.setSerializerType(serializeType);
+  //   }
+  //   if (headerMapValues) {
+  //     this.createHeader(headerMapValues);
+  //   }
+
+  //   return this.HTTP2.post(api, data, { 'content-type': 'application/json' });
+  // }
+
+  // private setSerializerType(serializerType: string) {
+  //   switch (serializerType) {
+  //     case 'json':
+  //       this.HTTP2.setDataSerializer('json');
+  //       break;
+  //     case 'multipart':
+  //       this.HTTP2.setDataSerializer('multipart');
+  //       break;
+  //     case 'raw':
+  //       this.HTTP2.setDataSerializer('raw');
+  //       break;
+  //     case 'urlencoded':
+  //       this.HTTP2.setDataSerializer('urlencoded');
+  //       break;
+  //     case 'utf8':
+  //       this.HTTP2.setDataSerializer('utf8');
+  //       break;
+  //     default:
+  //       console.log('please set correct serialize type');
+  //   }
+  // }
+
+  // public setHeader(http: HTTP, map: Map<string, string>) {
+  //   map.forEach((value: string, key: string) => {
+  //     http.setHeader('*', key, value);
+  //   });
+  // }
+  // public createHeaderValues(): Map<string, string> {
+  //   const map = new Map<string, string>();
+  //   map.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+  //   map.set('content-type', 'application/json');
+  //   return map;
+  // }
+
+  // public createGetHeaderValues(): Map<string, string> {
+  //   const map = new Map<string, string>();
+  //   map.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+  //   map.set('content-type', 'application/json');
+  //   return map;
+  // }
+
+  // public createHeader(map: Map<string, string>) {
+  //   this.setHeader(this.HTTP2, map);
+  // }
   callPostMethod(api: string, data?: any) {
-    console.log(api);
-    return this.http.post(api, data, { headers: this.headers });
+    if (isPlatform('capacitor')) {
+      const url = 'https://praedatoren.app' + api;
+
+      let options: HttpOptions = {
+        url,
+        data: data,
+      };
+
+      if (this._storageService.getToken()) {
+        options['headers'] = {
+          Authorization: `Bearer ${this._storageService.getToken()}`,
+          'Content-Type': 'application/json',
+        };
+      } else {
+        options['headers'] = {
+          Authorization: 'Basic writeKey:password',
+          'Content-Type': 'application/json',
+        };
+      }
+
+      return from(CapacitorHttp.post(options)).pipe(map((data) => data.data));
+    } else {
+      return this.http.post(api, data, { headers: this.headers });
+    }
   }
 
   callGetMethod(api: string, data?: any) {
     if (data === undefined) {
       data = '';
     }
-    const url = api.endsWith('/') ? api + data : data ? api + '/' + data : api;
-    console.log(url);
-    return this.http.get(url, { headers: this.headers });
+    const link = api.endsWith('/') ? api + data : data ? api + '/' + data : api;
+
+    if (isPlatform('capacitor')) {
+      const url = 'https://praedatoren.app' + link;
+      const options: HttpOptions = {
+        url,
+        headers: {
+          Authorization: `Bearer ${this._storageService.getToken()}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      return from(CapacitorHttp.get(options)).pipe(map((data) => data.data));
+    } else {
+      return this.http.get(link, { headers: this.headers });
+    }
+  }
+
+  getPostRequest(api: string, data: any) {
+    if (isPlatform('capacitor')) {
+      const options = {
+        url: 'https://praedatoren.app/' + api,
+        data: data,
+      };
+      return CapacitorHttp.post(options).then((res) => {
+        return res;
+      });
+    } else {
+      return this.http.post(api, data, { headers: this.headers });
+    }
   }
 
   getDocument(body: any) {

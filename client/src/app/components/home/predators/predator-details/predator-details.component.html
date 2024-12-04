@@ -9,14 +9,14 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" *ngIf="!loader">
   <div *ngIf="loader">
     <app-loader></app-loader>
   </div>
   <div class="gallery-container">
     <gallery *ngIf="images && images.length" [items]="images"></gallery>
   </div>
-  <div class="information" *ngIf="!loader">
+  <div class="information" *ngIf="!loader&&data">
     <div>
       <ion-text>
         {{'predatorForm.predators' | translate}}
@@ -78,6 +78,8 @@
       <p class="pl-2"><b class="text-break">{{data.comment}}</b></p>
     </div>
   </div>
+
+  <app-no-data *ngIf="!loader&&!data"></app-no-data>
 
   <app-map *ngIf="data && data.longitude && data.latitude" [longitude]="data.longitude"
     [latitude]="data.latitude"></app-map>
