@@ -11,8 +11,9 @@ module.exports = class CustomTransport extends Transport {
   initialize() {
     try {
       // fs.writeFileSync(this.filename, [], 'utf8');
+      console.log(__dirname);
       fs.writeFile(
-        __dirname + "/../logs/" + this.filename,
+        __dirname + "/logs/" + this.filename,
         "",
         "utf8",
         function (err) {
@@ -26,12 +27,13 @@ module.exports = class CustomTransport extends Transport {
   }
 
   setup() {
+    console.log(__dirname);
     // This checks if the file exists
-    if (fs.existsSync(__dirname + "/../logs/" + this.filename)) {
+    if (fs.existsSync(__dirname + "/logs/" + this.filename)) {
       // The content of the file is checked to know if it is necessary to adapt the array
       try {
         const data = fs.readFile(
-          __dirname + "/../logs/" + this.filename,
+          __dirname + "/logs/" + this.filename,
           "utf8",
           function (err) {
             if (err) return err;
@@ -54,10 +56,11 @@ module.exports = class CustomTransport extends Transport {
   }
 
   readLog() {
+    console.log(__dirname);
     let data = null;
     try {
       data = fs.readFileSync(
-        __dirname + "/../logs/" + this.filename,
+        __dirname + "/logs/" + this.filename,
         "utf8",
         function (err) {
           if (err) return err;
@@ -69,6 +72,7 @@ module.exports = class CustomTransport extends Transport {
   }
 
   writeLog(info) {
+    console.log(__dirname);
     const data = this.readLog();
     let arr = [];
     if (data) {
@@ -81,7 +85,7 @@ module.exports = class CustomTransport extends Transport {
     try {
       // Writing the array again
       fs.writeFileSync(
-        __dirname + "/../logs/" + this.filename,
+        __dirname + "/logs/" + this.filename,
         json,
         "utf8",
         function (err) {
@@ -93,6 +97,7 @@ module.exports = class CustomTransport extends Transport {
   }
 
   log(info, callback) {
+    console.log(__dirname);
     setImmediate(() => {
       this.emit("logged", info);
     });

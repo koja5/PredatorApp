@@ -21,6 +21,8 @@ import { Location } from '@angular/common';
 import { Geolocation } from '@capacitor/geolocation';
 import { PredatorModel } from '../../models/predator.model';
 import { QuestionAlertComponent } from 'src/app/components/common/question-alert/question-alert.component';
+import { HttpProviderService } from 'src/app/services/http-provider/http-provider.service';
+import { HttpNativeService } from 'src/app/services/http-provider/http-native.service';
 
 @Component({
   selector: 'app-predator-edit',
@@ -48,7 +50,8 @@ export class PredatorEditComponent implements OnInit {
     private _service: CallApiService,
     private _activatedRouter: ActivatedRoute,
     private _router: Router,
-    private _location: Location
+    private _location: Location,
+    private _http: HttpNativeService
   ) {}
 
   //#region INIT
@@ -135,14 +138,18 @@ export class PredatorEditComponent implements OnInit {
   save() {
     const data = this.packData();
 
-    this._service.callPostMethod('/api/upload/setPredator', data).subscribe(
-      (data: any) => {
-        this.backToPreviousPage();
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    // this._service.callPostMethod('/api/upload/setPredator', data).subscribe(
+    //   (data: any) => {
+    //     this.backToPreviousPage();
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+    //   }
+    // );
+
+    this._http.post('/api/upload/setPredator', data).then((data: any) => {
+      this.backToPreviousPage();
+    });
   }
 
   packData(): FormData {

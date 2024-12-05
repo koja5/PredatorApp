@@ -1,4 +1,5 @@
 const request = require("request");
+const logger = require("../../config/logger");
 
 module.exports = makeRequest;
 
@@ -14,6 +15,8 @@ function prepareOptionsForRequest(body, api) {
 
 function makeRequest(body, api, res) {
   var options = prepareOptionsForRequest(body, api);
+
+  logger.log("info", JSON.stringify(options));
 
   request(options, function (error, response, body) {
     if (!error) {

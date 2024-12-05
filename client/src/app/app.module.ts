@@ -11,6 +11,7 @@ import { CookieModule } from 'ngx-cookie';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './services/factory/httpLoaderFactory';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +32,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       isolate: false,
     }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    HTTP,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
