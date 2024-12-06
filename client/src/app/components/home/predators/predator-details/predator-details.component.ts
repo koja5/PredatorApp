@@ -6,6 +6,7 @@ import { PredatorModel } from '../../models/predator.model';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { Geolocation } from '@capacitor/geolocation';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-predator-details',
@@ -51,16 +52,16 @@ export class PredatorDetailsComponent implements OnInit {
         for (let i = 0; i < gallery.length; i++) {
           this.images.push(
             new ImageItem({
-              src: './assets/file-storage/' + gallery[i],
-              thumb: './assets/file-storage/' + gallery[i],
+              src: environment.GALLERY_STORAGE + gallery[i],
+              thumb: environment.GALLERY_STORAGE + gallery[i],
             })
           );
         }
       } else {
         this.images.push(
           new ImageItem({
-            src: './assets/file-storage/' + this.data.gallery,
-            thumb: './assets/file-storage/' + this.data.gallery,
+            src: environment.GALLERY_STORAGE + this.data.gallery,
+            thumb: environment.GALLERY_STORAGE + this.data.gallery,
           })
         );
       }

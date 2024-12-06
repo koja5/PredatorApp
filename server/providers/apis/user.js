@@ -126,6 +126,7 @@ router.get("/getAllActivities", auth, async (req, res, next) => {
 });
 
 router.get("/getAllPredatorNotes", auth, async (req, res, next) => {
+  console.log(req.user.user.id);
   try {
     connection.getConnection(function (err, conn) {
       if (err) {

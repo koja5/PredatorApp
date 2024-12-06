@@ -7,7 +7,7 @@
     "ng": "ng",
     "client": "ng serve --port 4201 --proxy-config proxy.conf.json",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

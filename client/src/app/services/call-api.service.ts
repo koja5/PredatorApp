@@ -170,7 +170,6 @@ export class CallApiService {
         };
       } else {
         options['headers'] = {
-          Authorization: 'Basic writeKey:password',
           'Content-Type': 'application/json',
         };
       }

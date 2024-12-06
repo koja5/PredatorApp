@@ -10,6 +10,7 @@ import { PredatorEditComponent } from './predator-edit/predator-edit.component';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-predators',
@@ -52,21 +53,63 @@ export class PredatorsComponent implements OnInit {
   takePicture = async () => {
     this.active = '';
     const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
+      resultType: CameraResultType.Base64,
       source: CameraSource.Camera,
+      quality: 100,
     });
 
     console.log(image);
 
-    this.imageSource = image.dataUrl;
+    // const fileSrc = Capacitor.convertFileSrc(image.path!);
+
+    // const checkCameraPermissions = await Camera.checkPermissions();
+    // if (checkCameraPermissions.photos !== 'granted') {
+    //   await Camera.requestPermissions({ permissions: ['photos'] });
+    // }
+
+    // const image = await Camera.getPhoto({
+    //   resultType: CameraResultType.Uri,
+    //   source: CameraSource.Camera,
+    //   quality: 100,
+    // });
+
+    // if (!image) return;
+
+    const imageBlob = this.base64toBlob(image.base64String, 'image/jpeg');
+    if (!imageBlob) return;
+
+    this.imageSource = imageBlob;
 
     // this._router.navigate([
     //   'home/predator-edit/new?gallery=' + this.imageSource,
     // ]);
     // this.editFormComponent.open();
   };
+
+  base64toBlob(base64Data: any, contentType: any) {
+    contentType = contentType || '';
+    var sliceSize = 1024;
+    var byteCharacters = atob(base64Data);
+    var bytesLength = byteCharacters.length;
+    var slicesCount = Math.ceil(bytesLength / sliceSize);
+    var byteArrays = new Array(slicesCount);
+
+    for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+      var begin = sliceIndex * sliceSize;
+      var end = Math.min(begin + sliceSize, bytesLength);
+
+      var bytes = new Array(end - begin);
+      for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+        bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    return new Blob(byteArrays, { type: contentType });
+  }
+
+  getBlobImage(blob: any) {
+    return window.URL.createObjectURL(blob);
+  }
 
   openAction() {
     if (this.active === '') {

@@ -46,9 +46,11 @@ export class GalleryComponent implements OnInit {
         if (this.value.startsWith('data:image')) {
           // const blob = new Blob([this.value], { type: 'image/png' });
           const blob = this.b64toBlob(
-            this.value.split('data:image/png;base64,')[1]
+            this.value.split('data:image/jpeg;base64,')[1]
           );
-          this.files.push(new File([blob], 'name.png', { type: 'image/png' }));
+          this.files.push(
+            new File([blob], 'name.jpeg', { type: 'image/jpeg' })
+          );
           this.packImagesToGallery();
           this.appendFormData();
         } else if (this.value.indexOf(';') != -1) {
@@ -56,9 +58,18 @@ export class GalleryComponent implements OnInit {
           for (let i = 0; i < gallery.length; i++) {
             this.gallery.push(environment.GALLERY_STORAGE + gallery[i]);
           }
+        } else if (this.value.startsWith('blob:')) {
+          this.gallery.push(this.value);
+        } else if (this.value.startsWith('https://localhost')) {
+          this.gallery.push(this.value);
         } else {
           this.gallery.push(environment.GALLERY_STORAGE + this.value);
         }
+      } else if (this.value instanceof Blob) {
+        this.gallery.push(window.URL.createObjectURL(this.value));
+        this.files.push(
+          new File([this.value], 'name.jpeg', { type: 'image/jpeg' })
+        );
       }
 
       this.packImageForPreview();

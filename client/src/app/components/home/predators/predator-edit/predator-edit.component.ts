@@ -146,8 +146,9 @@ export class PredatorEditComponent implements OnInit {
     //     console.log(error);
     //   }
     // );
-
+    this.loader = true;
     this._http.post('/api/upload/setPredator', data).then((data: any) => {
+      this.loader = false;
       this.backToPreviousPage();
     });
   }

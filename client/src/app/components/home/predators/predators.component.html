@@ -5,7 +5,7 @@
   <div id="screen">
     <div id="cover"></div>
     <div id="content">
-     
+
       <app-predator-profile-user></app-predator-profile-user>
 
       <div class="menu {{active}}">
@@ -37,9 +37,11 @@
       <div *ngIf="!loader&&predators.length" id="user-publications">
         <div *ngFor="let item of predators">
           <img *ngIf="getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg" class="more-photos">
-          <img class="predator-image" src="{{getImageForPreviewFromGallery(item.gallery)}}" (click)="showDetails(item.id)">
+          <img class="predator-image" src="{{getImageForPreviewFromGallery(item.gallery)}}"
+            (click)="showDetails(item.id)">
         </div>
-        <!-- <img *ngIf="imageSource" src="{{imageSource}}"> -->
+        <!-- <img *ngIf="imageSource" src="{{getBlobImage(imageSource)}}"> -->
+        <!-- <ion-img *ngIf="imageSource" [src]="imageSource"></ion-img> -->
       </div>
     </div>
   </div>
