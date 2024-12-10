@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   ENCRIPTY_KEY: 'PREDATOR_APP_2024',
   GALLERY_STORAGE: './assets/file-storage/',
+  DOMAIN: '',
 };
 
 /*

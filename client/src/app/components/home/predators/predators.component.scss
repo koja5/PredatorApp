@@ -192,6 +192,8 @@ header #icons svg:nth-child(2) {
   border-top: 1px solid lightgray;
   box-shadow: 0 -6px 8px -6px lightgray;
   border-bottom: none;
+  overflow: scroll !important;
+  height: calc(100% - 155px);
 }
 
 #screen #content #user-publications {
@@ -405,7 +407,7 @@ svg {
 }
 
 #screen #content #user-publications .more-photos {
-  position: fixed;
+  position: absolute;
   width: 24px !important;
   height: 24px !important;
   text-align: end;

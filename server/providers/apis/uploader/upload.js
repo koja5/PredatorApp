@@ -25,7 +25,19 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
       res.json(err);
     }
 
-    console.log(req.files);
+    console.log(req);
+
+    if (req.body.id_type_of_water == "null") {
+      delete req.body.id_type_of_water;
+    }
+
+    if (req.body.id_territory == "null") {
+      delete req.body.id_territory;
+    }
+
+    if (req.body.id_activity == "null") {
+      delete req.body.id_activity;
+    }
 
     req.body.id_user = req.user.user.id;
 
@@ -83,12 +95,14 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
                 res.json(true);
               } else {
                 logger.log("error", err.sql + ". " + err.sqlMessage);
+                console.log(err);
                 res.json(false);
               }
             }
           );
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
+          console.log(err);
           res.json(false);
         }
       }

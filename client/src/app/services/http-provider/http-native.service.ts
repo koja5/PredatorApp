@@ -6,6 +6,7 @@ import { from, map } from 'rxjs';
 import { StorageService } from '../storage.service';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class HttpNativeService {
   }
 
   public post(url: any, params?: any) {
-    let api = 'https://praedatoren.app' + url;
+    let api = environment.DOMAIN + url;
 
     // let formDataObj: any = {};
     // params.forEach((value: any, key: any) => (formDataObj[key] = value));

@@ -34,6 +34,7 @@ export class GalleryComponent implements OnInit {
 
   public isGalleryOpen = false;
   files: any[] = [];
+  public imageFromCamera: any;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -44,14 +45,11 @@ export class GalleryComponent implements OnInit {
     if (this.value) {
       if (typeof this.value == 'string') {
         if (this.value.startsWith('data:image')) {
-          // const blob = new Blob([this.value], { type: 'image/png' });
-          const blob = this.b64toBlob(
+          this.imageFromCamera = this.b64toBlob(
             this.value.split('data:image/jpeg;base64,')[1]
           );
-          this.files.push(
-            new File([blob], 'name.jpeg', { type: 'image/jpeg' })
-          );
-          this.packImagesToGallery();
+          this.packImageFromCamera();
+          this.packImagesToGallery(this.imageFromCamera);
           this.appendFormData();
         } else if (this.value.indexOf(';') != -1) {
           const gallery = this.convertGalleryStringToGalleryArray();
@@ -67,9 +65,8 @@ export class GalleryComponent implements OnInit {
         }
       } else if (this.value instanceof Blob) {
         this.gallery.push(window.URL.createObjectURL(this.value));
-        this.files.push(
-          new File([this.value], 'name.jpeg', { type: 'image/jpeg' })
-        );
+        this.imageFromCamera = this.value;
+        this.packImageFromCamera();
       }
 
       this.packImageForPreview();
@@ -110,13 +107,30 @@ export class GalleryComponent implements OnInit {
   }
 
   prepareFilesList(files: Array<any>) {
-    // this.files = [];
     for (const item of files) {
       item.progress = 0;
       this.files.push(item);
+      this.packImagesToGallery(item);
     }
-    this.packImagesToGallery();
     this.appendFormData();
+  }
+
+  initializeAllAndKeepFromCamera() {
+    let ind = 1;
+    for (let i = 0; i < this.files.length; i++) {
+      if (this.files[i].name === 'fromCamera.jpeg') {
+        ind = 0;
+        if (i > 1) {
+          this.files.splice(0, i - 1);
+        }
+        if (i < this.files.length) {
+          this.files.slice(i + 1, this.files.length);
+        }
+      }
+    }
+    if (ind) {
+      this.files = [];
+    }
   }
 
   appendFormData() {
@@ -144,10 +158,27 @@ export class GalleryComponent implements OnInit {
     }
   }
 
-  packImagesToGallery() {
-    for (let i = 0; i < this.files.length; i++) {
-      this.gallery.push(URL.createObjectURL(this.files[i]));
+  packImagesToGallery(image: any) {
+    this.gallery.push(URL.createObjectURL(image));
+  }
+
+  packImageFromCamera() {
+    if (this.imageFromCamera) {
+      this.files.push(
+        new File([this.imageFromCamera], 'fromCamera.jpeg', {
+          type: 'image/jpeg',
+        })
+      );
     }
+  }
+
+  checkIsImageInGallery(image: any) {
+    for (let i = 0; i < this.gallery.length; i++) {
+      if (this.gallery[i] === image) {
+        return true;
+      }
+    }
+    return false;
   }
 
   openImage(index: number) {

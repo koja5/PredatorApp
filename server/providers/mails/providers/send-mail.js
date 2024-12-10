@@ -21,7 +21,7 @@ var smtpTransport = nodemailer.createTransport({
 async function sendMail(to, subject, message, template = false, res) {
   if (template) {
     var emailTemplate = fs.readFileSync(
-      "./providers/mails/mail_templates/" + template,
+      __dirname + "/../mail_templates/" + template,
       "utf-8"
     );
     var hoganTemplate = hogan.compile(emailTemplate);

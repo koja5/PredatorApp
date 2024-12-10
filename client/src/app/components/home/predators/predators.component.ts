@@ -58,8 +58,6 @@ export class PredatorsComponent implements OnInit {
       quality: 100,
     });
 
-    console.log(image);
-
     // const fileSrc = Capacitor.convertFileSrc(image.path!);
 
     // const checkCameraPermissions = await Camera.checkPermissions();
@@ -153,5 +151,12 @@ export class PredatorsComponent implements OnInit {
 
   refresh() {
     this.getPredators();
+    setTimeout(() => {
+      this.imageSource = null;
+    }, 20);
+  }
+
+  handleRefresh(event: any) {
+    this.refresh();
   }
 }

@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === "production") {
     })
   );
 } else {
-  console.log("TEST!");
   logger = createLogger({
     format: format.json(),
     transports: [

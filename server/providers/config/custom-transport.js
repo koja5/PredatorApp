@@ -11,7 +11,6 @@ module.exports = class CustomTransport extends Transport {
   initialize() {
     try {
       // fs.writeFileSync(this.filename, [], 'utf8');
-      console.log(__dirname);
       fs.writeFile(
         __dirname + "/logs/" + this.filename,
         "",
@@ -27,7 +26,6 @@ module.exports = class CustomTransport extends Transport {
   }
 
   setup() {
-    console.log(__dirname);
     // This checks if the file exists
     if (fs.existsSync(__dirname + "/logs/" + this.filename)) {
       // The content of the file is checked to know if it is necessary to adapt the array
@@ -56,7 +54,6 @@ module.exports = class CustomTransport extends Transport {
   }
 
   readLog() {
-    console.log(__dirname);
     let data = null;
     try {
       data = fs.readFileSync(
@@ -72,7 +69,6 @@ module.exports = class CustomTransport extends Transport {
   }
 
   writeLog(info) {
-    console.log(__dirname);
     const data = this.readLog();
     let arr = [];
     if (data) {
@@ -97,7 +93,6 @@ module.exports = class CustomTransport extends Transport {
   }
 
   log(info, callback) {
-    console.log(__dirname);
     setImmediate(() => {
       this.emit("logged", info);
     });

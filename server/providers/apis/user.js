@@ -165,12 +165,32 @@ router.get("/getPredatorById/:id", auth, async (req, res, next) => {
           "select p.*, ap.name 'name_of_predator', atow.name as 'name_of_type_of_water', at.name as 'name_of_territory', aa.name as 'name_of_activity' from predators p join all_predators ap on p.id_predator = ap.id join all_type_of_waters atow on p.id_type_of_water = atow.id join all_territories at on p.id_territory = at.id join all_activities aa on p.id_activity = aa.id where p.id_user = ? and p.id = ?",
           [req.user.user.id, req.params.id],
           function (err, rows, fields) {
-            conn.release();
             if (err) {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
-              res.json(rows.length ? rows[0] : false);
+              if (rows.length) {
+                conn.release();
+                res.json(rows[0]);
+              } else {
+                conn.query(
+                  "select p.* from predators p where p.id_user = ? and p.id = ?",
+                  [req.user.user.id, req.params.id],
+                  function (err, rows, fields) {
+                    conn.release();
+                    if (err) {
+                      logger.log("error", err.sql + ". " + err.sqlMessage);
+                      res.json(err);
+                    } else {
+                      if (rows.length) {
+                        res.json(rows[0]);
+                      } else {
+                        res.json(false);
+                      }
+                    }
+                  }
+                );
+              }
             }
           }
         );
