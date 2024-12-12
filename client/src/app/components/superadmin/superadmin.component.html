@@ -1,0 +1,40 @@
+<ion-split-pane contentId="main">
+  <ion-menu contentId="main" class="superadmin-menu">
+    <ion-header>
+      <ion-toolbar>
+        <img src="./assets/icon/logo.png" class="logo">
+        <label>{{'general.nameOfApp' | translate}}</label>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-menu-toggle autoHide="false">
+        <ion-item routerLink="all-admins" routerLinkActive="active-link">
+          <ion-label>
+            All admins
+          </ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle autoHide="false">
+        <ion-item routerLink="/all-admins" routerLinkActive="active-link">
+          <ion-label>
+            All users
+          </ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+    </ion-content>
+  </ion-menu>
+
+
+  <ion-content>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-content>
+</ion-split-pane>

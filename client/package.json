@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^18.0.0",
+    "@angular/animations": "^18.2.13",
     "@angular/cdk": "^19.0.1",
     "@angular/common": "^18.0.0",
     "@angular/compiler": "^18.0.0",
@@ -44,6 +44,7 @@
     "ionicons": "^7.0.0",
     "ng-gallery": "^12.0.0",
     "ngx-cookie": "^6.0.1",
+    "ngx-toastr": "^19.0.0",
     "ol": "^10.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

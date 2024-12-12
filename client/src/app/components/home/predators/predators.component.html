@@ -12,14 +12,14 @@
 
       <div class="menu {{active}}">
         <ul>
-          <li>
-            <a (click)="takePicture()">
+          <li (click)="takePicture()">
+            <a>
               <img src="./assets/icon/add-photo.svg">
               <span>{{'general.takeAPicture' | translate}}</span>
             </a>
           </li>
-          <li>
-            <a (click)="addManually()">
+          <li (click)="addManually()">
+            <a>
               <img src="./assets/icon/add-without-photo.svg">
               <span>{{'general.manually' | translate}}</span>
             </a>
@@ -37,13 +37,13 @@
         <h6>{{'general.startTakingPhotos' | translate}}</h6>
       </div>
       <div *ngIf="!loader&&predators.length" id="user-publications">
-        <div *ngFor="let item of predators">
+        <div *ngFor="let item of predators; let i = index">
           <img *ngIf="getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg" class="more-photos">
-          <img class="predator-image" src="{{getImageForPreviewFromGallery(item.gallery)}}"
-            (click)="showDetails(item.id)">
+          <img class="predator-image"
+            ngSrc="{{loadedImage[i] ? getImageForPreviewFromGallery(item.gallery) : './assets/icon/loader.gif'}}"
+            onerror="this.onerror=null;this.src='./assets/icon/no-image.svg'" [width]="300" [height]="300"
+            (click)="showDetails(item.id)" (load)="loadImage(i)">
         </div>
-        <!-- <img *ngIf="imageSource" src="{{getBlobImage(imageSource)}}"> -->
-        <!-- <ion-img *ngIf="imageSource" [src]="imageSource"></ion-img> -->
       </div>
     </div>
   </div>

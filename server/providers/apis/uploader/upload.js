@@ -25,20 +25,6 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
       res.json(err);
     }
 
-    console.log(req);
-
-    if (req.body.id_type_of_water == "null") {
-      delete req.body.id_type_of_water;
-    }
-
-    if (req.body.id_territory == "null") {
-      delete req.body.id_territory;
-    }
-
-    if (req.body.id_activity == "null") {
-      delete req.body.id_activity;
-    }
-
     req.body.id_user = req.user.user.id;
 
     conn.query(

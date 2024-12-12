@@ -1,5 +1,6 @@
 {
    "general": {
+      "nameOfApp": "Prädatoren Tracker",
       "areYouSure": "Bist du sicher?",
       "yes": "Ja",
       "no": "NEIN",
@@ -13,7 +14,8 @@
       "manually": "Manually",
       "startTakingPhotos": "Fangen Sie an, Fotos zu machen",
       "dataNotFoundText1": "Die angeforderten Informationen wurden nicht gefunden.",
-      "dataNotFoundText2": "Bitte versuchen Sie es erneut oder wenden Sie sich an einen Administrator."
+      "dataNotFoundText2": "Bitte versuchen Sie es erneut oder wenden Sie sich an einen Administrator.",
+      "needToFillAllFields": "Bitte füllen Sie alle Felder aus."
    },
    "login": {
       "loginTitle": "Login",
@@ -79,5 +81,12 @@
       "comment": "Freier Kommentar",
       "addMorePicture": "Add more",
       "deletePredatorData": "Raubtierdaten löschen"
+   },
+   "superadmin": {
+      "allAdmins": {
+         "name": "Name",
+         "phone": "Telefon",
+         "email": "E-Mail"
+      }
    }
 }

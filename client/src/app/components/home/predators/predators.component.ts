@@ -159,4 +159,14 @@ export class PredatorsComponent implements OnInit {
   handleRefresh(event: any) {
     this.refresh();
   }
+
+  onImageError(entity: any): void {
+    entity.imageUrl = './assets/icon/no-image.svg';
+  }
+
+  public loadedImage: any = {};
+
+  loadImage(index: number) {
+    this.loadedImage[index] = true;
+  }
 }

@@ -25,22 +25,25 @@ router.get("/", (req, res) => {
 
 //#region USERS
 
-router.get("/getAllUsers", auth, async (req, res, next) => {
+router.get("/getAllAdmins", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query("select * from users", function (err, rows, fields) {
-          conn.release();
-          if (err) {
-            logger.log("error", err.sql + ". " + err.sqlMessage);
-            res.json(err);
-          } else {
-            res.json(rows);
+        conn.query(
+          "select * from users",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
           }
-        });
+        );
       }
     });
   } catch (ex) {

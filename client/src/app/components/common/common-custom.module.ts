@@ -9,6 +9,8 @@ import { GalleryModule } from 'ng-gallery';
 import { MapComponent } from './map/map.component';
 import { QuestionAlertComponent } from './question-alert/question-alert.component';
 import { NoDataComponent } from './no-data/no-data.component';
+import { ToastrComponent } from './toastr/toastr.component';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -17,9 +19,15 @@ import { NoDataComponent } from './no-data/no-data.component';
     MapComponent,
     QuestionAlertComponent,
     NoDataComponent,
+    ToastrComponent,
   ],
-  imports: [CommonModule, IonicModule, TranslateModule, GalleryModule],
-  providers: [],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TranslateModule,
+    GalleryModule
+  ],
+  providers: [ToastrComponent, ToastrService],
   bootstrap: [],
   exports: [
     LoaderComponent,

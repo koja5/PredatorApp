@@ -1,0 +1,88 @@
+<table class="table-container" *ngIf="config">
+  <tr class="headers">
+    <th *ngFor="let column of config.columns">{{column.title | translate}}</th>
+  </tr>
+  <tr class="row-body" *ngFor="let value of data">
+    <td *ngFor="let item of config.columns" [attr.data-th]="item.title | translate">
+      <div *ngIf="item.template">
+        <div *ngIf="item.template.choices" class="datatable-body-cell">
+          <div *ngFor="let item of item.template.choices">
+            <!-- directly html code -->
+            <div *ngIf="item.html">
+              <div *ngIf="
+item.operator === '==' && value === item.value
+" [innerHtml]="item.html"></div>
+              <div *ngIf="
+item.operator === '!=' && value !== item.value
+" [innerHtml]="item.html"></div>
+              <div *ngIf="item.operator === '>' && value > item.value" [innerHtml]="item.html"></div>
+              <div *ngIf="item.operator === '>' && value < item.value" [innerHtml]="item.html"></div>
+            </div>
+            <!-- END -->
+
+            <div *ngIf="item.apart" class="datatable-body-cell-label">
+              <div *ngIf="item.operator === '==' && value === item.value"
+                class="{{item.apart.badge ? item.apart.badge : ''}}">
+                <i *ngIf="item.apart.icon" class="{{item.apart.icon}} font-medium-3"></i>
+                <span *ngIf="item.apart.title"
+                  class="{{item.apart.titleClass ? item.apart.titleClass : ''}} {{item.apart.icon ? 'title-left' : ''}}">{{item.apart.title
+                  | translate}}</span>
+              </div>
+              <div *ngIf="item.operator === '!=' && value !== item.value" class="{{item.badge ? item.badge : ''}}">
+                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                <span *ngIf="item.title" class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                  translate}}</span>
+              </div>
+              <div *ngIf="item.operator === '>' && value > item.value" class="{{item.badge ? item.badge : ''}}">
+                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                <span *ngIf="item.title" class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                  translate}}</span>
+              </div>
+              <div *ngIf="item.operator === '>' && value < item.value" class="{{item.badge ? item.badge : ''}}">
+                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                <span *ngIf="item.title" class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="item.template.type === 'action'" ngbDropdown container="body">
+          <div *ngIf="item.template.actionMode.type === 'menu'">
+            <button ngbDropdownToggle type="button"
+              class="btn icon-btn btn-sm hide-arrow {{disableCRUD ? 'cursor-not-allowed' : 'cursor-pointer'}}"
+              title="{{disableCRUD ? ('actionMessage.actionNotAllowed' | translate) : ''}}" [disabled]="disableCRUD"
+              rippleEffect>
+              <span class="fa fa-user"></span>
+            </button>
+            <div ngbDropdownMenu>
+
+              <a *ngFor="let item of item.template.actionMode.menu"
+                (click)="actionColumn(item, value[item.field], value)" ngbDropdownItem><span class="fa fa-user"
+                  [class]="'mr-50'"></span>
+                {{item.actionName | translate}}</a>
+
+            </div>
+          </div>
+          <div *ngIf="item.template.actionMode.type === 'button'">
+            <button *ngIf="item.template.actionMode.routerLink" type="button" class="btn icon-btn btn-sm hide-arrow"
+              (click)="openLink(item.template.actionMode.routerLink, value)" rippleEffect>
+              <span class="fa fa-user" [class]="'cursor-pointer'"></span>
+            </button>
+            <button *ngIf="item.template.actionMode.action" type="button" class="btn icon-btn btn-sm hide-arrow"
+              (click)="actionColumn(item.template.actionMode.action, value, value)"><span class="fa fa-user"
+                [class]="'cursor-pointer'"></span></button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!item.template" class="{{item.class}}">
+        <div *ngIf="item.type === 'date'">
+          {{value[item.field] | date: item.format}}
+        </div>
+        <div *ngIf="item.type === 'string'">
+          {{value[item.field]}}
+        </div>
+      </div>
+
+    </td>
+  </tr>
+</table>

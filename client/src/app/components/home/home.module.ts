@@ -1,6 +1,14 @@
-import { CommonModule } from '@angular/common';
+import {
+  CommonModule,
+  NgOptimizedImage,
+  provideImgixLoader,
+} from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PhotosComponent } from './photos/photos.component';
 import { IonicModule } from '@ionic/angular';
@@ -15,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonCustomModule } from '../common/common-custom.module';
 import { PredatorDetailsComponent } from './predators/predator-details/predator-details.component';
 import { PredatorProfileUserComponent } from './predators/predator-profile-user/predator-profile-user.component';
+import { ToastrModule } from 'ngx-toastr';
 
 const routes = [
   {
@@ -49,13 +58,14 @@ const routes = [
     GalleryModule,
     FormsModule,
     RouterModule.forChild(routes),
-    CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     HomePageRoutingModule,
     DynamicFieldsModule,
     TranslateModule,
     CommonCustomModule,
+    NgOptimizedImage,
   ],
   providers: [],
   exports: [RouterModule],

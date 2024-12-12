@@ -31,32 +31,11 @@ export class HttpNativeService {
   public post(url: any, params?: any) {
     let api = environment.DOMAIN + url;
 
-    // let formDataObj: any = {};
-    // params.forEach((value: any, key: any) => (formDataObj[key] = value));
-
-    // console.log(formDataObj);
-
-    // formDataObj['id'] = Number(formDataObj['id']);
-
-    const options = {
-      url: api,
-      data: params,
-      headers: {
-        Authorization: `Bearer ${this._storageService.getToken()}`,
-        'Content-Type': 'multipart/form-data',
-      },
-      method: 'POST',
-    };
-
-    // return this.http2.post(api, params);
-
     return axios.post(api, params, {
       headers: {
         Authorization: `Bearer ${this._storageService.getToken()}`,
         'Content-Type': 'multipart/form-data',
       },
     });
-
-    // return from(CapacitorHttp.post(options)).pipe(map((data) => data.data));
   }
 }

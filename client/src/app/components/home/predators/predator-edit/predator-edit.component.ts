@@ -23,6 +23,8 @@ import { PredatorModel } from '../../models/predator.model';
 import { QuestionAlertComponent } from 'src/app/components/common/question-alert/question-alert.component';
 import { HttpProviderService } from 'src/app/services/http-provider/http-provider.service';
 import { HttpNativeService } from 'src/app/services/http-provider/http-native.service';
+import { ToastrComponent } from 'src/app/components/common/toastr/toastr.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-predator-edit',
@@ -51,7 +53,9 @@ export class PredatorEditComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _router: Router,
     private _location: Location,
-    private _http: HttpNativeService
+    private _http: HttpNativeService,
+    private _toastr: ToastrComponent,
+    private _translate: TranslateService
   ) {}
 
   //#region INIT
@@ -136,21 +140,27 @@ export class PredatorEditComponent implements OnInit {
   //#region SAVE
 
   save() {
+    if (!this.checkRequiredValues()) {
+      this._toastr.showErrorCustom(
+        this._translate.instant('general.needToFillAllFields')
+      );
+      return;
+    }
+
     const data = this.packData();
 
-    // this._service.callPostMethod('/api/upload/setPredator', data).subscribe(
-    //   (data: any) => {
-    //     this.backToPreviousPage();
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
     this.loader = true;
     this._http.post('/api/upload/setPredator', data).then((data: any) => {
       this.loader = false;
       this.backToPreviousPage();
     });
+  }
+
+  checkRequiredValues() {
+    for (let [key, value] of Object.entries(this.data)) {
+      if (value == null || value == undefined || value == '') return false;
+    }
+    return true;
   }
 
   packData(): FormData {

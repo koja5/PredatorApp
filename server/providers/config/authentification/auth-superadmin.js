@@ -34,9 +34,7 @@ const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, config.TOKEN_KEY);
     req.user = decoded;
     // check if user is superadmin
-    if (req.user.user.type != 1) {
-      // res.clearCookie("token");
-      // res.redirect('/');
+    if (req.user.user.type != 0 && req.user.user.type != 1) {
       return res.status(401).send("Invalid Token");
     }
   } catch (err) {

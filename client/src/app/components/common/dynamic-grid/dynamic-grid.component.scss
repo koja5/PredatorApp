@@ -1,0 +1,80 @@
+table {
+  width: 100%;
+  display: table;
+  overflow: scroll;
+}
+
+table,
+th,
+td {
+  border: none;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+// tr {
+//   &:nth-child(even) {
+//     background-color: #e6ecff;
+//   }
+// }
+
+tr {
+  border-bottom: 1px solid lightgray;
+}
+
+.headers {
+  border-bottom: 1px solid;
+}
+
+.headers th {
+  padding: 1rem;
+  font-weight: bold;
+}
+
+td {
+  text-align: center;
+}
+
+.row-body:hover {
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    text-align: left;
+  }
+
+  td,
+  th {
+    &:before {
+      content: attr(data-th);
+      display: block;
+      font-weight: bold;
+      padding-bottom: 3px;
+      width: 25%;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.feather {
+  display: inline-block;
+  position: relative;
+  top: -0.1rem;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+
+  .dropdown-item & {
+    margin-right: 0.25rem;
+  }
+}
+
+
