@@ -32,18 +32,15 @@ router.get("/getAllAdmins", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query(
-          "select * from users",
-          function (err, rows, fields) {
-            conn.release();
-            if (err) {
-              logger.log("error", err.sql + ". " + err.sqlMessage);
-              res.json(err);
-            } else {
-              res.json(rows);
-            }
+        conn.query("select * from users", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            res.json(rows);
           }
-        );
+        });
       }
     });
   } catch (ex) {
@@ -97,6 +94,147 @@ router.post("/generateNewPassword", auth, function (req, res) {
           req.body.password = newPassword;
 
           makeRequest(req.body, "mail/sendNewGeneratedPassword", res);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
+//#region ACTIVITY
+
+router.post("/setActivity", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log(req.body);
+
+    conn.query(
+      "INSERT INTO all_activities set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
+//#region Predator
+
+router.post("/setPredator", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log(req.body);
+
+    conn.query(
+      "INSERT INTO all_predators set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
+//#region Territory
+
+router.post("/setTerritory", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log(req.body);
+
+    conn.query(
+      "INSERT INTO all_territories set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
+//#region Type of water
+
+router.post("/setTypeOfWater", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log(req.body);
+
+    conn.query(
+      "INSERT INTO all_type_of_waters set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/deleteTypeOfWater", auth, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log(req.body);
+
+    conn.query(
+      "delete from all_type_of_waters where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(false);

@@ -1,0 +1,26 @@
+<!-- <div
+  *ngIf="language && config && checkRights()"
+  [ngClass]="[config.positionClass]"
+> -->
+<div *ngIf="config && checkRights()" [ngClass]="[config.positionClass]" class="form-group form-custom">
+  <ion-button *ngIf="!config.request" [class]="config.class" [disabled]="config.disabled" type="submit">
+    {{ config.title | translate }}
+  </ion-button>
+  <a *ngIf="!config.subtype && config.request" [class]="config.class"
+    (click)="config.confirmRequired ? alertQuestion.showQuestionAlert() : clickRequest(true)">
+    {{ config.title | translate }}
+  </a>
+  <a *ngIf="config.subtype === 'delete'&&group.controls[config.field].value" [class]="config.class"
+    (click)="config.confirmRequired ? alertQuestion.showQuestionAlert() : clickRequest(true)">
+    {{ config.title | translate }}
+  </a>
+</div>
+
+<app-question-alert #alertQuestion (action)="clickRequest($event)"></app-question-alert>
+
+<!-- <div *ngIf="title || icon">
+  <button class="e-btn {{ class }}" (click)="clickButton()">
+    <app-dynamic-icon *ngIf="icon" [icon]="icon"></app-dynamic-icon>
+    {{ title | translate }}
+  </button>
+</div> -->

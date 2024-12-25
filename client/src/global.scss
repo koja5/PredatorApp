@@ -75,6 +75,7 @@
 :root {
   --bg-color: #fff;
   --bg-round-a: #01193c;
+  --primary: #01193c;
   --bg-round-b: #04befe;
   --panel-color: #fff;
   --title: #444;
@@ -195,3 +196,8 @@ a {
   --ion-text-color: #01193c;
   font-weight: bold;
 }
+
+.hide {
+  display: none;
+}
+

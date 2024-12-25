@@ -7,22 +7,13 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-menu-toggle autoHide="false">
-        <ion-item routerLink="all-admins" routerLinkActive="active-link">
+      <ion-menu-toggle autoHide="false" *ngFor="let item of navigations">
+        <ion-item routerLink="{{item.url}}" routerLinkActive="active-link">
           <ion-label>
-            All admins
+            <span *ngIf="item.icon" class="{{item.icon}}"></span> {{item.title | translate}}
           </ion-label>
         </ion-item>
       </ion-menu-toggle>
-
-      <ion-menu-toggle autoHide="false">
-        <ion-item routerLink="/all-admins" routerLinkActive="active-link">
-          <ion-label>
-            All users
-          </ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
     </ion-content>
   </ion-menu>
 

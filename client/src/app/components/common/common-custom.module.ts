@@ -11,6 +11,7 @@ import { QuestionAlertComponent } from './question-alert/question-alert.componen
 import { NoDataComponent } from './no-data/no-data.component';
 import { ToastrComponent } from './toastr/toastr.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { DialogConfirmTemplateComponent } from './discard-changes-template/discard-changes-template.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +21,9 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     QuestionAlertComponent,
     NoDataComponent,
     ToastrComponent,
+    DialogConfirmTemplateComponent,
   ],
-  imports: [
-    CommonModule,
-    IonicModule,
-    TranslateModule,
-    GalleryModule
-  ],
+  imports: [CommonModule, IonicModule, TranslateModule, GalleryModule],
   providers: [ToastrComponent, ToastrService],
   bootstrap: [],
   exports: [
@@ -35,6 +32,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     MapComponent,
     QuestionAlertComponent,
     NoDataComponent,
+    DialogConfirmTemplateComponent,
   ],
 })
 export class CommonCustomModule {}

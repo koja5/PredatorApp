@@ -1,0 +1,27 @@
+[
+    {
+        "title": "navigation.allAdmins",
+        "icon": "fa fa-cog",
+        "url": "all-admins"
+    },
+    {
+        "title": "navigation.allActivities",
+        "icon": "fa fa-cog",
+        "url": "all-activities"
+    },
+    {
+        "title": "navigation.allPredators",
+        "icon": "fa fa-cog",
+        "url": "all-predators"
+    },
+    {
+        "title": "navigation.allTerritories",
+        "icon": "fa fa-cog",
+        "url": "all-territories"
+    },
+    {
+        "title": "navigation.allTypeOfWaters",
+        "icon": "fa fa-cog",
+        "url": "all-type-of-waters"
+    }
+]

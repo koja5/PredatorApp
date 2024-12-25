@@ -50,18 +50,18 @@
     },
     "columns": [
         {
-            "title": "commonFields.action",
+            "title": "general.action",
             "width": 100,
             "template": {
                 "type": "action",
                 "actionMode": {
                     "type": "menu",
-                    "icon": "more-vertical",
+                    "icon": "fa fa-cog",
                     "menu": [
                         {
                             "type": "edit",
                             "actionName": "general.edit",
-                            "icon": "edit",
+                            "icon": "fa fa-pencil",
                             "formDialog": {
                                 "type": "sidebar",
                                 "closeAfterExecute": true
@@ -70,11 +70,11 @@
                         {
                             "type": "delete",
                             "actionName": "general.delete",
-                            "icon": "trash",
+                            "icon": "fa fa-trash",
                             "executeAction": {
                                 "request": {
                                     "type": "POST",
-                                    "api": "/api/deleteVoucherPartner",
+                                    "api": "/api/superadmin/deleteAdmin",
                                     "parameters": [],
                                     "fields": "",
                                     "root": ""
@@ -140,98 +140,21 @@
             "readonly": true
         },
         {
-            "type": "combobox",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "id_user",
-            "title": "commonFields.name",
-            "field": {
-                "text": "name",
-                "value": "id"
-            },
-            "fieldTemplate": {
-                "fields": [
-                    {
-                        "type": "text",
-                        "values": [
-                            "firstname",
-                            "",
-                            "lastname"
-                        ]
-                    }
-                ]
-            },
-            "request": {
-                "type": "GET",
-                "api": "/api/getUsers",
-                "parameters": [],
-                "fields": "",
-                "root": ""
-            },
-            "fieldConfig": {
-                "ignoreAccent": false,
-                "filter": true
-            },
-            "required": true
-        },
-        {
             "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "voucher_code",
-            "title": "commonFields.voucherCode",
-            "field": "voucher_code",
-            "required": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "discount",
-            "title": "commonFields.discount",
-            "field": "discount",
-            "required": true
-        },
-        {
-            "type": "datetimepicker",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "valid_from",
-            "title": "commonFields.validFrom",
-            "field": "valid_from"
-        },
-        {
-            "type": "datetimepicker",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "valid_to",
-            "title": "commonFields.validTo",
-            "field": "valid_to"
-        },
-        {
-            "type": "numeric",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "bonus_for_partner",
-            "title": "commonFields.bonusForPartner",
-            "field": "bonus_for_partner"
-        },
-        {
-            "type": "switch",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "active",
-            "title": "commonFields.active",
-            "field": "active"
+            "name": "name",
+            "title": "superadmin.allAdmins.name",
+            "field": "name",
+            "required": true
         },
         {
             "type": "button",
             "width": "col-md-12",
-            "class": "btn btn-primary",
             "name": "submit",
             "title": "general.save",
             "field": "submit",
-            "positionClass": "text-right mt-3 col-md-12"
+            "positionClass": "text-end mt-3 col-md-12"
         }
     ]
 }

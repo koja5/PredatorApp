@@ -16,7 +16,6 @@ import { HomePageRoutingModule } from 'src/app/home/home-routing.module';
 import { HomeComponent } from './home.component';
 import { PredatorsComponent } from './predators/predators.component';
 import { PredatorEditComponent } from './predators/predator-edit/predator-edit.component';
-import { DynamicFieldsModule } from '../common/dynamic-fields/dynamic-fields.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { GalleryModule } from 'ng-gallery';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +23,7 @@ import { CommonCustomModule } from '../common/common-custom.module';
 import { PredatorDetailsComponent } from './predators/predator-details/predator-details.component';
 import { PredatorProfileUserComponent } from './predators/predator-profile-user/predator-profile-user.component';
 import { ToastrModule } from 'ngx-toastr';
+import { DynamicFieldsModule } from '../common/dynamic-component/dynamic-fields/dynamic-fields.module';
 
 const routes = [
   {
@@ -62,10 +62,10 @@ const routes = [
     ReactiveFormsModule,
     IonicModule,
     HomePageRoutingModule,
-    DynamicFieldsModule,
     TranslateModule,
     CommonCustomModule,
     NgOptimizedImage,
+    DynamicFieldsModule
   ],
   providers: [],
   exports: [RouterModule],

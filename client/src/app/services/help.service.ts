@@ -171,4 +171,13 @@ export class HelpService {
   isObjectEmpty(value: any) {
     return Object.keys(value).length ? true : false;
   }
+
+  checkUndefinedProperty(property: any) {
+    for (let [key, value] of Object.entries(property)) {
+      if (value != undefined) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

@@ -5,6 +5,7 @@
       "yes": "Ja",
       "no": "NEIN",
       "edit": "Bearbeiten",
+      "delete": "Löschen",
       "back": "Zurück",
       "cancel": "Stornieren",
       "confirm": "Bestätigen",
@@ -15,7 +16,10 @@
       "startTakingPhotos": "Fangen Sie an, Fotos zu machen",
       "dataNotFoundText1": "Die angeforderten Informationen wurden nicht gefunden.",
       "dataNotFoundText2": "Bitte versuchen Sie es erneut oder wenden Sie sich an einen Administrator.",
-      "needToFillAllFields": "Bitte füllen Sie alle Felder aus."
+      "needToFillAllFields": "Bitte füllen Sie alle Felder aus.",
+      "action": "Aktion",
+      "createNew": "Neu erstellen",
+      "save": "Speichern"
    },
    "login": {
       "loginTitle": "Login",
@@ -64,7 +68,12 @@
    "navigation": {
       "home": "Heim",
       "photo": "Foto",
-      "location": "Standort"
+      "location": "Standort",
+      "allAdmins": "Alle Admins",
+      "allActivities": "Alle Aktivitäten",
+      "allPredators": "Alles Raubtiere",
+      "allTerritories": "Alle Gebiete",
+      "allTypeOfWaters": "Alle Gewässer"
    },
    "predatorForm": {
       "predators": "Predator",
@@ -82,8 +91,45 @@
       "addMorePicture": "Add more",
       "deletePredatorData": "Raubtierdaten löschen"
    },
+   "actionMessage": {
+      "successExecuteActionTitleDefault": "Erfolgreich geändert!",
+      "successExecuteActionTextDefault": "Aktion erfolgreich ausgeführt!",
+      "errorExecuteActionTitleDefault": "Etwas ist passiert",
+      "errorExecuteActionTextDefault": "Bitte überprüfen Sie es noch einmal oder versuchen Sie es später",
+      "errorUpdateTermineOnGoogleCalendarRights": "Ein Problem mit den Rechten beim Aktualisieren eines Termins im Google-Kalender.",
+      "dialogCompleteReportQuestionTitle": "Sind Sie sicher?",
+      "dialogCompleteReportQuestionText": "Möchten Sie den Besatzmeldung abschließen und senden? Beachten Sie bitte, dass  die Besatzmeldung danach nicht mehr geändert werden kann.",
+      "dialogCompleteReportQuestionYes": "Ja, Besatzmeldung abschließen und senden!",
+      "dialogCompleteReportQuestionNo": "NEIN",
+      "reportCompletedNotYet": "Die Besatzmeldung wurde noch nicht fertiggestellt und gesendet.",
+      "reportCompleted": "Diese Besatzmeldung wurde abgeschlossen am/um",
+      "dialogBackReportToOwnerTitle": "Sind sie sicher?",
+      "dialogBackReportToOwnerText": "Möchten Sie dem Bewirtschafter die Besatzmeldung wieder zum andern freigeben?",
+      "dialogReminderOwnerToCompleteReportTitle": "Sind sie sicher?",
+      "dialogReminderOwnerToCompleteReportText": "Möchten Sie eine Benachrichtigung per E-Mail an den Bewirtschafter senden, z. B. eine Erinnerung zum Ausfüllen der Besatzmeldung?",
+      "dialogRequestForAdditionalChangesTitle": "Sind sie sicher?",
+      "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Landesfischereiverband senden, um die Besatzmeldung wieder ändern zu können?",
+      "dialogNoHaveReportsTitle": "Sind sie sicher?",
+      "dialogNoHaveReportsText": "Möchten Sie einen leeren Bericht senden? Wenn Sie derzeit über einige Einträge verfügen, werden diese Einträge gelöscht!",
+      "exportToPng": "Nach PNG exportieren",
+      "exportToCsv": "Als CSV exportieren",
+      "goBack": "Geh zurück",
+      "valueNeedToBeLess": "Dieser Wert muss kleiner oder gleich dem vorherigen Wert sein",
+      "dialogGenerateNewPasswordTitle": "Sind Sie sicher?",
+      "dialogGenerateNewPasswordText": "Möchten Sie für diesen Benutzer ein neues Passwort generieren? Das neue Passwort wird per E-Mail an den Benutzer gesendet.",
+      "dialogGenerateNewPasswordYes": "Ja, neues Passwort generieren",
+      "dialogGenerateNewPasswordNo": "NEIN"
+   },
+   "form": {
+      "mustFillThisField": "Bitte dieses Feld ausfüllen!",
+      "fieldIsRequired": "Eingabe ist erforderlich",
+      "emailIsRequired": "EMail ist erforderlich",
+      "emailMustBeValid": "Die Email-Adresse muss gültig sein",
+      "passwordIsRequired": "Passwort ist erforderlich"
+   },
    "superadmin": {
       "allAdmins": {
+         "id": "ID",
          "name": "Name",
          "phone": "Telefon",
          "email": "E-Mail"
