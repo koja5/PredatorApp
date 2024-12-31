@@ -75,6 +75,10 @@
       "allTerritories": "Alle Gebiete",
       "allTypeOfWaters": "Alle Gewässer"
    },
+   "navBar": {
+      "profile": "Profil",
+      "logout": "Ausloggen"
+   },
    "predatorForm": {
       "predators": "Predator",
       "totalNumber": "Anzahl Gesamt *",

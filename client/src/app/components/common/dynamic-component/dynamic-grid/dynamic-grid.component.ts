@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component';
 import { ToastrComponent } from '../../toastr/toastr.component';
 import { QuestionAlertComponent } from '../../question-alert/question-alert.component';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-dynamic-grid',
@@ -33,6 +34,7 @@ export class DynamicGridComponent implements OnInit {
   public isModalOpen = false;
   public loader = false;
   public executeActionConfig: any;
+  public ColumnMode = ColumnMode;
 
   constructor(
     private _configurationService: ConfigurationService,

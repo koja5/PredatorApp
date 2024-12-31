@@ -428,3 +428,7 @@ svg {
 .predator-image {
   cursor: pointer;
 }
+
+img[src="./assets/icon/no-image.svg"]{
+  object-fit: contain !important;
+}

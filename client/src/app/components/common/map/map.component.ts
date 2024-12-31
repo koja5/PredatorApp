@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import { OGCMapTile, OSM } from 'ol/source';
+import { OGCMapTile, OSM, TileDebug } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { Feature } from 'ol';
 import { Point } from 'ol/geom';
@@ -34,6 +34,10 @@ export class MapComponent implements OnInit {
     } else {
       this.setPoint(this.longitude, this.latitude);
     }
+
+    // this.map.on('singleclick', function (evt) {
+    //   this.setPinOnMap(evt);
+    // });
   }
 
   setPoint(longitude: number, latitude: number) {
@@ -73,13 +77,44 @@ export class MapComponent implements OnInit {
     });
 
     this.map = new Map({
-      layers: [rasterLayer, vectorLayer],
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+        vectorLayer,
+      ],
       target: 'map',
       view: new View({
         center: [longitude, latitude],
-        zoom: 5,
+        zoom: 80,
         maxZoom: 18,
       }),
     });
   }
+
+  // addMarker(longitude, latitude) {
+  //   console.log('lon:', lon);
+  //   console.log('lat:', lat);
+
+  //   var iconFeatures = [];
+
+  //   const iconStyle = new Style({
+  //     image: new Icon({
+  //       anchor: [0.5, 46],
+  //       anchorXUnits: 'fraction',
+  //       anchorYUnits: 'pixels',
+  //       src: 'assets/icon/map-marker.png',
+  //       width: 32,
+  //       height: 32,
+  //     }),
+  //   });
+  //   const iconFeature = new Feature({
+  //     geometry: new Point([longitude, latitude]),
+  //     name: 'Null Island',
+  //     population: 4000,
+  //     rainfall: 500,
+  //   });
+
+  //   this.map.addLayer(iconFeature);
+  // }
 }

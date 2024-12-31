@@ -1,10 +1,10 @@
 <div class="option-container m-2">
-  <ion-button (click)="openModal()"><span class="fa fa-plus-circle"></span> {{'general.createNew' |
+  <ion-button (click)="openModal()"><span class="fa fa-plus-circle add-icon"></span> {{'general.createNew' |
     translate}}</ion-button>
 </div>
 
 
-<table class="table-container styled-table" *ngIf="config">
+<!-- <table class="table-container styled-table" *ngIf="config">
   <thead>
     <tr class="headers">
       <th *ngFor="let column of config.columns">{{column.title | translate}}</th>
@@ -16,7 +16,6 @@
         <div *ngIf="item.template">
           <div *ngIf="item.template.choices" class="datatable-body-cell">
             <div *ngFor="let item of item.template.choices">
-              <!-- directly html code -->
               <div *ngIf="item.html">
                 <div *ngIf="
 item.operator === '==' && value === item.value
@@ -27,7 +26,6 @@ item.operator === '!=' && value !== item.value
                 <div *ngIf="item.operator === '>' && value > item.value" [innerHtml]="item.html"></div>
                 <div *ngIf="item.operator === '>' && value < item.value" [innerHtml]="item.html"></div>
               </div>
-              <!-- END -->
 
               <div *ngIf="item.apart" class="datatable-body-cell-label">
                 <div *ngIf="item.operator === '==' && value === item.value"
@@ -95,7 +93,101 @@ item.operator === '!=' && value !== item.value
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
+
+
+<ngx-datatable *ngIf="data && data.length" #grid id="grid" [rows]="data" [rowHeight]="50" class="material full-screen"
+  [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="true" [rowHeight]="'auto'"
+  [columnMode]="ColumnMode.force">
+  <ngx-datatable-column *ngFor="let item of config.columns" [name]="item.title | translate" [prop]="item.field"
+    [width]="item.width ? item.width : 'auto'" [flexGrow]="item.flexGrow" class="{{item.class}}"
+    [className]="item.className" [headerClass]="item.className" [cellClass]="item.className">
+
+    <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+      <span class="{{item.class}}">{{column.name}}</span>
+    </ng-template>
+
+    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+      <div *ngIf="item.template">
+        <div *ngIf="item.template.choices" class="datatable-body-cell">
+          <div *ngFor="let item of item.template.choices">
+            <div *ngIf="item.html">
+              <div *ngIf="
+item.operator === '==' && value === item.value
+" [innerHtml]="item.html"></div>
+              <div *ngIf="
+item.operator === '!=' && value !== item.value
+" [innerHtml]="item.html"></div>
+              <div *ngIf="item.operator === '>' && value > item.value" [innerHtml]="item.html"></div>
+              <div *ngIf="item.operator === '>' && value < item.value" [innerHtml]="item.html"></div>
+            </div>
+
+            <div *ngIf="item.apart" class="datatable-body-cell-label">
+              <div *ngIf="item.operator === '==' && value === item.value"
+                class="{{item.apart.badge ? item.apart.badge : ''}}">
+                <i *ngIf="item.apart.icon" class="{{item.apart.icon}} font-medium-3"></i>
+                <span *ngIf="item.apart.title"
+                  class="{{item.apart.titleClass ? item.apart.titleClass : ''}} {{item.apart.icon ? 'title-left' : ''}}">{{item.apart.title
+                  | translate}}</span>
+              </div>
+              <div *ngIf="item.operator === '!=' && value !== item.value" class="{{item.badge ? item.badge : ''}}">
+                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                <span *ngIf="item.title" class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                  translate}}</span>
+              </div>
+              <div *ngIf="item.operator === '>' && value > item.value" class="{{item.badge ? item.badge : ''}}">
+                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                <span *ngIf="item.title" class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                  translate}}</span>
+              </div>
+              <div *ngIf="item.operator === '>' && value < item.value" class="{{item.badge ? item.badge : ''}}">
+                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                <span *ngIf="item.title" class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="item.template.type === 'action'" ngbDropdown container="body">
+          <div *ngIf="item.template.actionMode.type === 'menu'">
+            <button ngbDropdownToggle type="button"
+              class="btn icon-btn btn-sm hide-arrow {{disableCRUD ? 'cursor-not-allowed' : 'cursor-pointer'}}"
+              title="{{disableCRUD ? ('actionMessage.actionNotAllowed' | translate) : ''}}" [disabled]="disableCRUD"
+              rippleEffect>
+              <span class="{{item.template.actionMode.icon}}"></span>
+            </button>
+            <div ngbDropdownMenu>
+
+              <a *ngFor="let item of item.template.actionMode.menu" (click)="actionColumn(item, value, row)"
+                ngbDropdownItem>
+                <span class="{{item.icon}} mr-50"></span>
+                {{item.actionName | translate}}</a>
+
+            </div>
+          </div>
+          <div *ngIf="item.template.actionMode.type === 'button'">
+            <button *ngIf="item.template.actionMode.routerLink" type="button" class="btn icon-btn btn-sm hide-arrow"
+              (click)="openLink(item.template.actionMode.routerLink, value)" rippleEffect>
+              <span class="{{item.icon}}" [class]="'cursor-pointer'"></span>
+            </button>
+            <button *ngIf="item.template.actionMode.action" type="button" class="btn icon-btn btn-sm hide-arrow"
+              (click)="actionColumn(item.template.actionMode.action, value, value)"><span class="{{item.icon}}"
+                [class]="'cursor-pointer'"></span></button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!item.template" class="{{item.class}}">
+        <div *ngIf="item.type === 'date'">
+          {{value | date: item.format}}
+        </div>
+        <div *ngIf="item.type === 'string'">
+          {{value}}
+        </div>
+      </div>
+    </ng-template>
+
+  </ngx-datatable-column>
+</ngx-datatable>
 
 
 <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" (willDismiss)="onWillDismiss($event)">

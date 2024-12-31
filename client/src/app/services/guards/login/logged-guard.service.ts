@@ -22,7 +22,7 @@ export class LoggedGuard {
         this._router.navigate([previousLink]);
         this._storageService.removeLocalStorage('previousLink');
       } else if (token.type === UserTypesEnum.superadmin) {
-        this._router.navigate(['/dashboard/admin/all-users']);
+        this._router.navigate(['/superadmin/all-users']);
       } else if (token.type === UserTypesEnum.user) {
         this._router.navigate(['home/predators']);
       }

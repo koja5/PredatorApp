@@ -12,6 +12,7 @@ import { AllActivitiesComponent } from './all-activities/all-activities.componen
 import { AllPredatorsComponent } from './all-predators/all-predators.component';
 import { AllTerritoriesComponent } from './all-territories/all-territories.component';
 import { AllTypeOfWatersComponent } from './all-type-of-waters/all-type-of-waters.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes = [
   {
@@ -52,6 +53,7 @@ const routes = [
     RouterModule.forChild(routes),
     IonicModule,
     TranslateModule,
+    NgbModule
   ],
   providers: [],
   exports: [RouterModule],

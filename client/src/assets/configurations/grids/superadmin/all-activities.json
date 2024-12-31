@@ -51,11 +51,11 @@
     "columns": [
         {
             "title": "general.action",
-            "width": 100,
             "template": {
                 "type": "action",
                 "actionMode": {
                     "type": "menu",
+                    "title": "Action",
                     "icon": "fa fa-cog",
                     "menu": [
                         {

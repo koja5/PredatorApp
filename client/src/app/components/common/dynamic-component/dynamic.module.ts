@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { CommonCustomModule } from '../common-custom.module';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [DynamicGridComponent],
@@ -27,6 +28,7 @@ import { IonicModule } from '@ionic/angular';
     CommonCustomModule,
     DateTimePickerModule,
     IonicModule,
+    NgxDatatableModule
   ],
   providers: [ToastrComponent],
   exports: [DynamicGridComponent],

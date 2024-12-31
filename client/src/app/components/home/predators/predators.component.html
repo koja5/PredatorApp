@@ -39,7 +39,7 @@
       <div *ngIf="!loader&&predators.length" id="user-publications">
         <div *ngFor="let item of predators; let i = index">
           <img *ngIf="getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg" class="more-photos">
-          <img class="predator-image"
+          <img class="predator-image {{loadedImage[i] ? 'no-image' : ''}}"
             ngSrc="{{loadedImage[i] ? getImageForPreviewFromGallery(item.gallery) : './assets/icon/loader.gif'}}"
             onerror="this.onerror=null;this.src='./assets/icon/no-image.svg'" [width]="300" [height]="300"
             (click)="showDetails(item.id)" (load)="loadImage(i)">

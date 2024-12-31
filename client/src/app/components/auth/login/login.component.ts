@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserTypesEnum } from 'src/app/enums/user-types-enum';
 
 @Component({
   selector: 'app-login',
@@ -69,7 +70,19 @@ export class LoginComponent implements OnInit {
           this.loader = false;
           if (data && data.token) {
             this._storageService.setToken(data.token);
-            this._roter.navigate(['/home/predators']);
+
+            const type = this._storageService.getDecodeToken()
+              .type as UserTypesEnum;
+            const previousLink =
+              this._storageService.getLocalStorage('previousLink');
+            if (previousLink) {
+              window.open(previousLink, '_self');
+              this._storageService.removeLocalStorage('previousLink');
+            } else if (type === UserTypesEnum.superadmin) {
+              this._roter.navigate(['/superadmin/all-admins']);
+            } else {
+              this._roter.navigate(['/home/predators']);
+            }
           } else {
             if (data.type === 'active' && !data.value) {
               this._roter.navigate([
