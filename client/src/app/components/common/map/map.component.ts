@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { OGCMapTile, OSM, TileDebug } from 'ol/source';
@@ -23,7 +23,7 @@ export class MapComponent implements OnInit {
   @Input() longitude: number;
   @Input() latitude: number;
 
-  public map!: Map;
+  @ViewChild('map') public map!: Map;
 
   constructor() {}
 
@@ -38,6 +38,77 @@ export class MapComponent implements OnInit {
     // this.map.on('singleclick', function (evt) {
     //   this.setPinOnMap(evt);
     // });
+
+    this.map.on('singleclick', function (this: MapComponent, evt) {
+      const coordinate = evt.coordinate;
+      // const hdms = toStringHDMS(toLonLat(coordinate));
+      console.log(coordinate);
+      // content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+      // this.setPoint(coordinate[0], coordinate[1]);
+      const iconFeature = new Feature({
+        geometry: new Point([coordinate[0], coordinate[1] + 0.0001]),
+        name: 'Null Island',
+        population: 4000,
+        rainfall: 500,
+      });
+
+      const iconStyle = new Style({
+        image: new Icon({
+          anchor: [0.5, 46],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          src: 'assets/icon/map-marker.png',
+          width: 32,
+          height: 32,
+        }),
+      });
+
+      iconFeature.setStyle(iconStyle);
+
+      const vectorSource = new VectorSource({
+        features: [iconFeature],
+      });
+
+      const vectorLayer = new VectorLayer({
+        source: vectorSource,
+      });
+
+      const rasterLayer = new TileLayer({
+        source: new OGCMapTile({
+          url: 'https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles/WebMercatorQuad',
+          crossOrigin: '',
+        }),
+      });
+
+      evt.map.setLayers([
+        new TileLayer({
+          source: new OSM(),
+        }),
+        vectorLayer,
+      ]);
+      evt.map.setView(
+        new View({
+          center: [coordinate[0], coordinate[1]],
+          zoom: 80,
+          maxZoom: 18,
+        })
+      );
+
+      // evt.map = new Map({
+      //   layers: [
+      //     new TileLayer({
+      //       source: new OSM(),
+      //     }),
+      //     vectorLayer,
+      //   ],
+      //   target: 'map',
+      //   view: new View({
+      //     center: [coordinate[0], coordinate[1]],
+      //     zoom: 80,
+      //     maxZoom: 18,
+      //   }),
+      // });
+    });
   }
 
   setPoint(longitude: number, latitude: number) {
