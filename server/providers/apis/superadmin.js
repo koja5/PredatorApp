@@ -175,7 +175,7 @@ router.post("/setTerritory", auth, function (req, res, next) {
     console.log(req.body);
 
     conn.query(
-      "INSERT INTO all_territories set ? ON DUPLICATE KEY UPDATE ?",
+      "INSERT INTO all_fish_districts set ? ON DUPLICATE KEY UPDATE ?",
       [req.body, req.body],
       function (err, rows) {
         conn.release();
@@ -204,7 +204,7 @@ router.post("/setTypeOfWater", auth, function (req, res, next) {
     console.log(req.body);
 
     conn.query(
-      "INSERT INTO all_type_of_waters set ? ON DUPLICATE KEY UPDATE ?",
+      "INSERT INTO all_waters set ? ON DUPLICATE KEY UPDATE ?",
       [req.body, req.body],
       function (err, rows) {
         conn.release();
@@ -229,7 +229,7 @@ router.post("/deleteTypeOfWater", auth, function (req, res) {
     console.log(req.body);
 
     conn.query(
-      "delete from all_type_of_waters where id = ?",
+      "delete from all_waters where id = ?",
       [req.body.id],
       function (err, rows) {
         conn.release();

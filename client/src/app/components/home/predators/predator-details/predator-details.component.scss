@@ -26,3 +26,26 @@
 ion-title {
   text-align: center;
 }
+
+.status-report div {
+  padding: 6px;
+  margin-bottom: 9px;
+  border-radius: 3px;
+}
+
+.draft-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 159, 67, 0.12) !important;
+  color: #ff9f43 !important;
+}
+
+.completed-status {
+  background: rgba(40, 199, 111, 0.12) !important;
+  color: #28c76f !important;
+}
+
+.checkmark-icon {
+  font-size: 35px;
+}

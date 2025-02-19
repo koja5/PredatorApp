@@ -51,18 +51,15 @@ router.get("/getAllTypeOfWaters", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query(
-          "select * from all_type_of_waters",
-          function (err, rows, fields) {
-            conn.release();
-            if (err) {
-              logger.log("error", err.sql + ". " + err.sqlMessage);
-              res.json(err);
-            } else {
-              res.json(rows);
-            }
+        conn.query("select * from all_waters", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            res.json(rows);
           }
-        );
+        });
       }
     });
   } catch (ex) {
@@ -79,7 +76,7 @@ router.get("/getAllTerritories", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from all_territories",
+          "select * from all_fish_districts",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -162,7 +159,7 @@ router.get("/getPredatorById/:id", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, ap.name 'name_of_predator', atow.name as 'name_of_type_of_water', at.name as 'name_of_territory', aa.name as 'name_of_activity' from predators p join all_predators ap on p.id_predator = ap.id join all_type_of_waters atow on p.id_type_of_water = atow.id join all_territories at on p.id_territory = at.id join all_activities aa on p.id_activity = aa.id where p.id_user = ? and p.id = ?",
+          "select p.*, ap.name 'name_of_predator', atow.name as 'name_of_type_of_water', at.name as 'name_of_territory', aa.name as 'name_of_activity' from predators p join all_predators ap on p.id_predator = ap.id join all_waters atow on p.id_type_of_water = atow.id join all_fish_districts at on p.id_territory = at.id join all_activities aa on p.id_activity = aa.id where p.id_user = ? and p.id = ?",
           [req.user.user.id, req.params.id],
           function (err, rows, fields) {
             if (err) {
@@ -240,6 +237,34 @@ router.post("/deletePredator", auth, async (req, res, next) => {
         conn.query(
           "delete from predators where id = ? and id_user = ?",
           [req.body.id, req.user.user.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(true);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/completedReport", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update predators set completed = 1, completed_date = ? where id = ? and id_user = ?",
+          [new Date(), req.body.id, req.user.user.id],
           function (err, rows, fields) {
             conn.release();
             if (err) {

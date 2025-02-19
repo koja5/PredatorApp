@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageItem } from 'ng-gallery';
 import { CallApiService } from 'src/app/services/call-api.service';
@@ -7,6 +7,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import { Geolocation } from '@capacitor/geolocation';
 import { environment } from 'src/environments/environment';
+import { QuestionAlertComponent } from 'src/app/components/common/question-alert/question-alert.component';
 
 @Component({
   selector: 'app-predator-details',
@@ -14,6 +15,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./predator-details.component.scss'],
 })
 export class PredatorDetailsComponent implements OnInit {
+  @ViewChild(QuestionAlertComponent) alertQuestion: QuestionAlertComponent;
   public data: PredatorModel;
   public images: any = [];
   public loader = true;
@@ -70,5 +72,17 @@ export class PredatorDetailsComponent implements OnInit {
 
   predatorEdit() {
     this._router.navigate(['home/predator-edit/' + this.data.id]);
+  }
+
+  completedReport(event: boolean) {
+    if (event) {
+      this._service
+        .callPostMethod('/api/user/completedReport', this.data)
+        .subscribe((data) => {
+          if(data) {
+            this.getData();
+          }
+        });
+    }
   }
 }

@@ -18,4 +18,6 @@ export class PredatorModel {
   gallery?: any;
   longitude: number;
   latitude: number;
+  completed: boolean;
+  completed_date: Date;
 }
