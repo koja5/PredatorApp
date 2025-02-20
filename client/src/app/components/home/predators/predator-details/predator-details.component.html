@@ -95,7 +95,7 @@
   <app-no-data *ngIf="!loader&&!data"></app-no-data>
 
   <app-map *ngIf="data && data.longitude && data.latitude" [longitude]="data.longitude"
-    [latitude]="data.latitude"></app-map>
+    [latitude]="data.latitude" [manual]="false"></app-map>
 </ion-content>
 
 <app-question-alert #alertQuestion (action)="completedReport($event)"></app-question-alert>

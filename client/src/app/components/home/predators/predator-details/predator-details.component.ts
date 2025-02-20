@@ -4,8 +4,6 @@ import { ImageItem } from 'ng-gallery';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { PredatorModel } from '../../models/predator.model';
 import Map from 'ol/Map';
-import View from 'ol/View';
-import { Geolocation } from '@capacitor/geolocation';
 import { environment } from 'src/environments/environment';
 import { QuestionAlertComponent } from 'src/app/components/common/question-alert/question-alert.component';
 
@@ -79,10 +77,14 @@ export class PredatorDetailsComponent implements OnInit {
       this._service
         .callPostMethod('/api/user/completedReport', this.data)
         .subscribe((data) => {
-          if(data) {
+          if (data) {
             this.getData();
           }
         });
     }
+  }
+
+  getCoordinate(event: any) {
+    console.log(event);
   }
 }

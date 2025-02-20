@@ -25,6 +25,7 @@ import { HttpProviderService } from 'src/app/services/http-provider/http-provide
 import { HttpNativeService } from 'src/app/services/http-provider/http-native.service';
 import { ToastrComponent } from 'src/app/components/common/toastr/toastr.component';
 import { TranslateService } from '@ngx-translate/core';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-predator-edit',
@@ -55,7 +56,8 @@ export class PredatorEditComponent implements OnInit {
     private _location: Location,
     private _http: HttpNativeService,
     private _toastr: ToastrComponent,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private _storageService: StorageService
   ) {}
 
   //#region INIT
@@ -176,6 +178,14 @@ export class PredatorEditComponent implements OnInit {
         this.uploaded[i],
         this.uploaded[i].name ? this.uploaded[i].name : this.uploaded[i]
       );
+    }
+
+    if (this._storageService.getLocalStorage('coordination')) {
+      const coordinate = this._storageService.getLocalStorage('coordination');
+      data.set('latitude', coordinate.lat);
+      data.set('longitude', coordinate.log);
+
+      this._storageService.removeLocalStorage('coordination');
     }
 
     return data;
