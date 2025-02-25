@@ -1,1 +1,4 @@
-<div #map id="map" class="map"></div>
+<div class="map-container">
+    <a (click)="getMyLocation()" class="my-location"><img src="../../../../assets/icon/my-location.png"></a>
+    <div *ngIf="loader" #map id="map" class="map"></div>
+</div>

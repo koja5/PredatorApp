@@ -4,8 +4,8 @@
       <ion-back-button default-href="/" [text]="('general.back' | translate)"></ion-back-button>
     </ion-buttons>
     <ion-title><img class="title-logo" src="./assets/icon/logo.png"></ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="predatorEdit()">{{'general.edit' | translate}}</ion-button>
+    <ion-buttons slot="end" *ngIf="!loader">
+      <ion-button (click)="predatorEdit()" [disabled]="data.completed">{{'general.edit' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,10 +15,10 @@
   </div>
   <div class="status-report">
     <div class="draft-status" *ngIf="!data.completed">
-      <span>{{'actionMessage.reportCompletedNotYet' | translate}}</span>
-      <ion-button fill="outline" color="success" size="small" (click)="alertQuestion.showQuestionAlert()"><ion-icon
-          name="checkmark-outline" class="checkmark-icon"></ion-icon> &nbsp;
-        Meldung absenden</ion-button>
+      <p class="mb-0">{{'actionMessage.reportCompletedNotYet' | translate}}</p>
+      <ion-button fill="outline" color="success" (click)="alertQuestion.showQuestionAlert()"><span
+          class="fa fa-paper-plane"></span> &nbsp;
+        {{'action.completedReport' | translate}}</ion-button>
     </div>
 
     <div class="completed-status pt-3 pb-3" *ngIf="data.completed">
@@ -94,8 +94,8 @@
 
   <app-no-data *ngIf="!loader&&!data"></app-no-data>
 
-  <app-map *ngIf="data && data.longitude && data.latitude" [longitude]="data.longitude"
-    [latitude]="data.latitude" [manual]="false"></app-map>
+  <app-map *ngIf="data && data.longitude && data.latitude" [longitude]="data.longitude" [latitude]="data.latitude"
+    [manual]="false"></app-map>
 </ion-content>
 
 <app-question-alert #alertQuestion (action)="completedReport($event)"></app-question-alert>

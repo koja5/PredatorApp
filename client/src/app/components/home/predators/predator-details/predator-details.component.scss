@@ -30,15 +30,24 @@ ion-title {
 .status-report div {
   padding: 6px;
   margin-bottom: 9px;
-  border-radius: 3px;
+  border-radius: 5px;
+}
+
+@media (min-width: 992px) {
+  .draft-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .draft-status {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: rgba(255, 159, 67, 0.12) !important;
   color: #ff9f43 !important;
+}
+
+.draft-status ion-button {
+  display: flex;
 }
 
 .completed-status {

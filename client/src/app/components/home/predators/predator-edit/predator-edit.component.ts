@@ -48,6 +48,13 @@ export class PredatorEditComponent implements OnInit {
   public isGalleryOpen = false;
   public predatorNotes: any;
   public loader = false;
+  public requiredFields = [
+    'id_activity',
+    'id_predator',
+    'id_territory',
+    'id_type_of_water',
+    'id_user',
+  ];
 
   constructor(
     private _service: CallApiService,
@@ -85,7 +92,6 @@ export class PredatorEditComponent implements OnInit {
 
     if (!this.data.longitude && !this.data.latitude) {
       const geolocation = await Geolocation.getCurrentPosition();
-
       this.data.longitude = geolocation.coords.longitude;
       this.data.latitude = geolocation.coords.latitude;
     }
@@ -159,9 +165,22 @@ export class PredatorEditComponent implements OnInit {
   }
 
   checkRequiredValues() {
-    for (let [key, value] of Object.entries(this.data)) {
-      if (value == null || value == undefined || value == '') return false;
-    }
+    // for (let [key, value] of Object.entries(this.data)) {
+    //   if (
+    //     key != 'completed' &&
+    //     key != 'completed_date' &&
+    //     (value == null || value == undefined || value == '')
+    //   )
+    //     return false;
+    // }
+    if (
+      !this.data.id_activity ||
+      !this.data.id_predator ||
+      !this.data.id_territory ||
+      !this.data.id_type_of_water
+    )
+      return false;
+
     return true;
   }
 

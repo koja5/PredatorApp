@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-button (click)="cancel()">{{'general.cancel' | translate}}</ion-button>
         </ion-buttons>
-        <ion-title><img class="title-logo" src="./assets/icon/logo.png"></ion-title>
+        <ion-title class="text-center"><img class="title-logo" src="./assets/icon/logo.png"></ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="save()" [strong]="true">{{'general.confirm' | translate}}</ion-button>
         </ion-buttons>
@@ -16,7 +16,16 @@
       <div *ngIf="!loader">
         <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.id_predator"
           (changeEmit)="changeEmitPredator($event)"></app-ion-select>
-        <div class="row">
+        <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.total_number"
+          (changeEmit)="changeEmitTotalNumber($event)"></app-ion-input>
+        <app-ion-input [label]="'predatorForm.includingYoungAnimals'" [type]="'number'"
+          [value]="data.including_young_animals" (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
+        <app-ion-input [label]="'predatorForm.includingFemaleAnimals'" [type]="'number'"
+          [value]="data.including_female_animals"
+          (changeEmit)="changeEmitIncludingFemaleAnimals($event)"></app-ion-input>
+        <app-ion-input [label]="'predatorForm.includingMaleAnimals'" [type]="'number'"
+          [value]="data.including_male_animals" (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
+        <!-- <div class="row">
           <div class="col-6">
             <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.total_number"
               (changeEmit)="changeEmitTotalNumber($event)"></app-ion-input>
@@ -38,7 +47,7 @@
               [value]="data.including_male_animals"
               (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
           </div>
-        </div>
+        </div> -->
         <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters"
           [value]="data.id_type_of_water" (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
         <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distance_to_water"

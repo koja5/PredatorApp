@@ -80,17 +80,17 @@
       "logout": "Ausloggen"
    },
    "predatorForm": {
-      "predators": "Predator",
-      "totalNumber": "Anzahl Gesamt *",
+      "predators": "Predator *",
+      "totalNumber": "Anzahl Gesamt",
       "includingYoungAnimals": "davon Jungtiere",
       "secondTitle": "Bitte nur sofern eindeutig erkennbar",
       "includingFemaleAnimals": "davon weibliche Erwachsene",
       "includingMaleAnimals": "davon männliche Erwachsene",
-      "typeOfWater": "Gewässerart",
+      "typeOfWater": "Gewässerart *",
       "distanceToWater": "Abstand zu Gewässer",
-      "territory": "Revier",
+      "territory": "Revier *",
       "location": "Standort/Gewasser",
-      "activity": "Aktivität",
+      "activity": "Aktivität *",
       "comment": "Freier Kommentar",
       "addMorePicture": "Add more",
       "deletePredatorData": "Raubtierdaten löschen"
@@ -123,6 +123,9 @@
       "dialogGenerateNewPasswordText": "Möchten Sie für diesen Benutzer ein neues Passwort generieren? Das neue Passwort wird per E-Mail an den Benutzer gesendet.",
       "dialogGenerateNewPasswordYes": "Ja, neues Passwort generieren",
       "dialogGenerateNewPasswordNo": "NEIN"
+   },
+   "action": {
+      "completedReport": "Meldung absenden"
    },
    "form": {
       "mustFillThisField": "Bitte dieses Feld ausfüllen!",

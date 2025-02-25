@@ -5,6 +5,8 @@ import { NeedToApproveComponent } from './components/pages/need-to-approve/need-
 import { LoggedGuard } from './services/guards/login/logged-guard.service';
 import { LoginGuardService } from './services/guards/login/login-guard.service';
 import { SuperadminComponent } from './components/superadmin/superadmin.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/guards/auth-interceptor';
 
 const routes: Routes = [
   {
@@ -44,6 +46,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   exports: [RouterModule],
 })
