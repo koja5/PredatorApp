@@ -176,8 +176,8 @@ export class PredatorEditComponent implements OnInit {
     if (
       !this.data.id_activity ||
       !this.data.id_predator ||
-      !this.data.id_territory ||
-      !this.data.id_type_of_water
+      !this.data.id_fish_district ||
+      !this.data.id_water
     )
       return false;
 
@@ -254,7 +254,7 @@ export class PredatorEditComponent implements OnInit {
   }
 
   changeEmitTypeOfWater(event: number) {
-    this.data.id_type_of_water = event;
+    this.data.id_water = event;
   }
 
   changeEmitDistanceToWater(event: number) {
@@ -262,7 +262,7 @@ export class PredatorEditComponent implements OnInit {
   }
 
   changeEmitTerritory(event: number) {
-    this.data.id_territory = event;
+    this.data.id_fish_district = event;
   }
 
   changeEmitActivity(event: number) {

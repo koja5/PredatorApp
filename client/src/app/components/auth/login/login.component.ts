@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { CallApiService } from 'src/app/services/call-api.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
@@ -23,14 +23,10 @@ export class LoginComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
-  public signUpForm = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    phone: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-    rePassword: ['', [Validators.required]],
-  });
+  public signUpForm: FormGroup;
+  public areas: any;
   public isAcceptTermsAndPrivacy = true;
+  public signUpProcess = 'profile';
 
   constructor(
     private _storageService: StorageService,
@@ -39,7 +35,28 @@ export class LoginComponent implements OnInit {
     private _roter: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initSignUpForm();
+    this.getAllAreas();
+  }
+
+  getAllAreas() {
+    this._service.callGetMethod('/api/auth/getAllAreas').subscribe((data) => {
+      this.areas = data;
+    });
+  }
+
+  initSignUpForm() {
+    this.signUpForm = this.formBuilder.group({
+      firstname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      rePassword: ['', [Validators.required]],
+      area: [''],
+    });
+  }
 
   changeMode() {
     if (this.mode === '') {
@@ -98,14 +115,30 @@ export class LoginComponent implements OnInit {
     this.submited = true;
   }
 
-  signUp() {
+  goToArea() {
     this.submited = true;
     if (
       !this.signUpForm.valid ||
-      this.signUpForm.value.password != this.signUpForm.value.rePassword ||
-      !this.isAcceptTermsAndPrivacy
+      this.signUpForm.value.password != this.signUpForm.value.rePassword
     )
       return;
+
+    this.signUpProcess = 'areas';
+
+    if (!this.areas) {
+      this._service.callGetMethod('/api/auth/getAllAreas').subscribe((data) => {
+        this.areas = data;
+      });
+    }
+  }
+
+  selectArea(item: any) {
+    this.signUpForm.controls.area.setValue(item.id);
+  }
+
+  signUp() {
+    this.submited = true;
+    if (!this.signUpForm.valid || !this.signUpForm.value.area) return;
 
     this._service
       .callPostMethod('/api/auth/signUp', this.signUpForm.value)
@@ -117,6 +150,10 @@ export class LoginComponent implements OnInit {
           this.error = 'created-account';
           setTimeout(() => {
             this.mode = '';
+            setTimeout(() => {
+              this.signUpProcess = 'profile';
+              this.initSignUpForm();
+            }, 2000);
           }, 2000);
         }
       });

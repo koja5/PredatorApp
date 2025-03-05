@@ -10,7 +10,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import { OGCMapTile, OSM, TileDebug } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
-import { Feature } from 'ol';
+import { Feature, Overlay } from 'ol';
 import { Point } from 'ol/geom';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
@@ -31,6 +31,7 @@ export class MapComponent implements OnInit {
   @Input() longitude: number;
   @Input() latitude: number;
   @Input() manual: boolean = true;
+  @Input() mapMarkers: any = [];
   @ViewChild('map') public map!: Map;
 
   public loader = true;
@@ -42,9 +43,11 @@ export class MapComponent implements OnInit {
       this.initializeMap();
 
       if (this.manual) {
-        this.map.on('singleclick', function (this: MapComponent, evt) {
+        this.map.on('singleclick', (evt) => {
+          // this.setPoint(coordinate[0], coordinate[1]);
           const coordinate = evt.coordinate;
-          coordinate[1] += 0.0001;
+          coordinate[1] -= 0.00007;
+
           const iconFeature = new Feature({
             geometry: new Point([coordinate[0], coordinate[1]]),
             population: 4000,
@@ -56,9 +59,9 @@ export class MapComponent implements OnInit {
               anchor: [0.5, 46],
               anchorXUnits: 'fraction',
               anchorYUnits: 'pixels',
-              src: 'assets/icon/map-marker.svg',
-              width: 25,
-              height: 25,
+              src: 'assets/icon/map-marker.png',
+              width: 40,
+              height: 40,
             }),
           });
 
@@ -70,13 +73,6 @@ export class MapComponent implements OnInit {
 
           const vectorLayer = new VectorLayer({
             source: vectorSource,
-          });
-
-          const rasterLayer = new TileLayer({
-            source: new OGCMapTile({
-              url: 'https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles/WebMercatorQuad',
-              crossOrigin: '',
-            }),
           });
 
           evt.map.setLayers([
@@ -98,7 +94,7 @@ export class MapComponent implements OnInit {
           );
         });
       }
-    }, 10);
+    }, 20);
   }
 
   async initializeMap() {
@@ -122,9 +118,9 @@ export class MapComponent implements OnInit {
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        src: 'assets/icon/map-marker.svg',
-        width: 25,
-        height: 25,
+        src: 'assets/icon/map-marker.png',
+        width: 40,
+        height: 40,
       }),
     });
 
@@ -136,13 +132,6 @@ export class MapComponent implements OnInit {
 
     const vectorLayer = new VectorLayer({
       source: vectorSource,
-    });
-
-    const rasterLayer = new TileLayer({
-      source: new OGCMapTile({
-        url: 'https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles/WebMercatorQuad',
-        crossOrigin: '',
-      }),
     });
 
     this.map = new Map({});

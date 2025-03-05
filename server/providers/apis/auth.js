@@ -88,23 +88,64 @@ router.post("/signUp", function (req, res, next) {
           req.body.password = sha1(req.body.password);
           delete req.body.rePassword;
           conn.query(
-            "INSERT INTO users set ?",
-            [req.body],
+            "select * from all_areas where id = ?",
+            [req.body.area],
             function (err, rows, fields) {
-              conn.release();
               if (err) {
-                res.json({
-                  type: "exist-account",
-                  value: 0,
-                });
+                logger.log("error", err.sql + ". " + err.sqlMessage);
               } else {
-                makeRequest(req.body, "mail/sendLinkForVerifyEmail", res);
+                if (rows.length) {
+                  delete req.body.area;
+                  req.body.id_admin = rows[0].id_admin;
+                  conn.query(
+                    "INSERT INTO users set ?",
+                    [req.body],
+                    function (err, rows, fields) {
+                      conn.release();
+                      if (err) {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json({
+                          type: "exist-account",
+                          value: 0,
+                        });
+                      } else {
+                        makeRequest(
+                          req.body,
+                          "mail/sendLinkForVerifyEmail",
+                          res
+                        );
+                      }
+                    }
+                  );
+                } else {
+                  res.json({ type: "exist-account", value: 0 });
+                }
               }
             }
           );
         }
       }
     );
+  });
+});
+
+router.get("/getAllAreas", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query("select id, name from all_areas", function (err, rows, fields) {
+      conn.release();
+      console.log(err);
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(false);
+      } else {
+        res.json(rows);
+      }
+    });
   });
 });
 

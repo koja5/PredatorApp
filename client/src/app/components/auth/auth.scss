@@ -177,7 +177,6 @@ form.sign-up-form {
   outline: none;
   border-radius: 49px;
   cursor: pointer;
-  background-color: var(--btn-color);
   color: var(--btn-text);
   text-transform: uppercase;
   font-weight: 600;
@@ -185,8 +184,16 @@ form.sign-up-form {
   transition: 0.5s;
 }
 
+.btn-primary {
+  background-color: var(--btn-color);
+}
+
 .btn:hover {
   background-color: var(--btn-hover);
+}
+
+.btn-light {
+  color: #000;
 }
 
 .check {

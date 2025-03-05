@@ -49,10 +49,10 @@
           </div>
         </div> -->
         <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters"
-          [value]="data.id_type_of_water" (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
+          [value]="data.id_water" (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
         <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distance_to_water"
           (changeEmit)="changeEmitDistanceToWater($event)"></app-ion-input>
-        <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.id_territory"
+        <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.id_fish_district"
           (changeEmit)="changeEmitTerritory($event)"></app-ion-select>
         <app-ion-select [label]="'predatorForm.activity'" [data]="allItems.activities" [value]="data.id_activity"
           (changeEmit)="changeEmitActivity($event)"></app-ion-select>

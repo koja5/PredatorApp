@@ -29,7 +29,6 @@
 @import "../node_modules/@swimlane/ngx-datatable/themes/material.scss";
 @import "../node_modules/@swimlane/ngx-datatable/assets/icons.css";
 
-
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -189,7 +188,8 @@ a {
   border-top: 1px solid #ebe9f1;
 }
 
-.full-width {
+.full-width,
+.w-full {
   width: 100%;
 }
 
@@ -206,3 +206,6 @@ a {
   display: none;
 }
 
+.map-marker {
+  cursor: pointer;
+}

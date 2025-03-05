@@ -26,6 +26,8 @@
       "login": "Anmelden",
       "logout": "Abmelden",
       "name": "Ihr Name",
+      "firstname": "Vorname",
+      "lastname": "Nachname",
       "phone": "Telefon",
       "email": "Email / Nutzername",
       "emailIsRequired": "Email / Nutzername ist erforderlich",
@@ -63,7 +65,10 @@
       "emailNotExist": "E-Mail existiert nicht. Versuchen Sie es mit einer anderen E-Mail-Adresse.",
       "accountExists": "Es existiert eine E-Mail mit dieser E-Mail. Bitte versuchen Sie es mit einer anderen E-Mail.",
       "successfullyCreatedAccount": "Konto erfolgreich erstellt. Bitte bestätigen Sie Ihre E-Mail-Adresse.",
-      "pleaseFillFields": "Alle Felder sind erforderlich. Bitte füllen Sie es aus."
+      "pleaseFillFields": "Alle Felder sind erforderlich. Bitte füllen Sie es aus.",
+      "goToNext": "Nächste",
+      "back": "Zurück",
+      "selectArea": "Wählen Sie Ihren Bereich:"
    },
    "navigation": {
       "home": "Heim",
