@@ -11,6 +11,7 @@ import { CallApiService } from 'src/app/services/call-api.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Capacitor } from '@capacitor/core';
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: 'app-predators',
@@ -34,10 +35,15 @@ export class PredatorsComponent implements OnInit {
   public predators: any;
   public loader = true;
 
-  constructor(private _service: CallApiService, private _router: Router) {}
+  constructor(
+    private _service: CallApiService,
+    private _router: Router,
+    private _helpService: HelpService
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getPredators();
+    console.log(await this._helpService.getCurrentLocation());
   }
 
   getPredators() {
@@ -52,11 +58,20 @@ export class PredatorsComponent implements OnInit {
 
   takePicture = async () => {
     this.active = '';
+    this.loader = true;
     const image = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
       source: CameraSource.Camera,
       quality: 100,
+    }).catch((er: any) => {
+      console.log(er);
     });
+    this.loader = false;
+    if (image) {
+      const imageBlob = this.base64toBlob(image.base64String, 'image/jpeg');
+      if (!imageBlob) return;
+      this.imageSource = imageBlob;
+    }
 
     // const fileSrc = Capacitor.convertFileSrc(image.path!);
 
@@ -72,11 +87,6 @@ export class PredatorsComponent implements OnInit {
     // });
 
     // if (!image) return;
-
-    const imageBlob = this.base64toBlob(image.base64String, 'image/jpeg');
-    if (!imageBlob) return;
-
-    this.imageSource = imageBlob;
 
     // this._router.navigate([
     //   'home/predator-edit/new?gallery=' + this.imageSource,

@@ -17,7 +17,6 @@ export class AppComponent {
     private _translateService: TranslateService,
     private _storageService: StorageService
   ) {
-    // Add languages to the translation service
     this._translateService.addLangs(['en', 'de']);
   }
 

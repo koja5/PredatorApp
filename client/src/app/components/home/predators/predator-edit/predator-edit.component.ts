@@ -26,6 +26,7 @@ import { HttpNativeService } from 'src/app/services/http-provider/http-native.se
 import { ToastrComponent } from 'src/app/components/common/toastr/toastr.component';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from 'src/app/services/storage.service';
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: 'app-predator-edit',
@@ -64,7 +65,8 @@ export class PredatorEditComponent implements OnInit {
     private _http: HttpNativeService,
     private _toastr: ToastrComponent,
     private _translate: TranslateService,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _helpService: HelpService
   ) {}
 
   //#region INIT
@@ -91,9 +93,14 @@ export class PredatorEditComponent implements OnInit {
     }
 
     if (!this.data.longitude && !this.data.latitude) {
-      const geolocation = await Geolocation.getCurrentPosition();
-      this.data.longitude = geolocation.coords.longitude;
-      this.data.latitude = geolocation.coords.latitude;
+      // const geolocation = this._helpService.getCurrentLocation();
+      this.loader = true;
+      const geolocation = await this._helpService.getCurrentLocation();
+      if (geolocation) {
+        this.data.longitude = geolocation.coords.longitude;
+        this.data.latitude = geolocation.coords.latitude;
+      }
+      this.loader = false;
     }
 
     this.isModalOpen = true;
@@ -165,14 +172,6 @@ export class PredatorEditComponent implements OnInit {
   }
 
   checkRequiredValues() {
-    // for (let [key, value] of Object.entries(this.data)) {
-    //   if (
-    //     key != 'completed' &&
-    //     key != 'completed_date' &&
-    //     (value == null || value == undefined || value == '')
-    //   )
-    //     return false;
-    // }
     if (
       !this.data.id_activity ||
       !this.data.id_predator ||

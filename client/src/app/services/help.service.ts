@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { ParameterTypeEnum } from '../enums/parameter-type-enum';
 import { UserTypesEnum } from '../enums/user-types-enum';
+import { Geolocation } from '@capacitor/geolocation';
+import {
+  NativeSettings,
+  AndroidSettings,
+  IOSSettings,
+} from 'capacitor-native-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -179,5 +185,39 @@ export class HelpService {
       }
     }
     return false;
+  }
+
+  async getCurrentLocation() {
+    try {
+      const permissionStatus = await Geolocation.checkPermissions();
+      if (permissionStatus?.location != 'granted') {
+        const requestStatus = await Geolocation.requestPermissions();
+        if (requestStatus.location != 'granted') {
+          await this.openSettings();
+          return;
+        }
+        // return await Geolocation.getCurrentPosition();
+        const position = await Geolocation.getCurrentPosition();
+        return position;
+      } else {
+        const position = await Geolocation.getCurrentPosition();
+        return position;
+      }
+    } catch (e: any) {
+      if (e?.message == 'Location services are not enabled') {
+        await this.openSettings();
+      }
+      console.log(e);
+      return;
+    }
+  }
+
+  openSettings(app = false) {
+    return NativeSettings.open({
+      optionAndroid: app
+        ? AndroidSettings.ApplicationDetails
+        : AndroidSettings.Location,
+      optionIOS: app ? IOSSettings.App : IOSSettings.LocationServices,
+    });
   }
 }
