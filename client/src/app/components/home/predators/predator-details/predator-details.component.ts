@@ -6,6 +6,8 @@ import { PredatorModel } from '../../models/predator.model';
 import Map from 'ol/Map';
 import { environment } from 'src/environments/environment';
 import { QuestionAlertComponent } from 'src/app/components/common/question-alert/question-alert.component';
+import { Platform } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-predator-details',
@@ -22,8 +24,14 @@ export class PredatorDetailsComponent implements OnInit {
   constructor(
     private _service: CallApiService,
     private _activatedRouter: ActivatedRoute,
-    private _router: Router
-  ) {}
+    private _router: Router,
+    private platform: Platform,
+    private _location: Location
+  ) {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this._location.back();
+    });
+  }
 
   ngOnInit() {
     this.getData();
@@ -65,6 +73,8 @@ export class PredatorDetailsComponent implements OnInit {
           })
         );
       }
+    } else {
+      this.images = [];
     }
   }
 
@@ -82,9 +92,5 @@ export class PredatorDetailsComponent implements OnInit {
           }
         });
     }
-  }
-
-  getCoordinate(event: any) {
-    console.log(event);
   }
 }

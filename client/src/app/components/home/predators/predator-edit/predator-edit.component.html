@@ -14,6 +14,7 @@
     <ion-content class="ion-padding">
       <app-loader *ngIf="loader"></app-loader>
       <div *ngIf="!loader">
+        <app-app-ion-datetime-button [value]="data.creation_date" (changeEmit)="changeEmitCreationDate($event)"></app-app-ion-datetime-button>
         <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.id_predator"
           (changeEmit)="changeEmitPredator($event)"></app-ion-select>
         <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.total_number"
@@ -25,31 +26,8 @@
           (changeEmit)="changeEmitIncludingFemaleAnimals($event)"></app-ion-input>
         <app-ion-input [label]="'predatorForm.includingMaleAnimals'" [type]="'number'"
           [value]="data.including_male_animals" (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
-        <!-- <div class="row">
-          <div class="col-6">
-            <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.total_number"
-              (changeEmit)="changeEmitTotalNumber($event)"></app-ion-input>
-          </div>
-          <div class="col-6">
-            <app-ion-input [label]="'predatorForm.includingYoungAnimals'" [type]="'number'"
-              [value]="data.including_young_animals"
-              (changeEmit)="changeEmitIncludingYoungAnimals($event)"></app-ion-input>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <app-ion-input [label]="'predatorForm.includingFemaleAnimals'" [type]="'number'"
-              [value]="data.including_female_animals"
-              (changeEmit)="changeEmitIncludingFemaleAnimals($event)"></app-ion-input>
-          </div>
-          <div class="col-6">
-            <app-ion-input [label]="'predatorForm.includingMaleAnimals'" [type]="'number'"
-              [value]="data.including_male_animals"
-              (changeEmit)="changeEmitIncludingMaleAnimals($event)"></app-ion-input>
-          </div>
-        </div> -->
-        <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters"
-          [value]="data.id_water" (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
+        <app-ion-select [label]="'predatorForm.typeOfWater'" [data]="allItems.typeOfWaters" [value]="data.id_water"
+          (changeEmit)="changeEmitTypeOfWater($event)"></app-ion-select>
         <app-ion-input [label]="'predatorForm.distanceToWater'" [type]="'number'" [value]="data.distance_to_water"
           (changeEmit)="changeEmitDistanceToWater($event)"></app-ion-input>
         <app-ion-select [label]="'predatorForm.territory'" [data]="allItems.territories" [value]="data.id_fish_district"
@@ -64,7 +42,7 @@
       </div>
     </ion-content>
 
-    <div class="predator-delete mt-4" *ngIf="data.id">
+    <div class="predator-delete mt-4" *ngIf="!loader&&data.id">
       <button class="btn btn-sm btn-outline-danger"
         (click)="alertQuestion.showQuestionAlert()">{{'predatorForm.deletePredatorData' |
         translate}}</button>

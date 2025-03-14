@@ -189,6 +189,11 @@ export class HelpService {
 
   async getCurrentLocation() {
     try {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
       const permissionStatus = await Geolocation.checkPermissions();
       if (permissionStatus?.location != 'granted') {
         const requestStatus = await Geolocation.requestPermissions();
@@ -197,10 +202,10 @@ export class HelpService {
           return;
         }
         // return await Geolocation.getCurrentPosition();
-        const position = await Geolocation.getCurrentPosition();
+        const position = await Geolocation.getCurrentPosition(options);
         return position;
       } else {
-        const position = await Geolocation.getCurrentPosition();
+        const position = await Geolocation.getCurrentPosition(options);
         return position;
       }
     } catch (e: any) {
@@ -219,5 +224,31 @@ export class HelpService {
         : AndroidSettings.Location,
       optionIOS: app ? IOSSettings.App : IOSSettings.LocationServices,
     });
+  }
+
+  convertDateToIsoString(date: any) {
+    var tzo = -date.getTimezoneOffset(),
+      dif = tzo >= 0 ? '+' : '-',
+      pad = function (num: any) {
+        return (num < 10 ? '0' : '') + num;
+      };
+
+    return (
+      date.getFullYear() +
+      '-' +
+      pad(date.getMonth() + 1) +
+      '-' +
+      pad(date.getDate()) +
+      'T' +
+      pad(date.getHours()) +
+      ':' +
+      pad(date.getMinutes()) +
+      ':' +
+      pad(date.getSeconds()) +
+      dif +
+      pad(Math.floor(Math.abs(tzo) / 60)) +
+      ':' +
+      pad(Math.abs(tzo) % 60)
+    );
   }
 }

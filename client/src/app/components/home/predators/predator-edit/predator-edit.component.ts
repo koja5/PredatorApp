@@ -6,7 +6,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { IonModal } from '@ionic/angular';
+import { IonModal, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CallApiService } from 'src/app/services/call-api.service';
 import {
@@ -18,7 +18,7 @@ import {
 } from './data-predators.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Geolocation } from '@capacitor/geolocation';
+import { Geolocation, GeolocationOptions } from '@capacitor/geolocation';
 import { PredatorModel } from '../../models/predator.model';
 import { QuestionAlertComponent } from 'src/app/components/common/question-alert/question-alert.component';
 import { HttpProviderService } from 'src/app/services/http-provider/http-provider.service';
@@ -66,12 +66,20 @@ export class PredatorEditComponent implements OnInit {
     private _toastr: ToastrComponent,
     private _translate: TranslateService,
     private _storageService: StorageService,
-    private _helpService: HelpService
-  ) {}
+    private _helpService: HelpService,
+    private platform: Platform
+  ) {
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.isModalOpen = false;
+      this.refreshEmit.emit();
+      this._location.back();
+    });
+  }
 
   //#region INIT
 
   async ngOnInit() {
+    this.isModalOpen = true;
     this.getAllPredators();
     this.getAllTypeOfWaters();
     this.getAllTerritories();
@@ -79,6 +87,8 @@ export class PredatorEditComponent implements OnInit {
 
     if (this.gallery) {
       this.data.gallery = this.gallery;
+      this.checkGeolocation();
+      this.initializeCreationDate();
     } else if (this._activatedRouter.snapshot.params.id != 'new') {
       this.loader = true;
       this._service
@@ -88,22 +98,53 @@ export class PredatorEditComponent implements OnInit {
         )
         .subscribe((data: any) => {
           this.data = data;
+          this.checkGeolocation();
           this.loader = false;
         });
+    } else {
+      this.checkGeolocation();
+      this.initializeCreationDate();
     }
+  }
 
+  initializeCreationDate() {
+    const timezone = new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)![1];
+    this.data.creation_date = this._helpService.convertDateToIsoString(
+      new Date()
+    );
+  }
+
+  async checkGeolocation() {
     if (!this.data.longitude && !this.data.latitude) {
-      // const geolocation = this._helpService.getCurrentLocation();
-      this.loader = true;
       const geolocation = await this._helpService.getCurrentLocation();
-      if (geolocation) {
+      this.loader = true;
+      // const geolocation = await Geolocation.getCurrentPosition({
+      //   enableHighAccuracy: true,
+      //   timeout: 5000,
+      //   maximumAge: 0,
+      // });
+      if (geolocation && geolocation.coords!) {
         this.data.longitude = geolocation.coords.longitude;
         this.data.latitude = geolocation.coords.latitude;
       }
       this.loader = false;
     }
 
-    this.isModalOpen = true;
+    // const internalGetCurrentPosition = async (
+    //   options: GeolocationOptions = {}
+    // ): Promise<GeolocationPosition> => {
+    //   return new Promise<GeolocationPosition>((resolve, reject) => {
+    //     const id = Geolocation.watchPosition(options, (position, err) => {
+    //       // Geolocation.clearWatch({ id });
+    //       if (err) {
+    //         reject(err);
+    //         return;
+    //       }
+    //       console.log(position);
+    //       // resolve(position);
+    //     });
+    //   });
+    // };
   }
 
   //#endregion
@@ -172,13 +213,7 @@ export class PredatorEditComponent implements OnInit {
   }
 
   checkRequiredValues() {
-    if (
-      !this.data.id_activity ||
-      !this.data.id_predator ||
-      !this.data.id_fish_district ||
-      !this.data.id_water
-    )
-      return false;
+    if (!this.data.id_predator || !this.data.total_number) return false;
 
     return true;
   }
@@ -291,6 +326,10 @@ export class PredatorEditComponent implements OnInit {
   changeGalleryImage(event: any) {
     this.data.gallery = event.gallery;
     this.uploaded = event.uploaded;
+  }
+
+  changeEmitCreationDate(event: any) {
+    this.data.creation_date = event;
   }
 
   //#endregion

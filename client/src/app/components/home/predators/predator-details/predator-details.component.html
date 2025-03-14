@@ -9,11 +9,11 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding" *ngIf="!loader">
+<ion-content class="ion-padding">
   <div *ngIf="loader">
     <app-loader></app-loader>
   </div>
-  <div class="status-report">
+  <div class="status-report" *ngIf="!loader">
     <div class="draft-status" *ngIf="!data.completed">
       <p class="mb-0">{{'actionMessage.reportCompletedNotYet' | translate}}</p>
       <ion-button fill="outline" color="success" (click)="alertQuestion.showQuestionAlert()"><span
@@ -27,6 +27,9 @@
 
   </div>
   <div class="gallery-container">
+    <div *ngIf="!images || !images.length" class="no-image">
+      <img src="./assets/icon/no-image.svg">
+    </div>
     <gallery *ngIf="images && images.length" [items]="images"></gallery>
   </div>
   <div class="information" *ngIf="!loader&&data">
@@ -89,6 +92,12 @@
         {{'predatorForm.comment' | translate}}
       </ion-text>
       <p class="pl-2"><b class="text-break">{{data.comment}}</b></p>
+    </div>
+    <div>
+      <ion-text>
+        {{'predatorForm.creationDate' | translate}}
+      </ion-text>
+      <p class="pl-2"><b class="text-break">{{data.creation_date | date: 'dd.MM.yyyy HH:mm'}}</b></p>
     </div>
   </div>
 

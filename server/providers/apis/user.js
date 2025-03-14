@@ -123,7 +123,6 @@ router.get("/getAllActivities", auth, async (req, res, next) => {
 });
 
 router.get("/getAllPredatorNotes", auth, async (req, res, next) => {
-  console.log(req.user.user.id);
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -159,7 +158,7 @@ router.get("/getPredatorById/:id", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select p.*, ap.name 'name_of_predator', atow.name as 'name_of_type_of_water', at.name as 'name_of_territory', aa.name as 'name_of_activity' from predators p join all_predators ap on p.id_predator = ap.id join all_waters atow on p.id_water = atow.id join all_fish_districts at on p.id_fish_district = at.id join all_activities aa on p.id_activity = aa.id where p.id_user = ? and p.id = ?",
+          "select p.*, ap.name 'name_of_predator', atow.name as 'name_of_type_of_water', at.name as 'name_of_territory', aa.name as 'name_of_activity' from predators p left join all_predators ap on p.id_predator = ap.id left join all_waters atow on p.id_water = atow.id left join all_fish_districts at on p.id_fish_district = at.id left join all_activities aa on p.id_activity = aa.id where p.id_user = ? and p.id = ?",
           [req.user.user.id, req.params.id],
           function (err, rows, fields) {
             if (err) {

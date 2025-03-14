@@ -19,7 +19,8 @@
       "needToFillAllFields": "Bitte füllen Sie alle Felder aus.",
       "action": "Aktion",
       "createNew": "Neu erstellen",
-      "save": "Speichern"
+      "save": "Speichern",
+      "imageNotAvailable": "Bild nicht verfügbar"
    },
    "login": {
       "loginTitle": "Login",
@@ -86,19 +87,20 @@
    },
    "predatorForm": {
       "predators": "Predator *",
-      "totalNumber": "Anzahl Gesamt",
+      "totalNumber": "Anzahl Gesamt *",
       "includingYoungAnimals": "davon Jungtiere",
       "secondTitle": "Bitte nur sofern eindeutig erkennbar",
       "includingFemaleAnimals": "davon weibliche Erwachsene",
       "includingMaleAnimals": "davon männliche Erwachsene",
-      "typeOfWater": "Gewässerart *",
+      "typeOfWater": "Gewässerart",
       "distanceToWater": "Abstand zu Gewässer",
-      "territory": "Revier *",
+      "territory": "Revier",
       "location": "Standort/Gewasser",
-      "activity": "Aktivität *",
+      "activity": "Aktivität",
       "comment": "Freier Kommentar",
       "addMorePicture": "Add more",
-      "deletePredatorData": "Raubtierdaten löschen"
+      "deletePredatorData": "Raubtierdaten löschen",
+      "creationDate": "Erstellungsdatum"
    },
    "actionMessage": {
       "successExecuteActionTitleDefault": "Erfolgreich geändert!",

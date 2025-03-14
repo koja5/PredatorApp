@@ -30,8 +30,6 @@ export class AppIonSelectComponent implements OnInit {
   }
 
   change(event: any) {
-    console.log(event.target.value);
-    // this.ionChange.emit(event.detail.value);
     this.value = event.target.value;
     this.changeEmit.emit(this.value);
   }

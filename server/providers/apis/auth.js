@@ -21,7 +21,6 @@ connection.getConnection(function (err, conn) {});
 // #region AUTH
 
 router.post("/login", function (req, res, next) {
-  console.log(req.body);
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -179,8 +178,6 @@ router.get("/verifyEmail/:email", function (req, res, next) {
       res.json(err);
     }
 
-    console.log(req.params);
-
     conn.query(
       "update users set verify = 1, active = 1 where sha1(email)",
       [req.params.email],
@@ -203,8 +200,6 @@ router.get("/checkIsNeedToActive/:email", function (req, res, next) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       res.json(err);
     }
-
-    console.log();
 
     conn.query(
       "select * from users where email = ? and active = 0",
@@ -264,8 +259,6 @@ router.post("/resetPassword", function (req, res, next) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       res.json(err);
     }
-
-    console.log(req.body);
 
     conn.query(
       "update users set password = ? where sha1(lower(email)) = ?",

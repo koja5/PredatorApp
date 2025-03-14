@@ -1,0 +1,18 @@
+<ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime id="datetime" locale="de-AT" presentation="date-time" [(ngModel)]="value"
+      (ngModelChange)="change($event)" [formatOptions]="{
+        date: {
+          day: '2-digit',
+          month: 'numeric',
+          year: 'numeric'
+        },
+        time: {
+          hour: '2-digit',
+          minute: '2-digit',
+        },
+      }"></ion-datetime>
+  </ng-template>
+</ion-modal>

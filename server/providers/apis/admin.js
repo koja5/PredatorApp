@@ -120,8 +120,6 @@ router.post("/exportBirthdayAndFortbildung", auth, async (req, res, next) => {
           }
         }
 
-        console.log(whereQuery);
-
         conn.query(
           "select DATE_FORMAT(fo.geburtsdatum, '%d.%m.%Y') as 'geburtsdatum', fort.*,  DATE_FORMAT(fort.fortbilfdungstermin, '%d.%m.%Y') as 'fortbilfdungstermin' from fsd_organs fo join fortbildungstermine fort on fo.fsd_id = fort.fsd_id where " +
             whereQuery,
@@ -160,8 +158,6 @@ router.post(
               whereQuery += " or ";
             }
           }
-
-          console.log(whereQuery);
 
           conn.query(
             "select fo.*, DATE_FORMAT(fo.geburtsdatum, '%d.%m.%Y') as 'geburtsdatum', fort.*, DATE_FORMAT(fort.fortbilfdungstermin, '%d.%m.%Y') as 'fortbilfdungstermin' from fsd_organs fo join fortbildungstermine fort on fo.fsd_id = fort.fsd_id where " +
@@ -202,8 +198,6 @@ router.post(
               whereQuery += " or ";
             }
           }
-
-          console.log(whereQuery);
 
           conn.query(
             "select fo.*, DATE_FORMAT(fo.geburtsdatum, '%d.%m.%Y') as 'geburtsdatum', fort.*, DATE_FORMAT(fort.fortbilfdungstermin, '%d.%m.%Y') as 'fortbilfdungstermin', be.*, DATE_FORMAT(be.bescheid_datum, '%d.%m.%Y') as 'bescheid_datum', DATE_FORMAT(be.bestellt_seit, '%d.%m.%Y') as 'bestellt_seit', DATE_FORMAT(be.Abbestellung, '%d.%m.%Y') as 'Abbestellung' from fsd_organs fo join fortbildungstermine fort on fo.fsd_id = fort.fsd_id join bestellungen be on fo.fsd_id = be.fsd_id where " +

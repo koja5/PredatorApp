@@ -43,7 +43,6 @@ export class PredatorsComponent implements OnInit {
 
   async ngOnInit() {
     this.getPredators();
-    console.log(await this._helpService.getCurrentLocation());
   }
 
   getPredators() {
@@ -66,11 +65,13 @@ export class PredatorsComponent implements OnInit {
     }).catch((er: any) => {
       console.log(er);
     });
-    this.loader = false;
     if (image) {
       const imageBlob = this.base64toBlob(image.base64String, 'image/jpeg');
       if (!imageBlob) return;
       this.imageSource = imageBlob;
+      this.loader = false;
+    } else {
+      this.loader = false;
     }
 
     // const fileSrc = Capacitor.convertFileSrc(image.path!);

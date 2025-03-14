@@ -72,6 +72,39 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
           }
           req.body.gallery = galleryPath;
 
+          req.body.id_water =
+            req.body.id_water == "null" ? null : req.body.id_water;
+          req.body.id_fish_district =
+            req.body.id_fish_district == "null"
+              ? null
+              : req.body.id_fish_district;
+          req.body.id_activity =
+            req.body.id_activity == "null" ? null : req.body.id_activity;
+
+          req.body.including_young_animals =
+            req.body.including_young_animals == "" ||
+            req.body.including_young_animals == "null"
+              ? null
+              : req.body.including_young_animals;
+
+          req.body.including_female_animals =
+            req.body.including_female_animals == "" ||
+            req.body.including_female_animals == "null"
+              ? null
+              : req.body.including_female_animals;
+
+          req.body.including_male_animals =
+            req.body.including_male_animals == "" ||
+            req.body.including_male_animals == "null"
+              ? null
+              : req.body.including_male_animals;
+
+          req.body.distance_to_water =
+            req.body.distance_to_water == "" ||
+            req.body.distance_to_water == "null"
+              ? null
+              : req.body.distance_to_water;
+
           conn.query(
             "INSERT INTO predators set ? ON DUPLICATE KEY UPDATE ?",
             [req.body, req.body],
