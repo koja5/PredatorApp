@@ -19,6 +19,7 @@ export class PredatorModel {
   longitude: number;
   latitude: number;
   completed: boolean;
+  visible: boolean;
   completed_date: Date;
   creation_date: string;
 }

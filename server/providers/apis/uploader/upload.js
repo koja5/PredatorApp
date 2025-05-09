@@ -105,6 +105,8 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
               ? null
               : req.body.distance_to_water;
 
+          req.body.visible = req.user.user.trusted;
+
           conn.query(
             "INSERT INTO predators set ? ON DUPLICATE KEY UPDATE ?",
             [req.body, req.body],

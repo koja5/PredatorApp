@@ -286,6 +286,7 @@ function generateToken(data) {
         id: data.id,
         name: data.name,
         type: data.type,
+        trusted: data.trusted,
       },
       email: data.email,
     },

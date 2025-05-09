@@ -41,7 +41,8 @@
           <div>
             <img *ngIf="!item.completed && getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg"
               class="information">
-            <img *ngIf="item.completed" src="./assets/icon/report-completed.webp" class="information">
+            <img *ngIf="item.completed&&item.visible" src="./assets/icon/report-completed.webp" class="information">
+            <img *ngIf="item.completed&&!item.visible" src="./assets/icon/report-waiting.png" class="information">
           </div>
           <img class="predator-image {{loadedImage[i] ? 'no-image' : ''}}"
             ngSrc="{{loadedImage[i] ? getImageForPreviewFromGallery(item.gallery) : './assets/icon/loader.gif'}}"

@@ -262,8 +262,8 @@ router.post("/completedReport", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "update predators set completed = 1, completed_date = ? where id = ? and id_user = ?",
-          [new Date(), req.body.id, req.user.user.id],
+          "update predators set completed = 1, completed_date = ?, visible = ? where id = ? and id_user = ?",
+          [new Date(), req.user.user.trusted, req.body.id, req.user.user.id],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -294,6 +294,7 @@ function generateToken(data) {
         firstname: data.firstname,
         lastname: data.lastname,
         type: data.type,
+        trusted: data.trusted,
       },
       email: data.email,
     },

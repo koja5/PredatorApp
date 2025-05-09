@@ -49,7 +49,18 @@ export class MapComponent implements OnInit {
       if (this.manual) {
         this.map.on('singleclick', (evt) => {
           const coordinate = evt.coordinate;
-          coordinate[1] += 0.00011;
+          // coordinate[1] += 0.00011;
+          const view = this.map.getView();
+          if (view['values_'] && view['values_'].zoom) {
+            if (view['values_'].zoom / 10000 > 0.0017) {
+              coordinate[1] += view['values_'].zoom / 10000 - 0.0017;
+            } else {
+              const difference = view['values_'].zoom / 10000 - 0.00025;
+              coordinate[1] += view['values_'].zoom / 10000 - difference;
+            }
+          } else {
+            coordinate[1] += 0.00011;
+          }
           this.setPoint(coordinate[0], coordinate[1], evt.map);
           this._storageService.setLocalStorage('coordination', {
             log: coordinate[0],
@@ -110,10 +121,11 @@ export class MapComponent implements OnInit {
       vectorLayer,
     ]);
     this.map.setTarget('map');
+    const view = this.map.getView();
     this.map.setView(
       new View({
         center: [longitude, latitude],
-        zoom: 80,
+        zoom: view && view['values_'].zoom ? view['values_'].zoom : 80,
         maxZoom: 18,
       })
     );

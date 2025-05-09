@@ -114,6 +114,7 @@
       "dialogCompleteReportQuestionNo": "NEIN",
       "reportCompletedNotYet": "Die Besatzmeldung wurde noch nicht fertiggestellt und gesendet.",
       "reportCompleted": "Diese Besatzmeldung wurde abgeschlossen am/um",
+      "reportNotYetApproved": "Bericht noch nicht genehmigt.",
       "dialogBackReportToOwnerTitle": "Sind sie sicher?",
       "dialogBackReportToOwnerText": "Möchten Sie dem Bewirtschafter die Besatzmeldung wieder zum andern freigeben?",
       "dialogReminderOwnerToCompleteReportTitle": "Sind sie sicher?",
