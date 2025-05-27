@@ -13,16 +13,18 @@ function prepareOptionsForRequest(body, api) {
   };
 }
 
-function makeRequest(body, api, res) {
+function makeRequest(body, api, res = false) {
   var options = prepareOptionsForRequest(body, api);
 
   logger.log("info", JSON.stringify(options));
 
   request(options, function (error, response, body) {
-    if (!error) {
-      res.json(true);
-    } else {
-      res.json(false);
+    if (res) {
+      if (!error) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
     }
   });
 }

@@ -76,7 +76,8 @@ router.get("/getAllTerritories", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from all_fish_districts",
+          "select afd.* from all_fish_districts afd left join users u on afd.id_area = u.id_area where u.id = ?",
+          [req.user.user.id],
           function (err, rows, fields) {
             conn.release();
             if (err) {

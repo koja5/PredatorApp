@@ -8,7 +8,7 @@ import { CallApiService } from 'src/app/services/call-api.service';
   styleUrls: ['./need-to-approve.component.scss'],
 })
 export class NeedToApproveComponent implements OnInit {
-  public loader = true;
+  public loader = false;
 
   constructor(
     private _service: CallApiService,
@@ -16,7 +16,9 @@ export class NeedToApproveComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.checkAccountStatus();
+    if (this._activatedRouter.snapshot.params.email) {
+      this.checkAccountStatus();
+    }
   }
 
   checkAccountStatus() {

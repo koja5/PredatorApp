@@ -130,7 +130,9 @@
       "dialogGenerateNewPasswordTitle": "Sind Sie sicher?",
       "dialogGenerateNewPasswordText": "Möchten Sie für diesen Benutzer ein neues Passwort generieren? Das neue Passwort wird per E-Mail an den Benutzer gesendet.",
       "dialogGenerateNewPasswordYes": "Ja, neues Passwort generieren",
-      "dialogGenerateNewPasswordNo": "NEIN"
+      "dialogGenerateNewPasswordNo": "NEIN",
+      "accountNeedToApproveTitle": "Ihre Anfrage zur Kontoerstellung wurde empfangen.",
+      "accountNeedToApproveText": "Wir prüfen Ihre Anfrage und Sie erhalten per E-Mail eine Benachrichtigung zur Kontoerstellung."
    },
    "action": {
       "completedReport": "Meldung absenden"

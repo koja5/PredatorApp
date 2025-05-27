@@ -92,7 +92,6 @@ router.post("/generateNewPassword", auth, function (req, res) {
         conn.release();
         if (!err) {
           req.body.password = newPassword;
-
           makeRequest(req.body, "mail/sendNewGeneratedPassword", res);
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -113,8 +112,6 @@ router.post("/setActivity", auth, function (req, res, next) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       res.json(err);
     }
-
-    console.log(req.body);
 
     conn.query(
       "INSERT INTO all_activities set ? ON DUPLICATE KEY UPDATE ?",
@@ -143,8 +140,6 @@ router.post("/setPredator", auth, function (req, res, next) {
       res.json(err);
     }
 
-    console.log(req.body);
-
     conn.query(
       "INSERT INTO all_predators set ? ON DUPLICATE KEY UPDATE ?",
       [req.body, req.body],
@@ -171,8 +166,6 @@ router.post("/setTerritory", auth, function (req, res, next) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       res.json(err);
     }
-
-    console.log(req.body);
 
     conn.query(
       "INSERT INTO all_fish_districts set ? ON DUPLICATE KEY UPDATE ?",
@@ -201,8 +194,6 @@ router.post("/setTypeOfWater", auth, function (req, res, next) {
       res.json(err);
     }
 
-    console.log(req.body);
-
     conn.query(
       "INSERT INTO all_waters set ? ON DUPLICATE KEY UPDATE ?",
       [req.body, req.body],
@@ -225,8 +216,6 @@ router.post("/deleteTypeOfWater", auth, function (req, res) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       res.json(err);
     }
-
-    console.log(req.body);
 
     conn.query(
       "delete from all_waters where id = ?",

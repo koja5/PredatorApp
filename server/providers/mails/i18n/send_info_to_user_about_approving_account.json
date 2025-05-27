@@ -1,0 +1,36 @@
+{
+    "template": "send_info_to_user_about_approving_account.hjs",
+    "language": {
+        "en": {
+            "subject": "Verify your mail",
+            "body": {
+                "greetings": "Hey #name 👋",
+                "message": "Please verify your email address.",
+                "verifyButton": "Verify email →",
+                "notSureWhyReceived": "Not sure why you got this email? Please ingorize this email.",
+                "letUsKnow": "let us know",
+                "greetingsEnd": "Thanks,",
+                "team": "The PredatorTracker team",
+                "acceptOurTerms": "Use of our service and website is subject to our",
+                "terms": "Terms of Use",
+                "and": "and",
+                "privacyPolicy": "Privacy Policy"
+            }
+        },
+        "de": {
+            "subject": "Die Anfrage zur Kontoerstellung wird zusätzlich geprüft",
+            "body": {
+                "greetings": "Hey #name 👋",
+                "message": "Ihre Anfrage zur Kontoerstellung wurde zur weiteren Überprüfung an die Administratoren der Region gesendet, in der Sie sich registriert haben. Sie können in Kürze mit Informationen zum Status Ihres Kontos rechnen. Vielen Dank für Ihr Verständnis.",
+                "verifyButton": "E-Mail bestätigen →",
+                "notSureWhyReceived": "Sie sind sich nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte ignorieren Sie diese E-Mail.",
+                "greetingsEnd": "Danke,",
+                "team": "Das PredatorenTracker-Team",
+                "acceptOurTerms": "Die Nutzung unseres Dienstes und unserer Website unterliegt unseren",
+                "terms": "Nutzungsbedingungen",
+                "and": "und",
+                "privacyPolicy": "Datenschutzrichtlinie"
+            }
+        }
+    }
+}

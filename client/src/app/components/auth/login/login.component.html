@@ -143,7 +143,7 @@
               <button class="btn btn-light" (click)="signUpProcess = 'profile'">{{'login.back' | translate}}</button>
               <h5 class="mb-3"> {{'login.selectArea' | translate}}</h5>
               <div class="areas">
-                <p *ngFor="let item of areas" class="{{signUpForm.value.area === item.id ? 'active' : ''}}"
+                <p *ngFor="let item of areas" class="{{signUpForm.value.id_area === item.id ? 'active' : ''}}"
                   (click)="selectArea(item)">{{item.name}}</p>
               </div>
 

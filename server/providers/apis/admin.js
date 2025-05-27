@@ -10,6 +10,7 @@ const sha1 = require("sha1");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/authentification/auth-admin");
 const sql = require("../config/sql-database");
+const makeRequest = require("./help-function/makeRequest");
 
 module.exports = router;
 
@@ -345,6 +346,41 @@ router.get("/getAllFbz", auth, async (req, res, next) => {
             res.json(rows);
           }
         });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/acceptUserForArea/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update users set active = 1 where sha1(id) = ?",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select * from users where sha1(id) = ?",
+                [req.params.id],
+                function (err, rows, fields) {
+                  makeRequest(rows[0], "mail/sendInfoToUserForApprovedAccount");
+                  res.redirect(process.env.link_client + "/page/success");
+                }
+              );
+            }
+          }
+        );
       }
     });
   } catch (ex) {

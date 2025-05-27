@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       rePassword: ['', [Validators.required]],
-      area: [''],
+      id_area: [''],
     });
   }
 
@@ -133,12 +133,12 @@ export class LoginComponent implements OnInit {
   }
 
   selectArea(item: any) {
-    this.signUpForm.controls.area.setValue(item.id);
+    this.signUpForm.controls.id_area.setValue(item.id);
   }
 
   signUp() {
     this.submited = true;
-    if (!this.signUpForm.valid || !this.signUpForm.value.area) return;
+    if (!this.signUpForm.valid || !this.signUpForm.value.id_area) return;
 
     this._service
       .callPostMethod('/api/auth/signUp', this.signUpForm.value)

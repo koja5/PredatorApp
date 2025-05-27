@@ -46,28 +46,30 @@ export class MapComponent implements OnInit {
     setTimeout(async () => {
       this.initializeMap();
 
-      if (this.manual) {
-        this.map.on('singleclick', (evt) => {
-          const coordinate = evt.coordinate;
-          // coordinate[1] += 0.00011;
-          const view = this.map.getView();
-          if (view['values_'] && view['values_'].zoom) {
-            if (view['values_'].zoom / 10000 > 0.0017) {
-              coordinate[1] += view['values_'].zoom / 10000 - 0.0017;
+      setTimeout(() => {
+        if (this.manual) {
+          this.map.on('singleclick', (evt) => {
+            const coordinate = evt.coordinate;
+            // coordinate[1] += 0.00011;
+            const view = this.map.getView();
+            if (view['values_'] && view['values_'].zoom) {
+              if (view['values_'].zoom / 10000 > 0.0017) {
+                coordinate[1] += view['values_'].zoom / 10000 - 0.0017;
+              } else {
+                const difference = view['values_'].zoom / 10000 - 0.00025;
+                coordinate[1] += view['values_'].zoom / 10000 - difference;
+              }
             } else {
-              const difference = view['values_'].zoom / 10000 - 0.00025;
-              coordinate[1] += view['values_'].zoom / 10000 - difference;
+              coordinate[1] += 0.00011;
             }
-          } else {
-            coordinate[1] += 0.00011;
-          }
-          this.setPoint(coordinate[0], coordinate[1], evt.map);
-          this._storageService.setLocalStorage('coordination', {
-            log: coordinate[0],
-            lat: coordinate[1],
+            this.setPoint(coordinate[0], coordinate[1], evt.map);
+            this._storageService.setLocalStorage('coordination', {
+              log: coordinate[0],
+              lat: coordinate[1],
+            });
           });
-        });
-      }
+        }
+      }, 100);
     }, 20);
   }
 

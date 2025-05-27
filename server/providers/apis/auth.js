@@ -11,6 +11,7 @@ const jwt = require("jsonwebtoken");
 const auth = require("../config/authentification/auth");
 const sql = require("../config/sql-database");
 const makeRequest = require("./help-function/makeRequest");
+const userType = require("./enums/user-type");
 
 module.exports = router;
 
@@ -88,13 +89,12 @@ router.post("/signUp", function (req, res, next) {
           delete req.body.rePassword;
           conn.query(
             "select * from all_areas where id = ?",
-            [req.body.area],
+            [req.body.id_area],
             function (err, rows, fields) {
               if (err) {
                 logger.log("error", err.sql + ". " + err.sqlMessage);
               } else {
                 if (rows.length) {
-                  delete req.body.area;
                   req.body.id_admin = rows[0].id_admin;
                   conn.query(
                     "INSERT INTO users set ?",
@@ -179,15 +179,60 @@ router.get("/verifyEmail/:email", function (req, res, next) {
     }
 
     conn.query(
-      "update users set verify = 1, active = 1 where sha1(email)",
+      "select u.*, u.email as 'email_user', a.allow_access_automatically from users u left join area_settings a on u.id_area = a.id_area where sha1(u.email) = ?",
       [req.params.email],
-      function (err, rows, fields) {
-        conn.release();
+      function (err, currentValue, fields) {
         console.log(err);
         if (err) {
           res.json(false);
         } else {
-          res.redirect(process.env.link_client + "auth/login");
+          console.log(currentValue);
+          let active = 0;
+          if (
+            currentValue.length &&
+            currentValue[0].allow_access_automatically
+          ) {
+            active = 1;
+          }
+          conn.query(
+            "update users set verify = 1, active = ? where sha1(email) = ?",
+            [active, req.params.email],
+            function (err, updatedValue, fields) {
+              if (err) {
+                res.json(false);
+              } else {
+                if (active) {
+                  conn.release();
+                  res.redirect(process.env.link_client + "auth/login");
+                } else {
+                  console.log(currentValue[0]);
+                  conn.query(
+                    "select u.* from users u where u.id_area = ? and u.type = ?",
+                    [currentValue[0].id_area, userType.admin],
+                    function (err, admins, fields) {
+                      conn.release();
+                      console.log(admins);
+                      for (let i = 0; i < admins.length; i++) {
+                        currentValue[0]["email"] = admins[i].email;
+                        makeRequest(
+                          currentValue[0],
+                          "mail/sendInfoToAdminAboutApprovingAccount"
+                        );
+                      }
+                      makeRequest(
+                        currentValue[0],
+                        "mail/sendInfoToUserAboutApprovingAccount"
+                      );
+                    }
+                  );
+
+                  res.redirect(
+                    process.env.link_client + "page/need-to-approve"
+                  );
+                }
+              }
+            }
+          );
         }
       }
     );

@@ -36,7 +36,7 @@ router.post("/sendLinkForVerifyEmail", function (req, res, next) {
   let subject = configuration.language.de.subject;
   let body = configuration.language.de.body;
 
-  body.greetings = body.greetings.replaceAll("#name", req.body.name);
+  body.greetings = body.greetings.replaceAll("#name", req.body.firstname + " " + req.body.lastname);
 
   body["verifyLink"] =
     process.env.link_api + "auth/verifyEmail/" + sha1(req.body.email);
@@ -55,13 +55,104 @@ router.post("/resetPasswordLink", function (req, res, next) {
 
   body = getMessage(configuration, req.body.lang);
 
-  console.log(req.body);
-
   // generate reset password
   body["reset_password_link"] =
     process.env.link_client +
     "auth/reset-password/" +
     sha1(req.body.email.toLowerCase());
+
+  sendMail(
+    req.body.email,
+    getSubject(configuration, req.body.lang),
+    body,
+    configuration.template,
+    res
+  );
+});
+
+//#endregion
+
+//#region INFO TO ADMIN ABOUT APPROVING ACCOUNT
+
+router.post("/sendInfoToAdminAboutApprovingAccount", function (req, res, next) {
+  var configuration = JSON.parse(
+    fs.readFileSync(
+      __dirname + "/i18n/send_info_to_admin_about_approving_account.json",
+      "utf-8"
+    )
+  );
+
+  body = getMessage(configuration, req.body.lang);
+
+  body.greetings = body.greetings.replaceAll(
+    "#name",
+    req.body.firstname + " " + req.body.lastname
+  );
+
+  body["acceptLink"] =
+    process.env.link_api +
+    "admin/acceptUserForArea/" +
+    sha1(req.body.id.toString());
+
+  body["name"] = req.body.firstname + " " + req.body.lastname;
+  body["email_user"] = req.body.email_user;
+  body["phone"] = req.body.phone;
+
+  sendMail(
+    req.body.email,
+    getSubject(configuration, req.body.lang),
+    body,
+    configuration.template,
+    res
+  );
+});
+
+//#endregion
+
+//#region INFO TO USER ABOUT APPROVING ACCOUNT
+
+router.post("/sendInfoToUserAboutApprovingAccount", function (req, res, next) {
+  var configuration = JSON.parse(
+    fs.readFileSync(
+      __dirname + "/i18n/send_info_to_user_about_approving_account.json",
+      "utf-8"
+    )
+  );
+
+  body = getMessage(configuration, req.body.lang);
+
+  body.greetings = body.greetings.replaceAll(
+    "#name",
+    req.body.firstname + " " + req.body.lastname
+  );
+
+  sendMail(
+    req.body.email,
+    getSubject(configuration, req.body.lang),
+    body,
+    configuration.template,
+    res
+  );
+});
+
+//#endregion
+
+//#region INFO TO USER ABOUT APPROVED ACCOUNT
+
+router.post("/sendInfoToUserForApprovedAccount", function (req, res, next) {
+  var configuration = JSON.parse(
+    fs.readFileSync(
+      __dirname + "/i18n/send_info_to_user_for_approved_account.json",
+      "utf-8"
+    )
+  );
+
+  body = getMessage(configuration, req.body.lang);
+
+  body.greetings = body.greetings.replaceAll(
+    "#name",
+    req.body.firstname + " " + req.body.lastname
+  );
 
   sendMail(
     req.body.email,
