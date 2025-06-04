@@ -24,6 +24,8 @@ import { PredatorDetailsComponent } from './predators/predator-details/predator-
 import { PredatorProfileUserComponent } from './predators/predator-profile-user/predator-profile-user.component';
 import { ToastrModule } from 'ngx-toastr';
 import { DynamicFieldsModule } from '../common/dynamic-component/dynamic-fields/dynamic-fields.module';
+import { LazyLoadImageDirective } from 'src/app/services/directives/lazy-load.directive';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const routes = [
   {
@@ -52,6 +54,7 @@ const routes = [
     PredatorEditComponent,
     PredatorDetailsComponent,
     PredatorProfileUserComponent,
+    LazyLoadImageDirective,
   ],
   imports: [
     CommonModule,
@@ -65,7 +68,8 @@ const routes = [
     TranslateModule,
     CommonCustomModule,
     NgOptimizedImage,
-    DynamicFieldsModule
+    DynamicFieldsModule,
+    ScrollingModule,
   ],
   providers: [],
   exports: [RouterModule],

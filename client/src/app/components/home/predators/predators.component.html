@@ -36,19 +36,19 @@
         <img src="./assets/icon/capture-photo.png">
         <h6>{{'general.startTakingPhotos' | translate}}</h6>
       </div>
-      <div *ngIf="!loader&&predators.length" id="user-publications">
-        <div *ngFor="let item of predators; let i = index">
-          <div>
-            <img *ngIf="!item.completed && getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg"
-              class="information">
-            <img *ngIf="item.completed&&item.visible" src="./assets/icon/report-completed.webp" class="information">
-            <img *ngIf="item.completed&&!item.visible" src="./assets/icon/report-waiting.png" class="information">
+      <div id="user-publications">
+        <cdk-virtual-scroll-viewport #viewport itemSize="1" class="viewport">
+          <div class="image-grid">
+            <div *cdkVirtualFor="let item of predators" class="predator-item">
+              <img *ngIf="!item.completed && getMorePhotosIcon(item.gallery)" src="./assets/icon/more-photos.svg"
+                class="information">
+              <img *ngIf="item.completed&&item.visible" src="./assets/icon/report-completed.webp" class="information">
+              <img *ngIf="item.completed&&!item.visible" src="./assets/icon/report-waiting.png" class="information">
+              <img class="predator-image" [lazyLoadImage]="getImageForPreviewFromGallery(item.gallery)"
+                onerror="this.onerror=null;this.src='./assets/icon/no-image.svg'" (click)="showDetails(item.id)" />
+            </div>
           </div>
-          <img class="predator-image {{loadedImage[i] ? 'no-image' : ''}}"
-            ngSrc="{{loadedImage[i] ? getImageForPreviewFromGallery(item.gallery) : './assets/icon/loader.gif'}}"
-            onerror="this.onerror=null;this.src='./assets/icon/no-image.svg'" [width]="300" [height]="300"
-            (click)="showDetails(item.id)" (load)="loadImage(i)">
-        </div>
+        </cdk-virtual-scroll-viewport>
       </div>
     </div>
   </div>

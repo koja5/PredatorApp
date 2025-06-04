@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Capacitor } from '@capacitor/core';
 import { HelpService } from 'src/app/services/help.service';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-predators',
@@ -22,6 +24,8 @@ export class PredatorsComponent implements OnInit {
   @ViewChild('createNewEntryButton') createNewEntryButton!: ElementRef;
   @ViewChild(PredatorEditComponent)
   editFormComponent!: PredatorEditComponent;
+  @ViewChild(CdkVirtualScrollViewport)
+  viewport!: CdkVirtualScrollViewport;
 
   @HostListener('document:mousedown', ['$event'])
   onGlobalClick(event: any): void {
@@ -38,11 +42,30 @@ export class PredatorsComponent implements OnInit {
   constructor(
     private _service: CallApiService,
     private _router: Router,
-    private _helpService: HelpService
+    private _helpService: HelpService,
+    private _storageService: StorageService
   ) {}
 
   async ngOnInit() {
     this.getPredators();
+  }
+
+  scrollToOffset() {
+    const savedScroll = this._storageService.getLocalStorage(
+      'galleryScrollPosition'
+    );
+    if (savedScroll) {
+      const scrollNumber = parseFloat(savedScroll);
+      this.viewport.scrollToOffset(scrollNumber);
+    }
+  }
+
+  saveScrollToOffset() {
+    const scrollPosition = this.viewport.measureScrollOffset();
+    this._storageService.setLocalStorage(
+      'galleryScrollPosition',
+      scrollPosition.toString()
+    );
   }
 
   getPredators() {
@@ -52,6 +75,9 @@ export class PredatorsComponent implements OnInit {
       .subscribe((data) => {
         this.predators = data;
         this.loader = false;
+        setTimeout(() => {
+          this.scrollToOffset();
+        }, 5);
       });
   }
 
@@ -158,6 +184,7 @@ export class PredatorsComponent implements OnInit {
 
   showDetails(id: number) {
     this._router.navigate(['home/predator-details/' + id]);
+    this.saveScrollToOffset();
   }
 
   refresh() {

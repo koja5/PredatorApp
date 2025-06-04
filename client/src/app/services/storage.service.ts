@@ -69,6 +69,10 @@ export class StorageService {
     localStorage.removeItem(key);
   }
 
+  removeLocalStorageAll() {
+    localStorage.clear();
+  }
+
   getParametarsDateFromLocalStorageForApiRequest(params: any, body?: any) {
     if (!body) {
       body = {};

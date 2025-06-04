@@ -39,6 +39,7 @@ export class HomeComponent {
 
   logout() {
     this._storageService.deleteToken();
+    this._storageService.removeLocalStorageAll();
     this._router.navigate(['/auth/login']);
   }
 }
