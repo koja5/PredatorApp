@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-question-alert',
   templateUrl: './question-alert.component.html',
   styleUrls: ['./question-alert.component.scss'],
+  standalone: false
 })
 export class QuestionAlertComponent implements OnInit {
   @ViewChild('alert') alert: IonAlert;

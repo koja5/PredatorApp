@@ -33,3 +33,19 @@ ion-toolbar {
   border: 1px solid red;
   min-width: 150px;
 }
+
+.navigation-menu {
+  padding-left: 15px;
+  margin-top: 10px;
+}
+
+.navigation-menu div {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.navigation-menu div img { 
+  margin-right: 10px;
+}

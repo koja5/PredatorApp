@@ -44,6 +44,11 @@ const routes = [
     path: 'photos',
     component: PhotosComponent,
   },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsModule),
+  },
 ];
 
 @NgModule({

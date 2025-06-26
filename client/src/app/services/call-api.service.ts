@@ -30,23 +30,23 @@ export class CallApiService {
     );
   }
 
-  callApi(data: any, router?: any) {
+  callApi(data: any, value?: any, activatedRouter?: any) {
     if (data && data.request && data.request.type === 'POST') {
       if (data.request.url) {
-        data.body = this.helpService.postRequestDataParameters(
-          data.body,
-          router.snapshot.params,
+        value = this.helpService.postRequestDataParameters(
+          value,
+          activatedRouter.snapshot.params,
           data.request.url
         );
       }
       return this.callPostMethod(
         data.request.api,
-        data.body ? data.body : router.body
+        data.body ? data.body : value
       );
     } else {
       if (data && data.request.url) {
         const dataValue = this.helpService.getRequestDataParameters(
-          router.snapshot.params,
+          value.snapshot.params,
           data.request.url
         );
         return this.callGetMethod(data.request.api, dataValue);
@@ -63,16 +63,16 @@ export class CallApiService {
         }
       } else {
         let dataValue = '';
-        if (router && router.snapshot && data && data.request) {
+        if (value && value.snapshot && data && data.request) {
           dataValue = this.helpService.getRequestDataParameters(
-            router.snapshot.params,
+            value.snapshot.params,
             data.request.parameters
           );
           return this.callGetMethod(data.request.api, dataValue);
         } else if (data && data.request) {
           return this.callGetMethod(data.request.api, dataValue);
         } else {
-          return this.callGetMethod(router.api, dataValue);
+          return this.callGetMethod(value.api, dataValue);
         }
       }
     }

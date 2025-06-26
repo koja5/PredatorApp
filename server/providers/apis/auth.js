@@ -329,9 +329,12 @@ function generateToken(data) {
     {
       user: {
         id: data.id,
+        id_admin: data.id_admin,
         name: data.name,
         type: data.type,
         trusted: data.trusted,
+        avatar: data.avatar,
+        cover: data.cover,
       },
       email: data.email,
     },

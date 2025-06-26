@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
+  standalone: false
 })
 export class LoaderComponent  implements OnInit {
 

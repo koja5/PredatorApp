@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   selector: 'app-ion-input',
   templateUrl: './app-ion-input.component.html',
   styleUrls: ['./app-ion-input.component.scss'],
+  standalone: false
 })
 export class AppIonInputComponent implements OnInit {
   @Input() label?: string;

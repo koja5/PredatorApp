@@ -6,6 +6,7 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
   selector: 'app-photos',
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.scss'],
+  standalone: false
 })
 export class PhotosComponent implements OnInit {
   public geolocation: any;

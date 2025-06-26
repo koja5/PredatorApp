@@ -10,6 +10,7 @@ import { QuestionAlertComponent } from 'src/app/components/common/question-alert
   selector: 'app-password-box',
   templateUrl: './password-box.component.html',
   styleUrls: ['./password-box.component.scss'],
+  standalone: false
 })
 export class PasswordBoxComponent {
   @ViewChild(QuestionAlertComponent) alertQuestion: QuestionAlertComponent;

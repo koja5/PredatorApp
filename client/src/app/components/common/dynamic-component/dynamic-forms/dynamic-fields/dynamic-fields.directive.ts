@@ -37,6 +37,7 @@ const components: { [type: string]: Type<Field> } = {
 
 @Directive({
   selector: '[dynamicField]',
+  standalone: false
 })
 export class DynamicFieldsDirective implements Field, OnChanges, OnInit {
   @Input()

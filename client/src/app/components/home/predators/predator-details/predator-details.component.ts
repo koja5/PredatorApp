@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
   selector: 'app-predator-details',
   templateUrl: './predator-details.component.html',
   styleUrls: ['./predator-details.component.scss'],
+  standalone: false
 })
 export class PredatorDetailsComponent implements OnInit {
   @ViewChild(QuestionAlertComponent) alertQuestion: QuestionAlertComponent;

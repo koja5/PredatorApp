@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[lazyLoadImage]'
+  selector: '[lazyLoadImage]',
+  standalone: false
 })
 export class LazyLoadImageDirective implements OnInit {
   @Input('lazyLoadImage') src!: string;

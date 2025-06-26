@@ -6,6 +6,7 @@ import { FieldConfig } from "../../../models/field-config";
   selector: "app-radio",
   templateUrl: "./radio.component.html",
   styleUrls: ["./radio.component.scss"],
+  standalone: false
 })
 export class RadioComponent {
   public config: FieldConfig;

@@ -1,0 +1,79 @@
+@import "../../predators/predators.component.scss";
+
+.avatar-container {
+  position: relative;
+}
+
+.avatar-container label {
+  position: absolute;
+  margin-left: 75px;
+  margin-top: 20px;
+}
+
+.cover-container {
+    width: 100%;
+    height: 25%;
+}
+
+.cover-container .cover {
+    height: 100%;
+}
+
+.cover-container label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.icon-wrapper {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  padding: 0.35rem;
+  background-color: #7367f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  top: 50%;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+
+  &:hover {
+    transition: all 0.25s;
+    background-color: darken(#7367f0, 15%);
+  }
+
+  .icon {
+    color: white;
+  }
+
+  label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+}
+
+.box-shadow-avatar {
+  box-shadow: 0 10px 20px 20px #6c93001a;
+}
+
+.image-container {
+  height: 100px;
+  width: 100px;
+  z-index: 1;
+  border-radius: 50%;
+  background-color: #fff;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 10px 20px 20px rgb(235 233 255);
+}

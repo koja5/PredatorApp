@@ -5,6 +5,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   selector: "app-discard-changes-template",
   templateUrl: "./discard-changes-template.component.html",
   styleUrls: ["./discard-changes-template.component.scss"],
+  standalone: false
 })
 export class DialogConfirmTemplateComponent {
   public confirmed = false;

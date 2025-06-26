@@ -6,6 +6,7 @@ import { FormGroup } from "@angular/forms";
   selector: "app-dynamic-rows",
   templateUrl: "./dynamic-rows.component.html",
   styleUrls: ["./dynamic-rows.component.scss"],
+  standalone: false
 })
 export class DynamicRowsComponent {
   public config: FieldConfig;

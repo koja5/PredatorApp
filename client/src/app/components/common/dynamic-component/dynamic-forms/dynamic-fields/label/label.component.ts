@@ -6,6 +6,7 @@ import { FieldConfig } from "../../models/field-config";
   selector: "app-label",
   templateUrl: "./label.component.html",
   styleUrls: ["./label.component.scss"],
+  standalone: false
 })
 export class LabelComponent implements OnInit {
   public config: FieldConfig;

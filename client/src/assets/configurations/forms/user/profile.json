@@ -1,0 +1,107 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/user/getMe",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSizes": true,
+            "pageSize": 20
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": true,
+        "settings": {
+            "type": "Menu"
+        }
+    },
+    "formDialog": {
+        "type": "sidebar",
+        "size": "lg"
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "actionRequest": {
+        "save": {
+            "type": "POST",
+            "api": "/api/user/setMe",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [],
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12 hide",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id",
+            "readonly": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "firstname",
+            "title": "profile.firstname",
+            "field": "firstname",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "lastname",
+            "title": "profile.lastname",
+            "field": "lastname",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "phone",
+            "title": "profile.phone",
+            "field": "phone",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "email",
+            "title": "profile.email",
+            "field": "email",
+            "required": true
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "name": "submit",
+            "title": "general.save",
+            "field": "submit",
+            "positionClass": "text-end mt-3 col-md-12"
+        }
+    ]
+}

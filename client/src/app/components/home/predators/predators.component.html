@@ -5,7 +5,9 @@
   </ion-refresher> -->
 
   <div id="screen">
-    <div id="cover"></div>
+    <div class="cover">
+      <img src="{{cover ? cover : '../../../../assets/images/profile/cover.jpg'}}">
+    </div>
     <div id="content">
 
       <app-predator-profile-user></app-predator-profile-user>

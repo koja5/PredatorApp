@@ -20,6 +20,7 @@ import { ResponseAction } from '../../../../enums/response-action';
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+  standalone: false
 })
 export class ButtonComponent implements OnInit {
   @Input() class!: string;

@@ -20,6 +20,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
   selector: 'app-dynamic-grid',
   templateUrl: './dynamic-grid.component.html',
   styleUrls: ['./dynamic-grid.component.scss'],
+  standalone: false
 })
 export class DynamicGridComponent implements OnInit {
   @ViewChild('form') form: DynamicFormsComponent;

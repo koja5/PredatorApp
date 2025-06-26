@@ -9,6 +9,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
   selector: 'app-multiselect',
   templateUrl: './multiselect.component.html',
   styleUrls: ['./multiselect.component.scss'],
+  standalone: false
 })
 export class MultiselectComponent implements OnInit {
   public config: FieldConfig;

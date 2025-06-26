@@ -213,3 +213,42 @@ a {
 ion-toolbar {
   border-radius: 7px 7px 0px 0px;
 }
+
+.error {
+  color: var(--bs-form-invalid-border-color);
+  font-size: 12px;
+}
+
+.custom-label {
+  margin-top: 10px;
+}
+
+#screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+#screen #content {
+  position: relative;
+  width: 100%;
+  // height: 74%;
+  // display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+}
+
+.cover {
+  width: 100%;
+  height: 25%;
+  background-blend-mode: multiply;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0 0 7px 7px;
+}
+

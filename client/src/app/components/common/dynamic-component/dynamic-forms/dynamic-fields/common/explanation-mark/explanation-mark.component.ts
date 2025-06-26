@@ -4,6 +4,7 @@ import { Component, Input } from "@angular/core";
   selector: "app-explanation-mark",
   templateUrl: "./explanation-mark.component.html",
   styleUrls: ["./explanation-mark.component.scss"],
+  standalone: false
 })
 export class ExplanationMarkComponent {
   @Input() explanation!: any;

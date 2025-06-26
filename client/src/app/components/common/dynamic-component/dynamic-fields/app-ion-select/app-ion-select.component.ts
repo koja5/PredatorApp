@@ -6,6 +6,7 @@ import { CallApiService } from 'src/app/services/call-api.service';
   selector: 'app-ion-select',
   templateUrl: './app-ion-select.component.html',
   styleUrls: ['./app-ion-select.component.scss'],
+  standalone: false
 })
 export class AppIonSelectComponent implements OnInit {
   @Input() label?: string;

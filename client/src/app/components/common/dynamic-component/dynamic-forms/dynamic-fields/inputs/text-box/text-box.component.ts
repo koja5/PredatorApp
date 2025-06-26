@@ -6,6 +6,7 @@ import { FieldConfig } from "../../../models/field-config";
   selector: "app-text-box",
   templateUrl: "./text-box.component.html",
   styleUrls: ["./text-box.component.scss"],
+  standalone: false
 })
 export class TextBoxComponent implements OnInit {
   public config: FieldConfig;

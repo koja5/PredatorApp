@@ -14,6 +14,7 @@ import { StorageService } from "src/app/services/storage.service";
   selector: "app-combobox",
   templateUrl: "./combobox.component.html",
   styleUrls: ["./combobox.component.scss"],
+  standalone: false
 })
 export class ComboboxComponent implements OnInit {
   public config: FieldConfig;

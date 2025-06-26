@@ -5,6 +5,7 @@ import { IonDatetime, IonDatetimeButton, IonModal } from '@ionic/angular';
   selector: 'app-app-ion-datetime-button',
   templateUrl: './app-ion-datetime-button.component.html',
   styleUrls: ['./app-ion-datetime-button.component.scss'],
+  standalone: false
 })
 export class AppIonDatetimeButtonComponent implements OnInit {
   @Input() value: string;

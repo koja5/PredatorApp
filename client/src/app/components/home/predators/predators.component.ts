@@ -19,6 +19,7 @@ import { StorageService } from 'src/app/services/storage.service';
   selector: 'app-predators',
   templateUrl: './predators.component.html',
   styleUrls: ['./predators.component.scss'],
+  standalone: false,
 })
 export class PredatorsComponent implements OnInit {
   @ViewChild('createNewEntryButton') createNewEntryButton!: ElementRef;
@@ -38,6 +39,7 @@ export class PredatorsComponent implements OnInit {
   public active = '';
   public predators: any;
   public loader = true;
+  public cover: string;
 
   constructor(
     private _service: CallApiService,
@@ -48,6 +50,15 @@ export class PredatorsComponent implements OnInit {
 
   async ngOnInit() {
     this.getPredators();
+    this.setCover();
+  }
+
+  setCover() {
+    const user = this._storageService.getDecodeToken();
+    if (user.cover) {
+      this.cover =
+        window.location.origin + '/assets/images/cover/' + user.cover;
+    }
   }
 
   scrollToOffset() {

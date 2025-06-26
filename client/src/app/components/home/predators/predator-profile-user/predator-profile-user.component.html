@@ -1,5 +1,6 @@
 <div class="text-center">
-  <img id="user-avatar" width="120" height="120" src="./assets/images/profile/avatar.png" alt="Avatar">
+  <img id="user-avatar" width="120" height="120" src="{{avatar ? avatar : './assets/images/profile/avatar.png'}}"
+    alt="Avatar">
   <p id="user-name">{{user.name}}</p>
   <!-- <p id="user-location" class="m-0">Kragujevac, Serbia</p>
   <p id="user-description">I like to fishing and make good photo!</p> -->

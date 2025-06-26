@@ -22,12 +22,15 @@ import { CallApiService } from 'src/app/services/call-api.service';
 import { FieldType } from '../enums/field-type';
 import { MessageService } from 'src/app/services/message.service';
 import { CanComponentDeactivate } from 'src/app/services/guards/dirtycheck.guard';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrComponent } from '../../toastr/toastr.component';
 
 @Component({
   exportAs: 'dynamicForm',
   selector: 'app-dynamic-forms',
   templateUrl: './dynamic-forms.component.html',
   styleUrls: ['./dynamic-forms.component.scss'],
+  standalone: false,
 })
 export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   @Input()
@@ -40,6 +43,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   @Input() disableEdit!: boolean;
   @Input() partOfGrid!: boolean;
   @Input() data!: any;
+  @Input() enableHandleSubmitDirectly = true;
 
   @Output()
   public submit: EventEmitter<any> = new EventEmitter<any>();
@@ -71,7 +75,10 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
     private configurationService: ConfigurationService,
     private apiService: CallApiService,
     private _activatedRouter: ActivatedRoute,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    private _translate: TranslateService,
+    private _service: CallApiService,
+    private _toastr: ToastrComponent
   ) {
     this._unsubscribeAll = new Subject();
 
@@ -244,11 +251,34 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
       event.stopPropagation();
       this.isDirty = false;
       if (
-        this.config.editSettingsRequest &&
-        this.config.editSettingsRequest.add.formData
+        this.config.actionRequest &&
+        this.config.actionRequest.save &&
+        this.enableHandleSubmitDirectly
       ) {
-        const formData = this.packFormData();
-        this.submit.emit(formData);
+        this._service
+          .callApi(
+            { request: this.config.actionRequest.save },
+            this.form.value,
+            this._activatedRouter
+          )
+          .subscribe((data: any) => {
+            if (data) {
+              if (data.response === false) {
+                if (data.message) {
+                  this._toastr.showErrorCustom(
+                    this._translate.instant(data.message)
+                  );
+                } else {
+                  this._toastr.showError();
+                }
+              } else {
+                this._toastr.showSuccess();
+                this.onChangeData.emit(this.form.value);
+              }
+            } else {
+              this._toastr.showError();
+            }
+          });
       } else {
         this.submit.emit(this.form.value);
       }

@@ -33,6 +33,16 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
+    <div class="navigation-menu">
+      <div routerLink="./settings/profile">
+        <img src="./assets/icon/user.svg" class="mr-1">
+        {{'navigation.profile' | translate}}
+      </div>
+      <div routerLink="./settings/change-password">
+        <img src="./assets/icon/password.svg" class="mr-1">
+        {{'navigation.changePassword' | translate}}
+      </div>
+    </div>
 
     <div class="logout">
       <ion-button class="logout-button" (click)="logout()">{{'login.logout' | translate}}</ion-button>
@@ -42,16 +52,17 @@
 
 <ion-toolbar>
   <ion-tabs>
-    <ion-tab-bar slot="bottom">
+    <ion-tab-bar slot="bottom" class="justify-content-between">
       <ion-tab-button tab="predators">
         <img src="./assets/icon/home.svg">
         <label>{{'navigation.home' | translate}}</label>
       </ion-tab-button>
-      <ion-tab-button tab="photos">
-        <!-- <ion-icon name="images-outline"></ion-icon>
-        <ion-label>{{'navigation.photo' | translate}}</ion-label> -->
+      <!-- <ion-tab-button tab="photos">
         <img src="./assets/icon/location.svg">
         <label>{{'navigation.location' | translate}}</label>
+      </ion-tab-button> -->
+      <ion-tab-button>
+        <img src="./assets/icon/logo.png" style="width: 55px;">
       </ion-tab-button>
       <ion-tab-button>
         <div class="ion-page" id="main-content">

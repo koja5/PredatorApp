@@ -11,15 +11,6 @@
   background-color: #bcbcbc;
 }
 
-#screen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
 header {
   position: absolute;
   width: 340px;
@@ -77,28 +68,7 @@ header #icons svg:nth-child(2) {
   margin-right: 5px;
 }
 
-#screen #cover {
-  width: 100%;
-  height: 25%;
-  background-image: url("../../../../assets/images/profile/cover.jpg");
-  background-blend-mode: multiply;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 0 0 7px 7px;
-}
-
-#screen #content {
-  position: relative;
-  width: 100%;
-  // height: 74%;
-  // display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-}
-
-#screen #content #user-avatar {
+#user-avatar {
   object-fit: cover;
   position: absolute;
   left: calc(50% - 60px);
@@ -107,29 +77,32 @@ header #icons svg:nth-child(2) {
   border-radius: 90%;
   background: #fff;
   border: 4px solid #072550;
+  width: 120px;
+  height: 120px;
+  background-repeat: round;
 }
 
-#screen #content #user-name {
+#user-name {
   font-size: 24px;
   font-weight: bold;
   margin: 55px 0 0 0;
   padding: 0;
 }
 
-#screen #content #user-location {
+#user-location {
   font-size: 16px;
   color: #b4b4b0;
   margin: 5px 0 0 0;
   padding: 0;
 }
 
-#screen #content #user-description {
+#user-description {
   font-size: 16px;
   color: #6c7171;
   padding: 0;
 }
 
-#screen #content #user-general-values {
+#user-general-values {
   width: 85%;
   display: flex;
   flex-direction: row;
@@ -137,7 +110,7 @@ header #icons svg:nth-child(2) {
   margin: 20px 0 0 0;
 }
 
-#screen #content #user-general-values p {
+#user-general-values p {
   width: 30%;
   margin: 0;
   display: flex;
@@ -146,19 +119,19 @@ header #icons svg:nth-child(2) {
   justify-content: center;
 }
 
-#screen #content #user-general-values p span:nth-child(1) {
+#user-general-values p span:nth-child(1) {
   font-size: 20px;
   font-weight: bold;
   color: black;
 }
 
-#screen #content #user-general-values p span:nth-child(2) {
+#user-general-values p span:nth-child(2) {
   font-size: 14px;
   margin: 3px 0 0 0;
   color: #6c7171;
 }
 
-#screen #content #follow-btn {
+#follow-btn {
   color: white;
   height: 35px;
   width: 110px;
@@ -172,11 +145,11 @@ header #icons svg:nth-child(2) {
   cursor: pointer;
 }
 
-#screen #content #follow-btn:hover {
+#follow-btn:hover {
   background: #f56700;
 }
 
-#screen #content #user-publications img {
+#user-publications img {
   width: 100%;
   height: 130px;
   object-fit: cover;
@@ -184,8 +157,8 @@ header #icons svg:nth-child(2) {
 
 .take-picture {
   position: absolute;
-  left: 47.5%;
-  bottom: 10px;
+  left: calc(100% / 2 - 25px);
+  bottom: 0px;
   z-index: 99999999999;
   border-radius: 100%;
   width: 56px;
@@ -277,7 +250,7 @@ h3 {
 }
 .menu {
   position: absolute;
-  left: 30.5%;
+  left: calc(100% / 2 - 102px);
   bottom: 60px;
   z-index: 10000;
   // min-height: 250px;

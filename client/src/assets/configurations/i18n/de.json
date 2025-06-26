@@ -65,7 +65,7 @@
       "sendEmailForRecoveryMessage": "Wir haben Ihnen per E-Mail Anweisungen zum Zurücksetzen Ihres Passworts gesendet.",
       "emailNotExist": "E-Mail existiert nicht. Versuchen Sie es mit einer anderen E-Mail-Adresse.",
       "accountExists": "Es existiert eine E-Mail mit dieser E-Mail. Bitte versuchen Sie es mit einer anderen E-Mail.",
-      "successfullyCreatedAccount": "Konto erfolgreich erstellt. Bitte bestätigen Sie Ihre E-Mail-Adresse.",
+      "successfullyCreatedAccount": "Konto erfolgreich erstellt. Bitte setzen Sie den Registrierungsprozess für praedatoren.app fort, indem Sie auf den Link unterhalb klicken. Danke.",
       "pleaseFillFields": "Alle Felder sind erforderlich. Bitte füllen Sie es aus.",
       "goToNext": "Nächste",
       "back": "Zurück",
@@ -79,7 +79,9 @@
       "allActivities": "Alle Aktivitäten",
       "allPredators": "Alles Raubtiere",
       "allTerritories": "Alle Gebiete",
-      "allTypeOfWaters": "Alle Gewässer"
+      "allTypeOfWaters": "Alle Gewässer",
+      "profile": "Profil",
+      "changePassword": "Kennwort ändern"
    },
    "navBar": {
       "profile": "Profil",
@@ -151,5 +153,22 @@
          "phone": "Telefon",
          "email": "E-Mail"
       }
+   },
+   "profile": {
+      "title": "Profil",
+      "firstname": "Vorname",
+      "lastname": "Nachname",
+      "gender": "Geschlecht",
+      "phone": "Telefon",
+      "email": "E-Mail"
+   },
+   "changePassword": {
+      "title": "Kennwort ändern",
+      "currentPassword": "aktuelles Passwort",
+      "newPassword": "aktuelles Passwort",
+      "reNewPassword": "Neues Passwort wiederholen",
+      "passwordsNeedToBeSame": "Neues Passwort und neues Passwort wiederholen müssen identisch sein.",
+      "currentPasswordIsNotGood": "Das aktuelle Passwort ist nicht gültig. Bitte geben Sie das korrekte aktuelle Passwort ein.",
+      "successfullyChangedPassword": "Passwort erfolgreich geändert"
    }
 }

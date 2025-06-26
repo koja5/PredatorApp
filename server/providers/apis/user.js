@@ -11,6 +11,13 @@ const jwt = require("jsonwebtoken");
 const auth = require("../config/authentification/auth");
 const sql = require("../config/sql-database");
 const makeRequest = require("./help-function/makeRequest");
+const multipart = require("connect-multiparty");
+const AVATAR_UPLOAD_FOLDER = multipart({
+  uploadDir: process.env.AVATAR_UPLOAD_FOLDER,
+});
+const COVER_UPLOAD_FOLDER = multipart({
+  uploadDir: process.env.COVER_UPLOAD_FOLDER,
+});
 
 module.exports = router;
 
@@ -76,8 +83,8 @@ router.get("/getAllTerritories", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select afd.* from all_fish_districts afd left join users u on afd.id_area = u.id_area where u.id = ?",
-          [req.user.user.id],
+          "select afd.* from all_fish_districts afd left join users u on afd.id_area = u.id_area where u.id = ? and (afd.hidden = 0 or afd.hidden is null)",
+          [req.user.user.id, 1],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -285,17 +292,242 @@ router.post("/completedReport", auth, async (req, res, next) => {
 
 //#endregion
 
+//#region PROFILE
+
+router.get("/getMe", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from users where id = ?",
+          [req.user.user.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : {});
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setMe", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "INSERT INTO users set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/setMyAvatar", AVATAR_UPLOAD_FOLDER, auth, (req, res) => {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.avatar = req.files.uploads[0].path.split("\\profile\\")[1];
+
+    conn.query(
+      "select * from users where id = ?",
+      [req.user.user.id],
+      function (err, rows) {
+        if (!err) {
+          if (rows.length && rows[0].avatar) {
+            rows[0].avatar =
+              process.env.AVATAR_UPLOAD_FOLDER + "/" + rows[0].avatar;
+            fs.rmSync(rows[0].avatar, { force: true });
+          }
+
+          conn.query(
+            "UPDATE users SET avatar = ? where id = ?",
+            [req.body.avatar, req.user.user.id],
+            function (err, rowInsert) {
+              conn.release();
+              if (!err) {
+                rows[0].avatar = req.body.avatar;
+
+                const token = generateToken(rows[0]);
+
+                res.json(token);
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
+        } else {
+          conn.release();
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/setMyCover", COVER_UPLOAD_FOLDER, auth, (req, res) => {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    console.log();
+    req.body.cover = req.files.uploads[0].path.split("\\cover\\")[1];
+
+    conn.query(
+      "select * from users where id = ?",
+      [req.user.user.id],
+      function (err, rows) {
+        if (!err) {
+          if (rows.length && rows[0].cover) {
+            rows[0].cover =
+              process.env.COVER_UPLOAD_FOLDER + "/" + rows[0].cover;
+            fs.rmSync(rows[0].cover, { force: true });
+          }
+
+          conn.query(
+            "UPDATE users SET cover = ? where id = ?",
+            [req.body.cover, req.user.user.id],
+            function (err, rowInsert) {
+              conn.release();
+              if (!err) {
+                rows[0].cover = req.body.cover;
+
+                const token = generateToken(rows[0]);
+
+                res.json(token);
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
+        } else {
+          conn.release();
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
+//#region CHANGE PASSWORD
+
+router.get("/checkOldPassword/:password", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from users where id = ? and password = sha1(" +
+            req.params.password +
+            ")",
+          [req.user.user.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              if (rows.length) {
+                res.json(true);
+              } else {
+                res.json(false);
+              }
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setMyPassword", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update users set password = sha1(" +
+        req.body.new_password +
+        ") where id = ?",
+      [req.user.user.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
 //#region HELP FUNCTION
+
+function setIdAndAdminId(body, user) {
+  console.log(body.id, user.user);
+
+  body.id = user.user.id;
+
+  body.id_admin = user.user.id_admin;
+  return body;
+}
 
 function generateToken(data) {
   return jwt.sign(
     {
       user: {
         id: data.id,
+        id_admin: data.id_admin,
         firstname: data.firstname,
         lastname: data.lastname,
         type: data.type,
         trusted: data.trusted,
+        avatar: data.avatar,
+        cover: data.cover,
       },
       email: data.email,
     },

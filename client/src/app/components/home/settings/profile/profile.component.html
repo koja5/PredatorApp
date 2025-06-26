@@ -1,0 +1,39 @@
+<div id="screen">
+  <div class="cover-container">
+    <div class="cover" *ngIf="coverImageCropped; else placeholderCover"
+      [ngStyle]="{backgroundImage: 'url(' + coverImageCropped + ')'}">
+    </div>
+
+    <ng-template #placeholderCover>
+      <img class="cover" src="../../../../../assets/images/profile/cover.jpg">
+    </ng-template>
+    <label for="cover-input-file">
+      <div class="icon-wrapper">
+        <input type="file" id="cover-input-file" accept="image/*" (change)="onFileChangeCover($event)" />
+        <img src="../../../../../assets/icon/add-photo.svg">
+      </div>
+    </label>
+  </div>
+
+  <div id="content">
+    <div class="text-center">
+      <div class="avatar-container m-auto">
+        <div id="user-avatar" width="120" height="120" *ngIf="profileImageCropped; else placeholderProfile"
+          [ngStyle]="{backgroundImage: 'url(' + profileImageCropped + ')'}">
+        </div>
+        <ng-template #placeholderProfile>
+          <img id="user-avatar" width="120" height="120" src="./assets/images/profile/avatar.png" alt="Avatar">
+        </ng-template>
+        <label for="avatar-input-file">
+          <div class="icon-wrapper">
+            <input type="file" id="avatar-input-file" accept="image/*" (change)="onFileChangeProfile($event)" />
+            <img src="../../../../../assets/icon/add-photo.svg">
+          </div>
+        </label>
+      </div>
+    </div>
+    <div class="m-3 mt-5">
+      <app-dynamic-forms [path]="path" [file]="file"></app-dynamic-forms>
+    </div>
+  </div>
+</div>

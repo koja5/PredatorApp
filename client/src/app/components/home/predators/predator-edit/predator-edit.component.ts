@@ -32,6 +32,7 @@ import { HelpService } from 'src/app/services/help.service';
   selector: 'app-predator-edit',
   templateUrl: './predator-edit.component.html',
   styleUrls: ['./predator-edit.component.scss'],
+  standalone: false
 })
 export class PredatorEditComponent implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;

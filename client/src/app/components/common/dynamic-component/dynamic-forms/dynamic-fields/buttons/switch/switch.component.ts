@@ -7,6 +7,7 @@ import { HelpService } from 'src/app/services/help.service';
   selector: 'app-switch',
   templateUrl: './switch.component.html',
   styleUrls: ['./switch.component.scss'],
+  standalone: false
 })
 export class SwitchComponent implements OnInit {
   public config: FieldConfig;

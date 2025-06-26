@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   selector: 'app-ion-textarea',
   templateUrl: './app-ion-textarea.component.html',
   styleUrls: ['./app-ion-textarea.component.scss'],
+  standalone: false
 })
 export class AppIonTextareaComponent implements OnInit {
   @Input() label?: string;

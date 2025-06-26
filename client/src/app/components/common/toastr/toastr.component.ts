@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-toastr',
   templateUrl: './toastr.component.html',
   styleUrls: ['./toastr.component.scss'],
+  standalone: false
 })
 export class ToastrComponent implements OnInit {
   private language: any;
