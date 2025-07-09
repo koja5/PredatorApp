@@ -4,6 +4,13 @@
   font-family: "Roboto Flex", sans-serif;
 }
 
+@media (max-width: 992px) {
+  .menu {
+    width: 100%;
+    left: 0px !important;
+  }
+}
+
 .line {
   width: 1px;
   height: 60%;
@@ -158,7 +165,7 @@ header #icons svg:nth-child(2) {
 .take-picture {
   position: absolute;
   left: calc(100% / 2 - 25px);
-  bottom: 0px;
+  bottom: 5px;
   z-index: 99999999999;
   border-radius: 100%;
   width: 56px;
@@ -250,7 +257,7 @@ h3 {
 }
 .menu {
   position: absolute;
-  left: calc(100% / 2 - 102px);
+  left: 30%;
   bottom: 60px;
   z-index: 10000;
   // min-height: 250px;
@@ -431,3 +438,4 @@ img[src="./assets/icon/no-image.svg"] {
   //   grid-template-columns: 1fr;
   // }
 }
+

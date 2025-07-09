@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button default-href="/" [text]="('general.back' | translate)"></ion-back-button>
+      <ion-button (click)="back()">{{'general.back' | translate}}</ion-button>
     </ion-buttons>
     <ion-title><img class="title-logo" src="./assets/icon/logo.png"></ion-title>
     <ion-buttons slot="end" *ngIf="!loader">

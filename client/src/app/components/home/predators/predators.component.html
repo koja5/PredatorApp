@@ -38,7 +38,7 @@
         <img src="./assets/icon/capture-photo.png">
         <h6>{{'general.startTakingPhotos' | translate}}</h6>
       </div>
-      <div id="user-publications">
+      <div id="user-publications" *ngIf="!loader && predators">
         <cdk-virtual-scroll-viewport #viewport itemSize="1" class="viewport">
           <div class="image-grid">
             <div *cdkVirtualFor="let item of predators" class="predator-item">
