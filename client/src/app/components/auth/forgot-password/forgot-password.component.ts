@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-  public submited = false;
+  public submitted = false;
   public responseMessage = new ResponseMessageModel();
   public loader = false;
   public form = this.formBuilder.group({
@@ -27,10 +27,14 @@ export class ForgotPasswordComponent implements OnInit {
     private _translate: TranslateService
   ) {}
 
+  get f() {
+    return this.form.controls;
+  }
+
   ngOnInit() {}
 
   forgotPassword() {
-    this.submited = false;
+    this.submitted = false;
     if (this.form.valid) {
       this._service
         .callPostMethod('/api/auth/forgotPassword', this.form.value)
@@ -53,6 +57,6 @@ export class ForgotPasswordComponent implements OnInit {
           }
         });
     }
-    this.submited = true;
+    this.submitted = true;
   }
 }

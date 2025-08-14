@@ -14,6 +14,7 @@ export class PredatorModel {
   name_of_territory: string;
   id_activity!: number;
   name_of_activity: string;
+  local_description: string;
   comment?: string;
   gallery?: any;
   longitude: number;

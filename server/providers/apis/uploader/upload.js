@@ -131,6 +131,122 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
   });
 });
 
+router.post("/setPredatorFromAdmin", multipartMiddleware, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    delete req.body.predator_name;
+    delete req.body.water;
+    delete req.body.activity;
+    delete req.body.fish_district;
+    delete req.body.client_name;
+    delete req.body.email;
+    delete req.body.phone;
+    delete req.body.edited;
+
+    conn.query(
+      "select * from predators where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        if (!err) {
+          let galleryPath = "";
+          if (rows.length) {
+            if (rows[0].gallery) {
+              if (
+                rows[0].gallery.length > req.body.gallery.length &&
+                req.files &&
+                !Object.keys(req.files).length
+              ) {
+                galleryPath = req.body.gallery;
+                const differentFiles = checkDifferent(
+                  rows[0].gallery,
+                  galleryPath
+                );
+                deleteFiles(differentFiles);
+              } else if (rows[0].gallery.length === req.body.gallery.length) {
+                galleryPath = req.body.gallery;
+              } else {
+                galleryPath = rows[0].gallery
+                  .concat(";")
+                  .concat(
+                    req.files && req.files.gallery
+                      ? packDocumentsPath(req.files.gallery)
+                      : req.body.gallery
+                  );
+              }
+            } else {
+              galleryPath =
+                req.files && req.files.gallery
+                  ? packDocumentsPath(req.files.gallery)
+                  : req.body.gallery;
+            }
+            // deleteFiles(differentFiles);
+          } else {
+            galleryPath =
+              req.files && req.files.gallery
+                ? packDocumentsPath(req.files.gallery)
+                : req.body.gallery;
+          }
+          req.body.gallery = galleryPath;
+
+          req.body.id_water =
+            req.body.id_water == "null" ? null : req.body.id_water;
+          req.body.id_fish_district =
+            req.body.id_fish_district == "null"
+              ? null
+              : req.body.id_fish_district;
+          req.body.id_activity =
+            req.body.id_activity == "null" ? null : req.body.id_activity;
+
+          req.body.including_young_animals =
+            req.body.including_young_animals == "" ||
+            req.body.including_young_animals == "null"
+              ? null
+              : req.body.including_young_animals;
+
+          req.body.including_female_animals =
+            req.body.including_female_animals == "" ||
+            req.body.including_female_animals == "null"
+              ? null
+              : req.body.including_female_animals;
+
+          req.body.including_male_animals =
+            req.body.including_male_animals == "" ||
+            req.body.including_male_animals == "null"
+              ? null
+              : req.body.including_male_animals;
+
+          req.body.distance_to_water =
+            req.body.distance_to_water == "" ||
+            req.body.distance_to_water == "null"
+              ? null
+              : req.body.distance_to_water;
+
+          conn.query(
+            "INSERT INTO predators set ? ON DUPLICATE KEY UPDATE ?",
+            [req.body, req.body],
+            function (err, rows) {
+              conn.release();
+              if (!err) {
+                res.json(true);
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              }
+            }
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        }
+      }
+    );
+  });
+});
+
 router.post("/deleteObservationSheetFile", auth, function (req, res) {
   connection.getConnection(function (err, conn) {
     if (err) {

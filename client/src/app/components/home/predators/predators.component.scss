@@ -163,9 +163,9 @@ header #icons svg:nth-child(2) {
 }
 
 .take-picture {
-  position: absolute;
+  position: fixed;
   left: calc(100% / 2 - 25px);
-  bottom: 5px;
+  bottom: 6vh;
   z-index: 99999999999;
   border-radius: 100%;
   width: 56px;
@@ -256,10 +256,10 @@ h3 {
   transform: rotate(90deg);
 }
 .menu {
-  position: absolute;
+  position: fixed;
   left: 30%;
-  bottom: 60px;
-  z-index: 10000;
+  bottom: 12vh;
+  z-index: 99999999999;
   // min-height: 250px;
   min-width: 40%;
   margin: 15px auto;
@@ -438,4 +438,3 @@ img[src="./assets/icon/no-image.svg"] {
   //   grid-template-columns: 1fr;
   // }
 }
-

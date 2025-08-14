@@ -1,1 +1,40 @@
 @import url("../../auth.scss");
+
+
+.areas {
+  width: 100%;
+  text-align: center;
+  border-radius: 50px;
+  background: #f5f5f5;
+  padding: 15px;
+}
+
+.areas p:hover, .areas p.active {
+    border-radius: 50px;
+    background: #01193c;
+    color: #fff;
+}
+
+.areas p {
+  font-size: 20px;
+  padding: 8px 35px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.check {
+  display: inline-flex;
+  position: relative;
+  margin: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.checkmark {
+  color: var(--check-text);
+  font-size: 13px;
+  margin-left: 6px;
+}
+

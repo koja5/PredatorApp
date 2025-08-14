@@ -80,6 +80,7 @@
   --bg-color: #fff;
   --bg-round-a: #01193c;
   --primary: #01193c;
+  --light: #05357c;
   --bg-round-b: #04befe;
   --panel-color: #fff;
   --title: #444;
@@ -216,7 +217,11 @@ ion-toolbar {
 
 .error {
   color: var(--bs-form-invalid-border-color);
-  font-size: 12px;
+  font-size: 14px;
+}
+
+.success {
+  color: green !important;
 }
 
 .custom-label {
@@ -251,4 +256,3 @@ ion-toolbar {
   background-position: center;
   border-radius: 0 0 7px 7px;
 }
-

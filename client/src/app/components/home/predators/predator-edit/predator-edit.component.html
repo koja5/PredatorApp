@@ -14,7 +14,8 @@
     <ion-content class="ion-padding">
       <app-loader *ngIf="loader"></app-loader>
       <div *ngIf="!loader">
-        <app-app-ion-datetime-button [value]="data.creation_date" (changeEmit)="changeEmitCreationDate($event)"></app-app-ion-datetime-button>
+        <app-app-ion-datetime-button [value]="data.creation_date"
+          (changeEmit)="changeEmitCreationDate($event)"></app-app-ion-datetime-button>
         <app-ion-select [label]="'predatorForm.predators'" [data]="allItems.predators" [value]="data.id_predator"
           (changeEmit)="changeEmitPredator($event)"></app-ion-select>
         <app-ion-input [label]="'predatorForm.totalNumber'" [type]="'number'" [value]="data.total_number"
@@ -34,6 +35,8 @@
           (changeEmit)="changeEmitTerritory($event)"></app-ion-select>
         <app-ion-select [label]="'predatorForm.activity'" [data]="allItems.activities" [value]="data.id_activity"
           (changeEmit)="changeEmitActivity($event)"></app-ion-select>
+        <app-ion-textarea [label]="'predatorForm.localDescription'" [value]="data.local_description"
+          (changeEmit)="changeEmitLocalDescription($event)"></app-ion-textarea>
         <app-ion-textarea [label]="'predatorForm.comment'" [value]="data.comment"
           (changeEmit)="changeEmitComment($event)"></app-ion-textarea>
 

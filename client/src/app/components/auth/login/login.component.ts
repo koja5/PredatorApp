@@ -14,9 +14,8 @@ import { UserTypesEnum } from 'src/app/enums/user-types-enum';
 })
 export class LoginComponent implements OnInit {
   public mode = '';
-  public passwordField = 'password';
+  public passwordTextType = 'password';
   public passwordFieldIcon = 'eye';
-  public submited = false;
   public error: any;
   public loader = false;
   public loginForm = this.formBuilder.group({
@@ -27,6 +26,7 @@ export class LoginComponent implements OnInit {
   public areas: any;
   public isAcceptTermsAndPrivacy = true;
   public signUpProcess = 'profile';
+  public submitted = false;
 
   constructor(
     private _storageService: StorageService,
@@ -34,6 +34,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _roter: Router
   ) {}
+
+  get f() {
+    return this.loginForm.controls;
+  }
 
   ngOnInit() {
     this.initSignUpForm();
@@ -67,18 +71,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  showHidePassword() {
-    if (this.passwordField === 'password') {
-      this.passwordField = 'text';
+  togglePasswordTextType() {
+    if (this.passwordTextType === 'password') {
+      this.passwordTextType = 'text';
       this.passwordFieldIcon = 'eye-off';
     } else {
-      this.passwordField = 'password';
+      this.passwordTextType = 'password';
       this.passwordFieldIcon = 'eye';
     }
   }
 
   login() {
-    this.submited = false;
+    this.submitted = false;
     this.loader = true;
     if (this.loginForm.valid) {
       this._service
@@ -109,14 +113,14 @@ export class LoginComponent implements OnInit {
               this.error = data.type;
             }
           }
-          this.submited = true;
+          this.submitted = true;
         });
     }
-    this.submited = true;
+    this.submitted = true;
   }
 
   goToArea() {
-    this.submited = true;
+    this.submitted = true;
     if (
       !this.signUpForm.valid ||
       this.signUpForm.value.password != this.signUpForm.value.rePassword
@@ -137,13 +141,13 @@ export class LoginComponent implements OnInit {
   }
 
   signUp() {
-    this.submited = true;
+    this.submitted = true;
     if (!this.signUpForm.valid || !this.signUpForm.value.id_area) return;
 
     this._service
       .callPostMethod('/api/auth/signUp', this.signUpForm.value)
       .subscribe((data: any) => {
-        this.submited = false;
+        this.submitted = false;
         if (data.type) {
           this.error = data.type;
         } else {

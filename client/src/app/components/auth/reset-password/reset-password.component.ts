@@ -12,10 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
-  public submited = false;
+  public submitted = false;
   public responseMessage = new ResponseMessageModel();
   public loader = false;
-  public passwordField = 'password';
+  public passwordTextType = 'password';
   public passwordFieldIcon = 'eye';
   public form = this.formBuilder.group({
     password: ['', [Validators.required]],
@@ -30,20 +30,24 @@ export class ResetPasswordComponent implements OnInit {
     private _translate: TranslateService
   ) {}
 
+  get f() {
+    return this.form.controls;
+  }
+
   ngOnInit() {}
 
   showHidePassword() {
-    if (this.passwordField === 'password') {
-      this.passwordField = 'text';
+    if (this.passwordTextType === 'password') {
+      this.passwordTextType = 'text';
       this.passwordFieldIcon = 'eye-off';
     } else {
-      this.passwordField = 'password';
+      this.passwordTextType = 'password';
       this.passwordFieldIcon = 'eye';
     }
   }
 
   resetPassword() {
-    this.submited = false;
+    this.submitted = false;
     if (this.form.valid) {
       if (this.form.value.password != this.form.value.rePassword) {
         this.responseMessage.value = false;
@@ -71,6 +75,16 @@ export class ResetPasswordComponent implements OnInit {
           }
         });
     }
-    this.submited = true;
+    this.submitted = true;
+  }
+
+  togglePasswordTextType() {
+    if (this.passwordTextType === 'password') {
+      this.passwordTextType = 'text';
+      this.passwordFieldIcon = 'eye-off';
+    } else {
+      this.passwordTextType = 'password';
+      this.passwordFieldIcon = 'eye';
+    }
   }
 }

@@ -69,7 +69,8 @@
       "pleaseFillFields": "Alle Felder sind erforderlich. Bitte füllen Sie es aus.",
       "goToNext": "Nächste",
       "back": "Zurück",
-      "selectArea": "Wählen Sie Ihren Bereich:"
+      "selectArea": "Wählen Sie Ihren Bereich:",
+      "downloadAndroidApp": "Herunterladen Android app"
    },
    "navigation": {
       "home": "Heim",
@@ -99,6 +100,7 @@
       "territory": "Revier",
       "location": "Standort/Gewasser",
       "activity": "Aktivität",
+      "localDescription": "nähere örtliche Beschreibung",
       "comment": "Freier Kommentar",
       "addMorePicture": "Add more",
       "deletePredatorData": "Raubtierdaten löschen",

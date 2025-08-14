@@ -306,6 +306,10 @@ export class PredatorEditComponent implements OnInit {
 
   changeEmitTotalNumber(event: number) {
     this.data.total_number = event;
+  } 
+  
+  changeEmitLocalDescription(event: string) {
+    this.data.local_description = event;
   }
 
   changeEmitIncludingYoungAnimals(event: number) {
