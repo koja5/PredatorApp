@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-predator-profile-user',
@@ -22,7 +23,7 @@ export class PredatorProfileUserComponent implements OnInit {
   setAvatar() {
     if (this.user.avatar) {
       this.avatar =
-        window.location.origin + '/assets/images/profile/' + this.user.avatar;
+        environment.DOMAIN + '/assets/images/profile/' + this.user.avatar;
     }
   }
 }

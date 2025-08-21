@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -31,14 +32,14 @@ export class ProfileComponent implements OnInit {
   setAvatar() {
     if (this.user.avatar) {
       this.profileImageCropped =
-        window.location.origin + '/assets/images/profile/' + this.user.avatar;
+        environment.DOMAIN + '/assets/images/profile/' + this.user.avatar;
     }
   }
 
   setCover() {
     if (this.user.cover) {
       this.coverImageCropped =
-        window.location.origin + '/assets/images/cover/' + this.user.cover;
+        environment.DOMAIN + '/assets/images/cover/' + this.user.cover;
     }
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../../storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class LoginGuardService {
     } else {
       this._storageService.setLocalStorage(
         'previousLink',
-        window.location.href.split(window.location.origin)[1]
+        window.location.href.split(environment.DOMAIN)[1]
       );
       this._router.navigate(['/auth/login']);
       return false;

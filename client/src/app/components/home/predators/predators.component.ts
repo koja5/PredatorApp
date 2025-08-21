@@ -57,7 +57,7 @@ export class PredatorsComponent implements OnInit {
     const user = this._storageService.getDecodeToken();
     if (user.cover) {
       this.cover =
-        window.location.origin + '/assets/images/cover/' + user.cover;
+        environment.DOMAIN + '/assets/images/cover/' + user.cover;
     }
   }
 
