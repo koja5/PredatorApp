@@ -186,7 +186,6 @@ router.get("/verifyEmail/:email", function (req, res, next) {
         if (err) {
           res.json(false);
         } else {
-          console.log(currentValue);
           let active = 0;
           if (
             currentValue.length &&
@@ -205,13 +204,15 @@ router.get("/verifyEmail/:email", function (req, res, next) {
                   conn.release();
                   res.redirect(process.env.link_client + "auth/login");
                 } else {
-                  console.log(currentValue[0]);
                   conn.query(
-                    "select u.* from users u where u.id_area = ? and u.type = ?",
-                    [currentValue[0].id_area, userType.admin],
+                    "select u.* from users u where u.id_area = ? and ((u.type = ? and can_accept_new_user = 1) or u.type = ?)",
+                    [
+                      currentValue[0].id_area,
+                      userType.admin,
+                      userType.superadminArea,
+                    ],
                     function (err, admins, fields) {
                       conn.release();
-                      console.log(admins);
                       for (let i = 0; i < admins.length; i++) {
                         currentValue[0]["email"] = admins[i].email;
                         makeRequest(

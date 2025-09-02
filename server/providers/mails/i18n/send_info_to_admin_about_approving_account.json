@@ -23,6 +23,7 @@
                 "greetings": "Hey 👋",
                 "message": "Ein neuer Benutzer hat in Ihrer Region ein Konto erstellt. Nachfolgend finden Sie Informationen zum Benutzer.",
                 "acceptButton": "Akzeptieren →",
+                "acceptAndTrustButton": "Akzeptieren und Vertrauen →",
                 "notSureWhyReceived": "Sie sind sich nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte ignorieren Sie diese E-Mail.",
                 "greetingsEnd": "Danke,",
                 "team": "Das PredatorenTracker-Team",

@@ -389,4 +389,40 @@ router.get("/acceptUserForArea/:id", async (req, res, next) => {
   }
 });
 
+
+router.get("/acceptAndTrustUserForArea/:id", async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "update users set active = 1, trusted = 1 where sha1(id) = ?",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              conn.query(
+                "select * from users where sha1(id) = ?",
+                [req.params.id],
+                function (err, rows, fields) {
+                  makeRequest(rows[0], "mail/sendInfoToUserForApprovedAccount");
+                  res.redirect(process.env.link_client + "/page/success");
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
 //#endregion

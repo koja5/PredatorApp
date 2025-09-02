@@ -36,7 +36,10 @@ router.post("/sendLinkForVerifyEmail", function (req, res, next) {
   let subject = configuration.language.de.subject;
   let body = configuration.language.de.body;
 
-  body.greetings = body.greetings.replaceAll("#name", req.body.firstname + " " + req.body.lastname);
+  body.greetings = body.greetings.replaceAll(
+    "#name",
+    req.body.firstname + " " + req.body.lastname
+  );
 
   body["verifyLink"] =
     process.env.link_api + "auth/verifyEmail/" + sha1(req.body.email);
@@ -94,9 +97,17 @@ router.post("/sendInfoToAdminAboutApprovingAccount", function (req, res, next) {
     "admin/acceptUserForArea/" +
     sha1(req.body.id.toString());
 
+  body["acceptAndTrustLink"] =
+    process.env.link_api +
+    "admin/acceptAndTrustUserForArea/" +
+    sha1(req.body.id.toString());
+
   body["name"] = req.body.firstname + " " + req.body.lastname;
   body["email_user"] = req.body.email_user;
   body["phone"] = req.body.phone;
+
+  console.log("POSLAO SAM ADMIN-U");
+  console.log(req.body.email);
 
   sendMail(
     req.body.email,
