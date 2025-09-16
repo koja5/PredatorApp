@@ -142,7 +142,9 @@
 }
 
 ion-content {
-  height: calc(100% - 60px) !important;
+  //height: calc(100% - 60px) !important;
+  padding-top: calc(env(safe-area-inset-top) + 10px) !important;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 10px) !important;
 }
 
 @media (min-width: 992px) {

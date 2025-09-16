@@ -30,7 +30,7 @@ export class SignInFormComponent implements OnInit {
     private _storageService: StorageService,
     private _service: CallApiService,
     private formBuilder: FormBuilder,
-    private _roter: Router
+    private _router: Router
   ) {}
 
   get f() {
@@ -58,33 +58,39 @@ export class SignInFormComponent implements OnInit {
     }
   }
 
-  login() {
+  async login() {
     this.submitted = false;
     this.loader = true;
     this.error = null;
     if (this.loginForm.valid) {
-      this._service
-        .callPostMethod('/api/auth/login', this.loginForm.value)
-        .subscribe((data: any) => {
+      (await this._service
+        .callPostMethod('/api/auth/login', this.loginForm.value))
+        .subscribe(async (data: any) => {
           this.loader = false;
           if (data && data.token) {
+            console.log(data.token);
+            console.log('TOKEN JE DOBAR!');
             this._storageService.setToken(data.token);
-
-            const type = this._storageService.getDecodeToken()
-              .type as UserTypesEnum;
-            const previousLink =
-              this._storageService.getLocalStorage('previousLink');
-            if (previousLink) {
-              window.open(previousLink, '_self');
-              this._storageService.removeLocalStorage('previousLink');
-            } else if (type === UserTypesEnum.superadmin) {
-              this._roter.navigate(['/superadmin/all-admins']);
-            } else {
-              this._roter.navigate(['/home/predators']);
-            }
+            console.log("Sacuvao sam token:");
+            const token1 = await this._storageService.getToken();
+            console.log(token1);
+            // const type = this._storageService.getDecodeToken()
+            //   .type as UserTypesEnum;
+            // console.log(type);
+            // const previousLink =
+            //   this._storageService.getLocalStorage('previousLink');
+            // if (previousLink) {
+            //   window.open(previousLink, '_self');
+            //   this._storageService.removeLocalStorage('previousLink');
+            // } else if (type === UserTypesEnum.superadmin) {
+            //   this._router.navigate(['/superadmin/all-admins']);
+            // } else {
+            //   this._router.navigate(['/home/predators']);
+            // }
+            this._router.navigate(['/home/predators']);
           } else {
             if (data.type === 'active' && !data.value) {
-              this._roter.navigate([
+              this._router.navigate([
                 '/page/need-to-approve/' + this.loginForm.value.email,
               ]);
             } else {

@@ -12,6 +12,11 @@ const config: CapacitorConfig = {
   //     enabled: false,
   //   },
   // },
+  plugins: {
+    StatusBar: {
+      overlaysWebView: true
+    }
+  }
 };
 
 export default config;

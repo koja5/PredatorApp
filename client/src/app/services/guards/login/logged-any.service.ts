@@ -8,8 +8,8 @@ import { StorageService } from '../../storage.service';
 export class LoggedAnyService {
   constructor(public _router: Router, public _storageService: StorageService) {}
 
-  canActivate() {
-    if (this._storageService.getToken()) {
+  async canActivate() {
+    if (await this._storageService.getToken()) {
       return true;
     } else {
       this._storageService.setLocalStorage(

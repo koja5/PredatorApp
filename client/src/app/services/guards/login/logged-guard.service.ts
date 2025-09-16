@@ -12,12 +12,14 @@ export class LoggedGuard {
     private _storageService: StorageService
   ) {}
 
-  canActivate() {
-    if (!this._storageService.getToken()) {
+  async canActivate() {
+    const token = await !this._storageService.getToken();
+    console.log(token);
+    if (!token) {
       return true;
     } else {
-      const token = this._storageService.getDecodeToken();
-      const previousLink = this._storageService.getLocalStorage('previousLink');
+      const token = await this._storageService.getDecodeToken() as any;
+      const previousLink = await this._storageService.getLocalStorage('previousLink');
       if (previousLink) {
         this._router.navigate([previousLink]);
         this._storageService.removeLocalStorage('previousLink');

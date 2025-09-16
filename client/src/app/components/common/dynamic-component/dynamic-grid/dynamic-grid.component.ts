@@ -61,8 +61,8 @@ export class DynamicGridComponent implements OnInit {
     }
   }
 
-  getData(config: any) {
-    this._service.callApi(config).subscribe((data) => {
+  async getData(config: any) {
+    (await this._service.callApi(config)).subscribe((data) => {
       this.data = data;
     });
   }
@@ -149,15 +149,15 @@ export class DynamicGridComponent implements OnInit {
     }
   }
 
-  callServerMethod(
+  async callServerMethod(
     request: any,
     event: any,
     noResponseMessage?: boolean,
     noCloseEditForm?: boolean
   ) {
     this.loader = true;
-    this._service
-      .callServerMethod(request, event, this._activateRouter)
+    (await this._service
+      .callServerMethod(request, event, this._activateRouter))
       .subscribe((data: any) => {
         if (data) {
           if (!noResponseMessage) {
@@ -173,10 +173,10 @@ export class DynamicGridComponent implements OnInit {
       });
   }
 
-  refreshDataFromServer() {
+  async refreshDataFromServer() {
     if (this.config.request) {
-      this._service
-        .callApi(this.config, this._activateRouter)
+      (await this._service
+        .callApi(this.config, this._activateRouter))
         .subscribe((data) => {
           this.loader = false;
           this.setResponseData(data);

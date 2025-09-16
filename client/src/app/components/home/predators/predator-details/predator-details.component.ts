@@ -38,13 +38,13 @@ export class PredatorDetailsComponent implements OnInit {
     this.getData();
   }
 
-  getData() {
+  async getData() {
     this.loader = true;
-    this._service
+    (await this._service
       .callGetMethod(
         '/api/user/getPredatorById',
         this._activatedRouter.snapshot.params.id
-      )
+      ))
       .subscribe((data: any) => {
         if (data) {
           this.data = data;
@@ -83,10 +83,10 @@ export class PredatorDetailsComponent implements OnInit {
     this._router.navigate(['home/predator-edit/' + this.data.id]);
   }
 
-  completedReport(event: boolean) {
+  async completedReport(event: boolean) {
     if (event) {
-      this._service
-        .callPostMethod('/api/user/completedReport', this.data)
+      (await this._service
+        .callPostMethod('/api/user/completedReport', this.data))
         .subscribe((data) => {
           if (data) {
             this.getData();

@@ -33,11 +33,11 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit() {}
 
-  forgotPassword() {
+  async forgotPassword() {
     this.submitted = false;
     if (this.form.valid) {
-      this._service
-        .callPostMethod('/api/auth/forgotPassword', this.form.value)
+      (await this._service
+        .callPostMethod('/api/auth/forgotPassword', this.form.value))
         .subscribe((data: any) => {
           if (data) {
             this.responseMessage = {

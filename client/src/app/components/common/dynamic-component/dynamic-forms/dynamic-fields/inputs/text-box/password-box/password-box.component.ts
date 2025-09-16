@@ -32,10 +32,10 @@ export class PasswordBoxComponent {
     this.alertQuestion.showQuestionAlert();
   }
 
-  generateNewPassword(dicision: any) {
+  async generateNewPassword(dicision: any) {
     if (dicision) {
-      this._service
-        .callPostMethod('/api/superadmin/generateNewPassword', this.group.value)
+      (await this._service
+        .callPostMethod('/api/superadmin/generateNewPassword', this.group.value))
         .subscribe((data) => {
           if (data) {
             this._toastr.showSuccess();

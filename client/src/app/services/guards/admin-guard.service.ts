@@ -14,8 +14,8 @@ export class AdminGuardService {
     private _helpService: HelpService
   ) {}
 
-  canActivate() {
-    const user = this._storageService.getDecodeToken();
+  async canActivate() {
+    const user = await this._storageService.getDecodeToken();
     if (user.type === UserTypesEnum.superadmin) {
       return true;
     } else {

@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
 export class LoginGuardService {
   constructor(public _router: Router, public _storageService: StorageService) {}
 
-  canActivate() {
-    if (this._storageService.getToken()) {
+  async canActivate() {
+    if (await this._storageService.getToken()) {
       return true;
     } else {
       this._storageService.setLocalStorage(

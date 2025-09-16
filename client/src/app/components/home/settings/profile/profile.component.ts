@@ -23,8 +23,8 @@ export class ProfileComponent implements OnInit {
     private _service: CallApiService
   ) {}
 
-  ngOnInit() {
-    this.user = this._storageService.getDecodeToken();
+  async ngOnInit() {
+    this.user = await this._storageService.getDecodeToken();
     this.setAvatar();
     this.setCover();
   }
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  onFileChangeCover(event: any) {
+  async onFileChangeCover(event: any) {
     const files = event.target.files as FileList;
 
     if (files.length > 0) {
@@ -55,15 +55,15 @@ export class ProfileComponent implements OnInit {
       formData.append('uploads[]', files[0], files[0].name);
       formData.append('id', this.user.id);
 
-      this._service
-        .callPostMethod('api/user/setMyCover', formData)
+      (await this._service
+        .callPostMethod('api/user/setMyCover', formData))
         .subscribe((data: any) => {
           this._storageService.setToken(data);
         });
     }
   }
 
-  onFileChangeProfile(event: any) {
+  async onFileChangeProfile(event: any) {
     const files = event.target.files as FileList;
 
     if (files.length > 0) {
@@ -75,8 +75,8 @@ export class ProfileComponent implements OnInit {
       formData.append('uploads[]', files[0], files[0].name);
       formData.append('id', this.user.id);
 
-      this._service
-        .callPostMethod('api/user/setMyAvatar', formData)
+      (await this._service
+        .callPostMethod('api/user/setMyAvatar', formData))
         .subscribe((data: any) => {
           this._storageService.setToken(data);
         });

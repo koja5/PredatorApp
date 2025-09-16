@@ -21,7 +21,7 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {}
 
-  submit(event: any) {
+  async submit(event: any) {
     console.log(event);
     if (event.new_password != event.re_new_password) {
       this._toastr.showErrorCustom(
@@ -30,12 +30,12 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    this._service
-      .callGetMethod('api/user/checkOldPassword', event.password)
-      .subscribe((data) => {
+    (await this._service
+      .callGetMethod('api/user/checkOldPassword', event.password))
+      .subscribe(async (data) => {
         if (data) {
-          this._service
-            .callPostMethod('api/user/setMyPassword', event)
+          (await this._service
+            .callPostMethod('api/user/setMyPassword', event))
             .subscribe((data) => {
               if (data) {
                 this._toastr.showSuccessCustom(

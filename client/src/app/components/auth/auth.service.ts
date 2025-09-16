@@ -7,8 +7,8 @@ import { CallApiService } from 'src/app/services/call-api.service';
 export class AuthService {
   constructor(private _service: CallApiService) {}
 
-  login(data: any) {
-    this._service.callPostMethod('/api/auth/login', data)?.subscribe((data: any) => {
+  async login(data: any) {
+    (await this._service.callPostMethod('/api/auth/login', data))?.subscribe((data: any) => {
       return data;
     });
   }

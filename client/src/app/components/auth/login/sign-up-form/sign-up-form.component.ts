@@ -37,8 +37,8 @@ export class SignUpFormComponent implements OnInit {
     this.getAllAreas();
   }
 
-  getAllAreas() {
-    this._service.callGetMethod('/api/auth/getAllAreas').subscribe((data) => {
+  async getAllAreas() {
+    (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data) => {
       this.areas = data;
     });
   }
@@ -74,7 +74,7 @@ export class SignUpFormComponent implements OnInit {
     }
   }
 
-  goToArea() {
+  async goToArea() {
     this.submitted = true;
     if (!this.signUpForm.valid) {
       this.error = 'fill-all-fields';
@@ -89,7 +89,7 @@ export class SignUpFormComponent implements OnInit {
     this.signUpProcess = 'areas';
 
     if (!this.areas) {
-      this._service.callGetMethod('/api/auth/getAllAreas').subscribe((data) => {
+      (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data) => {
         this.areas = data;
       });
     }
@@ -99,13 +99,13 @@ export class SignUpFormComponent implements OnInit {
     this.signUpForm.controls.id_area.setValue(item.id);
   }
 
-  signUp() {
+  async signUp() {
     this.submitted = true;
     this.error = null;
     if (!this.signUpForm.valid || !this.signUpForm.value.id_area) return;
 
-    this._service
-      .callPostMethod('/api/auth/signUp', this.signUpForm.value)
+    (await this._service
+      .callPostMethod('/api/auth/signUp', this.signUpForm.value))
       .subscribe((data: any) => {
         this.submitted = false;
         if (data.type) {

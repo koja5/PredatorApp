@@ -18,13 +18,13 @@ export class AppIonSelectComponent implements OnInit {
 
   constructor(private _service: CallApiService) {}
 
-  ngOnInit() {
-    this.getData();
+  async ngOnInit() {
+    await this.getData();
   }
 
-  getData() {
+  async getData() {
     if (this.config) {
-      this._service.callApi(this.config).subscribe((data: any) => {
+      (await this._service.callApi(this.config)).subscribe((data: any) => {
         this.data = data;
       });
     }

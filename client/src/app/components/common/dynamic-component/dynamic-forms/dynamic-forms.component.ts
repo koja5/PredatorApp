@@ -88,7 +88,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
       .subscribe((data: any) => {});
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.path && this.file && !this.data) {
       this.initializeConfig();
       this.loader = false;
@@ -103,7 +103,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
           this.setDisableEdit();
         }
         if (this.config.request && !this.data) {
-          this.getData(this.config);
+          await this.getData(this.config);
         } else {
           this.setValueToForm(this.config.config, this.data);
         }
@@ -126,7 +126,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   initializeConfig() {
     this.configurationService
       .getConfiguration(this.path, this.file)
-      .subscribe((data) => {
+      .subscribe(async (data) => {
         this.config = data as FormConfig;
         if (this.disableEdit) {
           this.setDisableEdit();
@@ -136,7 +136,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
         }
         this.form = this.createGroup();
         if (this.config.request && !this.data) {
-          this.getData(this.config);
+          await this.getData(this.config);
         }
         this.checkAdditionallValidation();
       });
@@ -172,8 +172,8 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
       });
   }
 
-  getData(data: any) {
-    this.apiService.callApi(data, this._activatedRouter).subscribe((data) => {
+  async getData(data: any) {
+    (await this.apiService.callApi(data, this._activatedRouter)).subscribe((data: any) => {
       this.data = data;
       this.setValueToForm(this.config.config, data);
     });
@@ -195,15 +195,15 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  callApiPost(api: string, body: any) {
-    this.apiService.callPostMethod(api, body).subscribe((data) => {
+  async callApiPost(api: string, body: any) {
+    (await this.apiService.callPostMethod(api, body)).subscribe((data) => {
       this.data = data;
       this.setValueToForm(this.config.config, data);
     });
   }
 
-  callApiGet(api: string, parameters?: string) {
-    this.apiService.callGetMethod(api, parameters!).subscribe((data) => {
+  async callApiGet(api: string, parameters?: string) {
+    (await this.apiService.callGetMethod(api, parameters!)).subscribe((data) => {
       this.data = data;
       this.setValueToForm(this.config.config, data);
     });
@@ -245,7 +245,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
     ]);
   }
 
-  handleSubmit(event: Event) {
+  async handleSubmit(event: Event) {
     if (this.form.valid) {
       event.preventDefault();
       event.stopPropagation();
@@ -255,12 +255,12 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
         this.config.actionRequest.save &&
         this.enableHandleSubmitDirectly
       ) {
-        this._service
+        (await this._service
           .callApi(
             { request: this.config.actionRequest.save },
             this.form.value,
             this._activatedRouter
-          )
+          ))
           .subscribe((data: any) => {
             if (data) {
               if (data.response === false) {
