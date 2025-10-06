@@ -28,7 +28,7 @@ export class NeedToApproveComponent implements OnInit {
         '/api/auth/checkIsNeedToActive',
         this._activatedRouter.snapshot.params.email
       ))
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.loader = false;
       });
   }

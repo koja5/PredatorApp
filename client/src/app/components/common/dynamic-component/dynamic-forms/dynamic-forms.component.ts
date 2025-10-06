@@ -88,10 +88,9 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
       .subscribe((data: any) => {});
   }
 
-  async ngOnInit() {
-    if (this.path && this.file && !this.data) {
+  ngOnInit() {
+    if (this.path && this.file) {
       this.initializeConfig();
-      this.loader = false;
     } else if (this.data && this.hideActionButtons) {
       this.getConfigurationFile();
       this.loader = false;
@@ -103,7 +102,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
           this.setDisableEdit();
         }
         if (this.config.request && !this.data) {
-          await this.getData(this.config);
+          this.getData(this.config);
         } else {
           this.setValueToForm(this.config.config, this.data);
         }
@@ -126,7 +125,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   initializeConfig() {
     this.configurationService
       .getConfiguration(this.path, this.file)
-      .subscribe(async (data) => {
+      .subscribe((data) => {
         this.config = data as FormConfig;
         if (this.disableEdit) {
           this.setDisableEdit();
@@ -136,9 +135,12 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
         }
         this.form = this.createGroup();
         if (this.config.request && !this.data) {
-          await this.getData(this.config);
+          this.getData(this.config);
+        } else {
+          this.setValueToForm(this.config.config, this.data);
+          this.loader = false;
         }
-        this.checkAdditionallValidation();
+        // this.checkAdditionallValidation();
       });
   }
 
@@ -173,7 +175,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   }
 
   async getData(data: any) {
-    (await this.apiService.callApi(data, this._activatedRouter)).subscribe((data: any) => {
+    (await this.apiService.callApi(data, this._activatedRouter)).subscribe((data) => {
       this.data = data;
       this.setValueToForm(this.config.config, data);
     });

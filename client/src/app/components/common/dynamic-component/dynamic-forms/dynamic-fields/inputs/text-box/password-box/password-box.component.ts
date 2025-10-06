@@ -36,7 +36,7 @@ export class PasswordBoxComponent {
     if (dicision) {
       (await this._service
         .callPostMethod('/api/superadmin/generateNewPassword', this.group.value))
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           if (data) {
             this._toastr.showSuccess();
           }

@@ -62,7 +62,7 @@ export class DynamicGridComponent implements OnInit {
   }
 
   async getData(config: any) {
-    (await this._service.callApi(config)).subscribe((data) => {
+    (await this._service.callApi(config)).subscribe((data: any) => {
       this.data = data;
     });
   }
@@ -177,7 +177,7 @@ export class DynamicGridComponent implements OnInit {
     if (this.config.request) {
       (await this._service
         .callApi(this.config, this._activateRouter))
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           this.loader = false;
           this.setResponseData(data);
         });

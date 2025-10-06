@@ -167,7 +167,7 @@
    "changePassword": {
       "title": "Kennwort ändern",
       "currentPassword": "aktuelles Passwort",
-      "newPassword": "aktuelles Passwort",
+      "newPassword": "Neues Passwort",
       "reNewPassword": "Neues Passwort wiederholen",
       "passwordsNeedToBeSame": "Neues Passwort und neues Passwort wiederholen müssen identisch sein.",
       "currentPasswordIsNotGood": "Das aktuelle Passwort ist nicht gültig. Bitte geben Sie das korrekte aktuelle Passwort ein.",

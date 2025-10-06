@@ -38,7 +38,7 @@ export class SignUpFormComponent implements OnInit {
   }
 
   async getAllAreas() {
-    (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data) => {
+    (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data: any) => {
       this.areas = data;
     });
   }
@@ -89,7 +89,7 @@ export class SignUpFormComponent implements OnInit {
     this.signUpProcess = 'areas';
 
     if (!this.areas) {
-      (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data) => {
+      (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data: any) => {
         this.areas = data;
       });
     }

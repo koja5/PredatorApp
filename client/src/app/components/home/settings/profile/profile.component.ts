@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrComponent } from 'src/app/components/common/toastr/toastr.component';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { environment } from 'src/environments/environment';
@@ -17,16 +18,27 @@ export class ProfileComponent implements OnInit {
   public coverImage: string = '';
   public coverImageCropped: string = '';
   public user: any;
+  public data: any;
 
   constructor(
     private _storageService: StorageService,
-    private _service: CallApiService
+    private _service: CallApiService,
+    private _toastr: ToastrComponent
   ) {}
 
   async ngOnInit() {
     this.user = await this._storageService.getDecodeToken();
     this.setAvatar();
     this.setCover();
+   this.getMe();
+  }
+
+  async getMe() {
+    (await this._service
+      .callGetMethod('/api/user/getMe'))
+      .subscribe((data: any) => {
+        this.data = data;
+      });
   }
 
   setAvatar() {
@@ -81,5 +93,13 @@ export class ProfileComponent implements OnInit {
           this._storageService.setToken(data);
         });
     }
+  }
+
+  async submit() {
+    (await this._service.callPostMethod('/api/user/setMe', this.data)).subscribe(data => {
+      if(data) {
+        this._toastr.showSuccess();
+      }
+    })
   }
 }

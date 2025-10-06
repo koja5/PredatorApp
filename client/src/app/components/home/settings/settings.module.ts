@@ -5,7 +5,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { DynamicModule } from '../../common/dynamic-component/dynamic.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonInput } from '@ionic/angular';
+import { DynamicFieldsModule } from '../../common/dynamic-component/dynamic-fields/dynamic-fields.module';
 
 const routes = [
   {
@@ -24,7 +25,9 @@ const routes = [
     CommonModule,
     RouterModule.forChild(routes),
     DynamicModule,
-    TranslateModule
+    TranslateModule,
+    IonicModule,
+    DynamicFieldsModule
   ],
   providers: [],
   exports: [RouterModule],

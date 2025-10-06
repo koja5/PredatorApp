@@ -208,7 +208,7 @@ export class PredatorEditComponent implements OnInit {
 
     this.loader = true;
 
-    (await this._service.callPostMethod('/api/upload/setPredator', data)).subscribe(data => {
+    (await this._service.callPostMethod('/api/upload/setPredator', data)).subscribe((data: any) => {
       this.loader = false;
       this.backToPreviousPage();
     })
@@ -266,6 +266,7 @@ export class PredatorEditComponent implements OnInit {
         if (data) {
           this.isModalOpen = false;
           setTimeout(() => {
+            this.refreshEmit.emit();
             this._router.navigate(['home/predators']);
           }, 100);
         }

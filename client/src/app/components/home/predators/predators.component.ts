@@ -21,7 +21,7 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./predators.component.scss'],
   standalone: false,
 })
-export class PredatorsComponent implements OnInit {
+export class PredatorsComponent {
   @ViewChild('createNewEntryButton') createNewEntryButton!: ElementRef;
   @ViewChild(PredatorEditComponent)
   editFormComponent!: PredatorEditComponent;
@@ -48,9 +48,10 @@ export class PredatorsComponent implements OnInit {
     private _storageService: StorageService
   ) {}
 
-  async ngOnInit() {
+  ionViewWillEnter() {
     this.getPredators();
     this.setCover();
+
   }
 
   async setCover() {
@@ -82,13 +83,13 @@ export class PredatorsComponent implements OnInit {
   async getPredators() {
     this.loader = true;
     (await this._service
-      .callGetMethod1('/api/user/getAllPredatorNotes'))
-      .subscribe((data) => {
+      .callGetMethod('/api/user/getAllPredatorNotes'))
+      .subscribe((data: any) => {
         this.predators = data;
         this.loader = false;
         setTimeout(() => {
           this.scrollToOffset();
-        }, 5);
+        }, 20);
       });
   }
 

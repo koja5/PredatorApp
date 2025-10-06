@@ -301,6 +301,8 @@ router.get("/getMe", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
+        console.log("USAO SAM");
+        console.log(req.user.user.id);
         conn.query(
           "select * from users where id = ?",
           [req.user.user.id],
@@ -310,6 +312,8 @@ router.get("/getMe", auth, async (req, res, next) => {
               logger.log("error", err.sql + ". " + err.sqlMessage);
               res.json(err);
             } else {
+              console.log("VRATIO SAM");
+              console.log(rows);
               res.json(rows.length ? rows[0] : {});
             }
           }

@@ -15,7 +15,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./predator-details.component.scss'],
   standalone: false,
 })
-export class PredatorDetailsComponent implements OnInit {
+export class PredatorDetailsComponent {
   @ViewChild(QuestionAlertComponent) alertQuestion: QuestionAlertComponent;
   public data: PredatorModel;
   public images: any = [];
@@ -34,7 +34,7 @@ export class PredatorDetailsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.getData();
   }
 
@@ -87,7 +87,7 @@ export class PredatorDetailsComponent implements OnInit {
     if (event) {
       (await this._service
         .callPostMethod('/api/user/completedReport', this.data))
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           if (data) {
             this.getData();
           }

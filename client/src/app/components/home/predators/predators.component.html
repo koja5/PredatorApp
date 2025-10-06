@@ -44,11 +44,7 @@
           </li>
         </ul>
       </div>
-      <!-- <div #createNewEntryButton class="menu-btn-container take-picture" (click)="openAction()">
-        <button aria-pressed="false" aria-label="Open Menu" class="menu-btn">
-          <img src="./assets/icon/add.svg">
-        </button>
-      </div> -->
+  
       <app-loader *ngIf="loader"></app-loader>
       <div class="no-data" *ngIf="!loader && (!predators || !predators.length)">
         <img src="./assets/icon/capture-photo.png">

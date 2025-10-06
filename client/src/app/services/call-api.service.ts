@@ -88,9 +88,9 @@ export class CallApiService {
       );
     }
     if (request.type === 'POST') {
-      return this.callPostMethod(request.api, data);
+      return await this.callPostMethod(request.api, data);
     } else {
-      return this.callGetMethod(request.api, data);
+      return await this.callGetMethod(request.api, data);
     }
   }
 

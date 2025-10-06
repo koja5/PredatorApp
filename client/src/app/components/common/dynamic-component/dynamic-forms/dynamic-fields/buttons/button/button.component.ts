@@ -66,7 +66,7 @@ export class ButtonComponent implements OnInit {
         } else {
           this.config.body = this.group.value;
           (await this._service.callApi(this.config, this._router)).subscribe(
-            (data) => {
+            (data: any) => {
               if (data) {
                 if (
                   this.config.responseMessage.type === ResponseAction.toastr
@@ -87,7 +87,7 @@ export class ButtonComponent implements OnInit {
                 this._toastr.showError();
               }
             },
-            (error) => {
+            (error: any) => {
               this._toastr.showError();
             }
           );

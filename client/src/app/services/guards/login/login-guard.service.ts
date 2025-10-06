@@ -10,7 +10,8 @@ export class LoginGuardService {
   constructor(public _router: Router, public _storageService: StorageService) {}
 
   async canActivate() {
-    if (await this._storageService.getToken()) {
+    const token = await this._storageService.getToken();
+    if (token) {
       return true;
     } else {
       this._storageService.setLocalStorage(

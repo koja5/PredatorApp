@@ -75,7 +75,7 @@ export class MultiselectComponent implements OnInit {
           this.config.request!.fields
         )
       ))
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         if (this.config.request!.root) {
           // this.data = data[this.config.request!.root];
         } else {

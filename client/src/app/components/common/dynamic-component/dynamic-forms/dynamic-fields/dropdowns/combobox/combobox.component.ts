@@ -73,7 +73,7 @@ export class ComboboxComponent implements OnInit {
   async getApiRequest() {
     this.loading = true;
     (await this._service.callApi(this.config, this.config.request!.fields)).subscribe(
-      (data) => {
+      (data: any) => {
         if (this.config.request!.root) {
           // this.data = data[this.config.request!.root];
         } else {
@@ -81,7 +81,7 @@ export class ComboboxComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      (error: any) => {
         this.loading = false;
       }
     );
@@ -170,12 +170,12 @@ export class ComboboxComponent implements OnInit {
 
       (await this._service
         .callPostMethod(this.config.addTag.request.api, body))
-        .subscribe(async (entryId) => {
+        .subscribe(async (entryId: any) => {
           this.loading = true;
           (await this._service
             .callApi(this.config, this.config.request!.fields))
             .subscribe(
-              (data) => {
+              (data: any) => {
                 if (this.config.request!.root) {
                   // this.data = data[this.config.request!.root];
                 } else {
@@ -185,7 +185,7 @@ export class ComboboxComponent implements OnInit {
                   this.loading = false;
                 }
               },
-              (error) => {
+              (error: any) => {
                 this.loading = false;
               }
             );

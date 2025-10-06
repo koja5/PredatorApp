@@ -43,7 +43,7 @@ export class GalleryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.value) {
+    if (this.value && this.value != "undefined") {
       if (typeof this.value == 'string') {
         if (this.value.startsWith('data:image')) {
           this.imageFromCamera = this.b64toBlob(
