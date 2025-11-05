@@ -1,4 +1,9 @@
-<div id="screen">
+<ion-header [translucent]="true" mode="md" collapse="fade">
+  <ion-toolbar>
+    <ion-title>{{'profile.title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
   <div class="cover-container">
     <div class="cover" *ngIf="coverImageCropped; else placeholderCover"
       [ngStyle]="{backgroundImage: 'url(' + coverImageCropped + ')'}">
@@ -32,8 +37,23 @@
         </label>
       </div>
     </div>
-    <div class="m-3 mt-5">
-      <app-dynamic-forms [path]="path" [file]="file"></app-dynamic-forms>
+    <br><br>
+    <div class="m-3 mt-5" *ngIf="data">
+      <!-- <app-dynamic-forms *ngIf="data" [path]="path" [file]="file" [data]="data"></app-dynamic-forms> -->
+
+      <app-ion-input [label]="'profile.firstname'"
+          [value]="data.firstname" (changeEmit)="data.firstname = $event"></app-ion-input>
+      <app-ion-input [label]="'profile.lastname'"
+    [value]="data.lastname" (changeEmit)="data.firstname = $event"></app-ion-input>
+      <app-ion-input [label]="'profile.phone'"
+    [value]="data.phone" (changeEmit)="data.phone = $event"></app-ion-input>
+      <app-ion-input [label]="'profile.email'"
+    [value]="data.email" (changeEmit)="data.email = $event"></app-ion-input>
+    <div class="text-end mt-3">
+    <ion-button 
+        (click)="submit()">{{'general.save' |
+        translate}}</ion-button>
+        </div>
     </div>
   </div>
-</div>
+</ion-content>

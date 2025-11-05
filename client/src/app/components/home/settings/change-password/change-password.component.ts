@@ -12,6 +12,11 @@ import { CallApiService } from 'src/app/services/call-api.service';
 export class ChangePasswordComponent implements OnInit {
   public path = 'forms/user';
   public file = 'change-password.json';
+  public data = {
+    password: '',
+    new_password: '',
+    re_new_password: ''
+  }
 
   constructor(
     private _toastr: ToastrComponent,
@@ -21,22 +26,21 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {}
 
-  submit(event: any) {
-    console.log(event);
-    if (event.new_password != event.re_new_password) {
+  async submit() {
+    if (this.data.new_password != this.data.re_new_password) {
       this._toastr.showErrorCustom(
         this._translate.instant('changePassword.passwordsNeedToBeSame')
       );
       return;
     }
 
-    this._service
-      .callGetMethod('api/user/checkOldPassword', event.password)
-      .subscribe((data) => {
+    (await this._service
+      .callGetMethod('api/user/checkOldPassword', this.data.password))
+      .subscribe(async (data: any) => {
         if (data) {
-          this._service
-            .callPostMethod('api/user/setMyPassword', event)
-            .subscribe((data) => {
+          (await this._service
+            .callPostMethod('api/user/setMyPassword', this.data))
+            .subscribe((data: any) => {
               if (data) {
                 this._toastr.showSuccessCustom(
                   this._translate.instant(

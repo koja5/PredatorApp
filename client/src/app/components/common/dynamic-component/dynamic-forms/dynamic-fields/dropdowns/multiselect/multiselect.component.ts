@@ -66,16 +66,16 @@ export class MultiselectComponent implements OnInit {
     );
   }
 
-  getApiRequest() {
-    this._service
+  async getApiRequest() {
+    (await this._service
       .callGetMethod(
         this.config.request!.api,
         this._service.packParametarGet(
           this.config.data,
           this.config.request!.fields
         )
-      )
-      .subscribe((data) => {
+      ))
+      .subscribe((data: any) => {
         if (this.config.request!.root) {
           // this.data = data[this.config.request!.root];
         } else {

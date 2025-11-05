@@ -25,8 +25,8 @@ export class AppComponent {
   }
 
   initializeLanguage() {
-    setTimeout(() => {
-      const language = this._storageService.getSelectedLanguage();
+    setTimeout(async () => {
+      const language = await this._storageService.getSelectedLanguage() as any;
       if (language) {
         this._translateService.setDefaultLang(language);
         this._translateService.use(language);
@@ -61,4 +61,5 @@ export class AppComponent {
   getPhoto() {
     return this.imageSource;
   }
+  
 }

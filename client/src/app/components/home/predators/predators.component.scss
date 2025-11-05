@@ -172,6 +172,7 @@ header #icons svg:nth-child(2) {
   height: 56px;
   font-size: 16px;
   padding: 0px;
+  object-fit: cover;
 }
 
 // .take-picture {
@@ -438,3 +439,11 @@ img[src="./assets/icon/no-image.svg"] {
   //   grid-template-columns: 1fr;
   // }
 }
+
+.new-predator-option {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+

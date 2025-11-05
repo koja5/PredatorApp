@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
     this.getAllAreas();
   }
 
-  getAllAreas() {
-    this._service.callGetMethod('/api/auth/getAllAreas').subscribe((data) => {
+  async getAllAreas() {
+    (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data: any) => {
       this.areas = data;
     });
   }
@@ -81,23 +81,25 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login() {
+  async login() {
     this.submitted = false;
     this.loader = true;
     if (this.loginForm.valid) {
-      this._service
-        .callPostMethod('/api/auth/login', this.loginForm.value)
-        .subscribe((data: any) => {
+      (await this._service
+        .callPostMethod('/api/auth/login', this.loginForm.value))
+        .subscribe(async (data: any) => {
           this.loader = false;
           if (data && data.token) {
             this._storageService.setToken(data.token);
 
-            const type = this._storageService.getDecodeToken()
-              .type as UserTypesEnum;
+            let type = await this._storageService.getDecodeToken();
+            if(type) {
+              type = type.type as UserTypesEnum;
+            }
             const previousLink =
               this._storageService.getLocalStorage('previousLink');
             if (previousLink) {
-              window.open(previousLink, '_self');
+              window.open(await previousLink, '_self');
               this._storageService.removeLocalStorage('previousLink');
             } else if (type === UserTypesEnum.superadmin) {
               this._roter.navigate(['/superadmin/all-admins']);
@@ -119,7 +121,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
   }
 
-  goToArea() {
+  async goToArea() {
     this.submitted = true;
     if (
       !this.signUpForm.valid ||
@@ -130,7 +132,7 @@ export class LoginComponent implements OnInit {
     this.signUpProcess = 'areas';
 
     if (!this.areas) {
-      this._service.callGetMethod('/api/auth/getAllAreas').subscribe((data) => {
+      (await this._service.callGetMethod('/api/auth/getAllAreas')).subscribe((data: any) => {
         this.areas = data;
       });
     }
@@ -140,12 +142,12 @@ export class LoginComponent implements OnInit {
     this.signUpForm.controls.id_area.setValue(item.id);
   }
 
-  signUp() {
+  async signUp() {
     this.submitted = true;
     if (!this.signUpForm.valid || !this.signUpForm.value.id_area) return;
 
-    this._service
-      .callPostMethod('/api/auth/signUp', this.signUpForm.value)
+    (await this._service
+      .callPostMethod('/api/auth/signUp', this.signUpForm.value))
       .subscribe((data: any) => {
         this.submitted = false;
         if (data.type) {

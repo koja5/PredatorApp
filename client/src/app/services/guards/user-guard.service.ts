@@ -14,8 +14,8 @@ export class UserGuardService {
     private _helpService: HelpService
   ) {}
 
-  canActivate() {
-    const user = this._storageService.getDecodeToken();
+  async canActivate() {
+    const user = await this._storageService.getDecodeToken();
     if (user.type === UserTypesEnum.user) {
       return true;
     } else {

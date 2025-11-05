@@ -49,13 +49,13 @@ export class ComboboxComponent implements OnInit {
     }
   }
 
-  initialization() {
+  async initialization() {
     if (this.config.request!.localData) {
       this.getLocalData(this.config.request!.localData);
     } else {
       if (this.config.request!.type === "POST") {
       } else {
-        this.getApiRequest();
+        await this.getApiRequest();
       }
     }
   }
@@ -70,10 +70,10 @@ export class ComboboxComponent implements OnInit {
     );
   }
 
-  getApiRequest() {
+  async getApiRequest() {
     this.loading = true;
-    this._service.callApi(this.config, this.config.request!.fields).subscribe(
-      (data) => {
+    (await this._service.callApi(this.config, this.config.request!.fields)).subscribe(
+      (data: any) => {
         if (this.config.request!.root) {
           // this.data = data[this.config.request!.root];
         } else {
@@ -81,7 +81,7 @@ export class ComboboxComponent implements OnInit {
           this.loading = false;
         }
       },
-      (error) => {
+      (error: any) => {
         this.loading = false;
       }
     );
@@ -152,7 +152,7 @@ export class ComboboxComponent implements OnInit {
     }, 20);
   }
 
-  submitNewEntriesEmitter(event: any) {
+  async submitNewEntriesEmitter(event: any) {
     if (
       this._helpService.checkUndefinedProperty(event) &&
       event.type != "submit"
@@ -168,14 +168,14 @@ export class ComboboxComponent implements OnInit {
         }
       }
 
-      this._service
-        .callPostMethod(this.config.addTag.request.api, body)
-        .subscribe((entryId) => {
+      (await this._service
+        .callPostMethod(this.config.addTag.request.api, body))
+        .subscribe(async (entryId: any) => {
           this.loading = true;
-          this._service
-            .callApi(this.config, this.config.request!.fields)
+          (await this._service
+            .callApi(this.config, this.config.request!.fields))
             .subscribe(
-              (data) => {
+              (data: any) => {
                 if (this.config.request!.root) {
                   // this.data = data[this.config.request!.root];
                 } else {
@@ -185,7 +185,7 @@ export class ComboboxComponent implements OnInit {
                   this.loading = false;
                 }
               },
-              (error) => {
+              (error: any) => {
                 this.loading = false;
               }
             );

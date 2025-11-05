@@ -21,19 +21,19 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./predators.component.scss'],
   standalone: false,
 })
-export class PredatorsComponent implements OnInit {
+export class PredatorsComponent {
   @ViewChild('createNewEntryButton') createNewEntryButton!: ElementRef;
   @ViewChild(PredatorEditComponent)
   editFormComponent!: PredatorEditComponent;
   @ViewChild(CdkVirtualScrollViewport)
   viewport!: CdkVirtualScrollViewport;
 
-  @HostListener('document:mousedown', ['$event'])
-  onGlobalClick(event: any): void {
-    if (!this.createNewEntryButton.nativeElement.contains(event.target)) {
-      this.active = '';
-    }
-  }
+  // @HostListener('document:mousedown', ['$event'])
+  // onGlobalClick(event: any): void {
+  //   if (!this.createNewEntryButton.nativeElement.contains(event.target)) {
+  //     this.active = '';
+  //   }
+  // }
 
   public imageSource: any;
   public active = '';
@@ -48,14 +48,15 @@ export class PredatorsComponent implements OnInit {
     private _storageService: StorageService
   ) {}
 
-  async ngOnInit() {
+  ionViewWillEnter() {
     this.getPredators();
     this.setCover();
+
   }
 
-  setCover() {
-    const user = this._storageService.getDecodeToken();
-    if (user.cover) {
+  async setCover() {
+    const user = await this._storageService.getDecodeToken() as any;
+    if (user && user.cover) {
       this.cover =
         environment.DOMAIN + '/assets/images/cover/' + user.cover;
     }
@@ -64,7 +65,7 @@ export class PredatorsComponent implements OnInit {
   scrollToOffset() {
     const savedScroll = this._storageService.getLocalStorage(
       'galleryScrollPosition'
-    );
+    ) as any;
     if (savedScroll) {
       const scrollNumber = parseFloat(savedScroll);
       this.viewport.scrollToOffset(scrollNumber);
@@ -79,16 +80,16 @@ export class PredatorsComponent implements OnInit {
     );
   }
 
-  getPredators() {
+  async getPredators() {
     this.loader = true;
-    this._service
-      .callGetMethod('/api/user/getAllPredatorNotes')
-      .subscribe((data) => {
+    (await this._service
+      .callGetMethod('/api/user/getAllPredatorNotes'))
+      .subscribe((data: any) => {
         this.predators = data;
         this.loader = false;
         setTimeout(() => {
           this.scrollToOffset();
-        }, 5);
+        }, 20);
       });
   }
 
@@ -112,24 +113,6 @@ export class PredatorsComponent implements OnInit {
     }
 
     // const fileSrc = Capacitor.convertFileSrc(image.path!);
-
-    // const checkCameraPermissions = await Camera.checkPermissions();
-    // if (checkCameraPermissions.photos !== 'granted') {
-    //   await Camera.requestPermissions({ permissions: ['photos'] });
-    // }
-
-    // const image = await Camera.getPhoto({
-    //   resultType: CameraResultType.Uri,
-    //   source: CameraSource.Camera,
-    //   quality: 100,
-    // });
-
-    // if (!image) return;
-
-    // this._router.navigate([
-    //   'home/predator-edit/new?gallery=' + this.imageSource,
-    // ]);
-    // this.editFormComponent.open();
   };
 
   base64toBlob(base64Data: any, contentType: any) {
@@ -218,4 +201,6 @@ export class PredatorsComponent implements OnInit {
   loadImage(index: number) {
     this.loadedImage[index] = true;
   }
+
+  
 }

@@ -1,12 +1,5 @@
 {
     "pageSize": 10,
-    "request": {
-        "type": "GET",
-        "api": "/api/user/getMe",
-        "parameters": [],
-        "fields": "",
-        "root": ""
-    },
     "paging": {
         "enable": true,
         "settings": {

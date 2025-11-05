@@ -128,8 +128,8 @@ export class HelpService {
     return UserTypesEnum[UserTypesEnum.superadmin];
   }
 
-  checkRights(rights: any) {
-    const type = this.getTypeOfName(this._storageService.getDecodeToken().type);
+  async checkRights(rights: any) {
+    const type = this.getTypeOfName((await this._storageService.getDecodeToken() as any).type);
     if (rights) {
       for (let i = 0; i < rights.length; i++) {
         if (rights[i] === type) {

@@ -1,4 +1,20 @@
-<body>
+<ion-header [translucent]="true" mode="md" collapse="fade">
+  <ion-toolbar>
+    <div class="new-predator-option">
+       
+      <a (click)="addManually()">
+          <img src="./assets/icon/add-without-photo.svg">
+          <span>{{'general.manually' | translate}}</span>
+      </a>
+       <a (click)="takePicture()">
+          <img src="./assets/icon/add-photo.svg">
+          <span>{{'general.takeAPicture' | translate}}</span>
+        </a>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
 
   <!-- <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -28,11 +44,7 @@
           </li>
         </ul>
       </div>
-      <div #createNewEntryButton class="menu-btn-container take-picture" (click)="openAction()">
-        <button aria-pressed="false" aria-label="Open Menu" class="menu-btn">
-          <img src="./assets/icon/add.svg">
-        </button>
-      </div>
+  
       <app-loader *ngIf="loader"></app-loader>
       <div class="no-data" *ngIf="!loader && (!predators || !predators.length)">
         <img src="./assets/icon/capture-photo.png">
@@ -59,4 +71,4 @@
   <app-predator-edit *ngIf="imageSource" #editFormComponent [gallery]="imageSource"
     (refreshEmit)="refresh()"></app-predator-edit>
 
-</body>
+</ion-content>

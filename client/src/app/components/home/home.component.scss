@@ -6,19 +6,19 @@
   width: 75px;
 }
 
-ion-tab-button,
+ion-header, ion-tab-button, ion-tab-bar,
 ion-menu-button {
-  background: #01193c;
-  color: #fff;
+  background: #01193c !important;
+  color: #fff !important;
 }
 
-ion-tab-bar {
-  background: none;
-}
+// ion-tab-bar {
+//   background: none;
+// }
 
-ion-toolbar {
-  background: none !important;
-}
+// ion-toolbar {
+//   background: none !important;
+// }
 
 .logout {
   position: absolute;

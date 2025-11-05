@@ -18,8 +18,8 @@ export class SuperadminComponent implements OnInit {
     private _router: Router
   ) {}
 
-  ngOnInit() {
-    this.currentUser = this._storageService.getDecodeToken();
+  async ngOnInit() {
+    this.currentUser = await this._storageService.getDecodeToken();
     this.getNavigation();
   }
 

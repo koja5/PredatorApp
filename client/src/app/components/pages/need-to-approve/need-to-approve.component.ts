@@ -21,14 +21,14 @@ export class NeedToApproveComponent implements OnInit {
     }
   }
 
-  checkAccountStatus() {
+  async checkAccountStatus() {
     this.loader = true;
-    this._service
+    (await this._service
       .callGetMethod(
         '/api/auth/checkIsNeedToActive',
         this._activatedRouter.snapshot.params.email
-      )
-      .subscribe((data) => {
+      ))
+      .subscribe((data: any) => {
         this.loader = false;
       });
   }

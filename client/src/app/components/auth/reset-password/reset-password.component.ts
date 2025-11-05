@@ -46,7 +46,7 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
-  resetPassword() {
+  async resetPassword() {
     this.submitted = false;
     if (this.form.valid) {
       if (this.form.value.password != this.form.value.rePassword) {
@@ -56,11 +56,11 @@ export class ResetPasswordComponent implements OnInit {
         );
         return;
       }
-      this._service
+      (await this._service
         .callPostMethod('/api/auth/resetPassword', {
           email: this._activatedRouter.snapshot.params.email,
           password: this.form.value.password,
-        })
+        }))
         .subscribe((data: any) => {
           if (data) {
             this.responseMessage = {

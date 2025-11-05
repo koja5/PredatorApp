@@ -55,7 +55,7 @@ export class ButtonComponent implements OnInit {
     return this._helpService.checkRights(this.config.rights);
   }
 
-  clickRequest(dicision: boolean) {
+  async clickRequest(dicision: boolean) {
     if (dicision) {
       if (this._helpService.checkUndefinedProperty(this.group.value)) {
         if (this.config.emitRequest) {
@@ -65,8 +65,8 @@ export class ButtonComponent implements OnInit {
           });
         } else {
           this.config.body = this.group.value;
-          this._service.callApi(this.config, this._router).subscribe(
-            (data) => {
+          (await this._service.callApi(this.config, this._router)).subscribe(
+            (data: any) => {
               if (data) {
                 if (
                   this.config.responseMessage.type === ResponseAction.toastr
@@ -87,7 +87,7 @@ export class ButtonComponent implements OnInit {
                 this._toastr.showError();
               }
             },
-            (error) => {
+            (error: any) => {
               this._toastr.showError();
             }
           );

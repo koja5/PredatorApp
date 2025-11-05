@@ -2,7 +2,7 @@
   <div *ngIf="loader" style="height: 70vh">
     <app-loader></app-loader>
   </div>
-  <div *ngIf="!loader">
+  <div *ngIf='form'>
     <div *ngIf="config && config.additionalInfo" class="{{ !hideActionButtons ? config.class : '' }}">
       <div class="card card-form">
         <div class="row no-gutters">
@@ -32,11 +32,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div *ngIf="config.childrens">
-    <app-dynamic-forms
-      *ngFor="let item of config.childrens"
-      [config]="item"
-    ></app-dynamic-forms>
-  </div>
-   -->

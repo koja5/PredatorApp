@@ -4,7 +4,7 @@ import { HelpService } from './help.service';
 import { StorageService } from './storage.service';
 import { RequestModel } from '../models/request.model';
 import { ParameterTypeEnum } from '../enums/parameter-type-enum';
-import { from, map, Observable, Subject } from 'rxjs';
+import { catchError, from, map, Observable, Subject, throwError } from 'rxjs';
 import { isPlatform } from '@ionic/angular';
 import { CapacitorHttp, HttpOptions } from '@capacitor/core';
 
@@ -30,7 +30,7 @@ export class CallApiService {
     );
   }
 
-  callApi(data: any, value?: any, activatedRouter?: any) {
+  async callApi(data: any, value?: any, activatedRouter?: any) {
     if (data && data.request && data.request.type === 'POST') {
       if (data.request.url) {
         value = this.helpService.postRequestDataParameters(
@@ -79,7 +79,7 @@ export class CallApiService {
     return new Subject();
   }
 
-  callServerMethod(request: any, data: any, router?: any) {
+  async callServerMethod(request: any, data: any, router?: any) {
     if (request.url) {
       data = this.helpService.postRequestDataParameters(
         data,
@@ -88,9 +88,9 @@ export class CallApiService {
       );
     }
     if (request.type === 'POST') {
-      return this.callPostMethod(request.api, data);
+      return await this.callPostMethod(request.api, data);
     } else {
-      return this.callGetMethod(request.api, data);
+      return await this.callGetMethod(request.api, data);
     }
   }
 
@@ -154,33 +154,51 @@ export class CallApiService {
   // public createHeader(map: Map<string, string>) {
   //   this.setHeader(this.HTTP2, map);
   // }
-  callPostMethod(api: string, data?: any) {
-    if (isPlatform('capacitor')) {
-      const url = 'https://praedatoren.app' + api;
+ async callPostMethod(api: string, data?: any) {
+  const url = 'https://praedatoren.app' + api;
+  const token = await this._storageService.getToken();
+  const isFormData = data instanceof FormData;
 
-      let options: HttpOptions = {
-        url,
-        data: data,
-      };
-
-      if (this._storageService.getToken()) {
-        options['headers'] = {
-          Authorization: `Bearer ${this._storageService.getToken()}`,
-          'Content-Type': 'application/json',
-        };
-      } else {
-        options['headers'] = {
-          'Content-Type': 'application/json',
-        };
-      }
-
-      return from(CapacitorHttp.post(options)).pipe(map((data) => data.data));
-    } else {
-      return this.http.post(api, data, { headers: this.headers });
-    }
+  if (isPlatform('capacitor') && isFormData) {
+    // 📌 Koristimo fetch jer CapacitorHttp ne zna za FormData
+    return from(
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+          // ⛔ Ne postavljaj Content-Type ručno – browser dodaje boundary automatski
+        },
+        body: data,
+      }).then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Server error: ${res.status} - ${text}`);
+        }
+        return res.json();
+      })
+    );
   }
 
-  callGetMethod(api: string, data?: any) {
+  if (isPlatform('capacitor')) {
+    // 📌 JSON payload ide preko CapacitorHttp
+    let headers: any = { 'Content-Type': 'application/json' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+    return from(
+      CapacitorHttp.post({
+        url,
+        headers,
+        data,
+      })
+    ).pipe(map((data) => data.data));
+  }
+
+  // 📌 U browseru HttpClient automatski hendluje i FormData i JSON
+  return this.http.post(api, data, { headers: this.headers });
+}
+
+
+  async callGetMethod(api: string, data?: any) {
     if (data === undefined) {
       data = '';
     }
@@ -191,7 +209,7 @@ export class CallApiService {
       const options: HttpOptions = {
         url,
         headers: {
-          Authorization: `Bearer ${this._storageService.getToken()}`,
+          Authorization: `Bearer ${await this._storageService.getToken()}`,
           'Content-Type': 'application/json',
         },
       };
@@ -201,6 +219,36 @@ export class CallApiService {
       return this.http.get(link, { headers: this.headers });
     }
   }
+
+async callGetMethod1(api: string, data?: any) {
+  if (!data) data = '';
+  const link = api.endsWith('/') ? api + data : data ? api + '/' + data : api;
+
+  if (isPlatform('capacitor')) {
+    const token = await this._storageService.getToken(); // čekamo token
+    console.log("Cekam token");
+    console.log(token);
+    const url = 'https://praedatoren.app' + link;
+    const options: HttpOptions = {
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    return from(CapacitorHttp.get(options)).pipe(
+      map(res => res.data),
+      catchError(err => {
+        console.error('iOS HTTP ERROR', err);
+        return throwError(() => err);
+      })
+    );
+  } else {
+    return this.http.get(link, { headers: this.headers });
+  }
+}
+
 
   getPostRequest(api: string, data: any) {
     if (isPlatform('capacitor')) {

@@ -28,12 +28,12 @@ export class HttpNativeService {
     return from(responseData);
   }
 
-  public post(url: any, params?: any) {
+  public async post(url: any, params?: any) {
     let api = environment.DOMAIN + url;
 
     return axios.post(api, params, {
       headers: {
-        Authorization: `Bearer ${this._storageService.getToken()}`,
+        Authorization: `Bearer ${await this._storageService.getToken()}`,
         'Content-Type': 'multipart/form-data',
       },
     });

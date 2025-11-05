@@ -81,10 +81,10 @@ export class PredatorEditComponent implements OnInit {
 
   async ngOnInit() {
     this.isModalOpen = true;
-    this.getAllPredators();
-    this.getAllTypeOfWaters();
-    this.getAllTerritories();
-    this.getAllActivities();
+    await this.getAllPredators();
+    await this.getAllTypeOfWaters();
+    await this.getAllTerritories();
+    await this.getAllActivities();
 
     if (this.gallery) {
       this.data.gallery = this.gallery;
@@ -92,11 +92,11 @@ export class PredatorEditComponent implements OnInit {
       this.initializeCreationDate();
     } else if (this._activatedRouter.snapshot.params.id != 'new') {
       this.loader = true;
-      this._service
+      (await this._service
         .callGetMethod(
           '/api/user/getPredatorForEditById',
           this._activatedRouter.snapshot.params.id
-        )
+        ))
         .subscribe((data: any) => {
           this.data = data;
           this.checkGeolocation();
@@ -133,33 +133,33 @@ export class PredatorEditComponent implements OnInit {
 
   //#region GET REQUIRED DATA
 
-  getAllPredators() {
-    this._service
-      .callGetMethod('/api/user/getAllPredators')
+  async getAllPredators() {
+    (await this._service
+      .callGetMethod('/api/user/getAllPredators'))
       .subscribe((data: PredatorItemModel) => {
         this.allItems.predators = data;
       });
   }
 
-  getAllTypeOfWaters() {
-    this._service
-      .callGetMethod('/api/user/getAllTypeOfWaters')
+  async getAllTypeOfWaters() {
+    (await this._service
+      .callGetMethod('/api/user/getAllTypeOfWaters'))
       .subscribe((data: TypeOfWaterModel) => {
         this.allItems.typeOfWaters = data;
       });
   }
 
-  getAllTerritories() {
-    this._service
-      .callGetMethod('/api/user/getAllTerritories')
+  async getAllTerritories() {
+    (await this._service
+      .callGetMethod('/api/user/getAllTerritories'))
       .subscribe((data: TerritoryModel) => {
         this.allItems.territories = data;
       });
   }
 
-  getAllActivities() {
-    this._service
-      .callGetMethod('/api/user/getAllActivities')
+  async getAllActivities() {
+    (await this._service
+      .callGetMethod('/api/user/getAllActivities'))
       .subscribe((data: ActivityModel) => {
         this.allItems.activities = data;
       });
@@ -177,7 +177,7 @@ export class PredatorEditComponent implements OnInit {
 
   //#region SAVE
 
-  save() {
+  async save() {
     if (!this.checkRequiredValues()) {
       this._toastr.showErrorCustom(
         this._translate.instant('general.needToFillAllFields')
@@ -185,13 +185,19 @@ export class PredatorEditComponent implements OnInit {
       return;
     }
 
-    const data = this.packData();
+    const data = await this.packData();
 
     this.loader = true;
-    this._http.post('/api/upload/setPredator', data).then((data: any) => {
+
+    (await this._service.callPostMethod('/api/upload/setPredator', data)).subscribe((data: any) => {
       this.loader = false;
       this.backToPreviousPage();
-    });
+    })
+
+    // this._http.post('/api/upload/setPredator', data).then((data: any) => {
+    //   this.loader = false;
+    //   this.backToPreviousPage();
+    // });
   }
 
   checkRequiredValues() {
@@ -200,7 +206,7 @@ export class PredatorEditComponent implements OnInit {
     return true;
   }
 
-  packData(): FormData {
+  async packData(): Promise<FormData> {
     let data = new FormData();
 
     for (let [key, value] of Object.entries(this.data)) {
@@ -215,12 +221,12 @@ export class PredatorEditComponent implements OnInit {
       );
     }
 
-    if (this._storageService.getLocalStorage('coordination')) {
-      const coordinate = this._storageService.getLocalStorage('coordination');
+    if (await this._storageService.getLocalStorage('coordination')) {
+      const coordinate = await this._storageService.getLocalStorage('coordination') as any;
       data.set('latitude', coordinate.lat);
       data.set('longitude', coordinate.log);
 
-      this._storageService.removeLocalStorage('coordination');
+      await this._storageService.removeLocalStorage('coordination');
     }
 
     return data;
@@ -234,13 +240,14 @@ export class PredatorEditComponent implements OnInit {
     }
   }
 
-  deletePredator() {
-    this._service
-      .callPostMethod('/api/user/deletePredator', this.data)
+  async deletePredator() {
+    (await this._service
+      .callPostMethod('/api/user/deletePredator', this.data))
       .subscribe((data: any) => {
         if (data) {
           this.isModalOpen = false;
           setTimeout(() => {
+            this.refreshEmit.emit();
             this._router.navigate(['home/predators']);
           }, 100);
         }

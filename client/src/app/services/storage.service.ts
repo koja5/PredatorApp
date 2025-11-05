@@ -5,6 +5,8 @@ import * as CryptoJS from 'crypto-js';
 import { environment } from '../../environments/environment';
 import { ParameterTypeEnum } from '../enums/parameter-type-enum';
 
+import { Preferences } from '@capacitor/preferences';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,68 +28,92 @@ export class StorageService {
     );
   }
 
-  setToken(token: any) {
-    this.cookieService.put('token', token, {
-      expires: new Date(new Date().getTime() + 86400000),
-      sameSite: 'lax',
-    });
+  // 🍎 koristi Preferences za iOS/Android, cookies samo za web
+  async setToken(token: string) {
+    if (this.isNative()) {
+      await Preferences.set({ key: 'token', value: token });
+    } else {
+      this.cookieService.put('token', token, {
+        expires: new Date(new Date().getTime() + 86400000),
+        sameSite: 'lax',
+      });
+    }
   }
 
-  getToken() {
-    return this.cookieService.get('token');
+  async getToken(): Promise<string> {
+    if (this.isNative()) {
+      const { value } = await Preferences.get({ key: 'token' });
+      return value || '';
+    }
+    return this.cookieService.get('token') || '';
   }
 
-  deleteToken() {
-    this.cookieService.remove('token');
+  async deleteToken() {
+    if (this.isNative()) {
+      await Preferences.remove({ key: 'token' });
+    } else {
+      this.cookieService.remove('token');
+    }
   }
 
-  getDecodeToken() {
-    if (this.getToken()) {
-      return this.helper.decodeToken(this.getToken()!).user;
+  async getDecodeToken() {
+    const token = await this.getToken();
+    if (token) {
+      return this.helper.decodeToken(token).user;
     }
     return false;
   }
 
-  setLocalStorage(key: string, value: any) {
-    if (typeof value === 'object') {
-      localStorage.setItem(key, JSON.stringify(value));
+  async setLocalStorage(key: string, value: any) {
+    const stringValue = typeof value === 'object' ? JSON.stringify(value) : value;
+    if (this.isNative()) {
+      await Preferences.set({ key, value: stringValue });
     } else {
-      localStorage.setItem(key, value);
+      localStorage.setItem(key, stringValue);
     }
   }
 
-  getLocalStorage(key: string) {
+  async getLocalStorage(key: string) {
+    if (this.isNative()) {
+      const { value } = await Preferences.get({ key });
+      if (!value) return null;
+      return this.safeParse(value);
+    }
     const storage = localStorage.getItem(key);
-    if (storage?.startsWith('{') && storage?.endsWith('}')) {
-      return JSON.parse(storage);
+    return this.safeParse(storage);
+  }
+
+  async removeLocalStorage(key: string) {
+    if (this.isNative()) {
+      await Preferences.remove({ key });
     } else {
-      return storage;
+      localStorage.removeItem(key);
     }
   }
 
-  removeLocalStorage(key: string) {
-    localStorage.removeItem(key);
-  }
-
-  removeLocalStorageAll() {
-    localStorage.clear();
-  }
-
-  getParametarsDateFromLocalStorageForApiRequest(params: any, body?: any) {
-    if (!body) {
-      body = {};
+  async removeLocalStorageAll() {
+    if (this.isNative()) {
+      await Preferences.clear();
+    } else {
+      localStorage.clear();
     }
+  }
+
+  async getParametarsDateFromLocalStorageForApiRequest(params: any, body?: any) {
+    if (!body) body = {};
     if (params.type === ParameterTypeEnum.local_storage) {
-      const storage = this.getLocalStorage(params.key);
-      for (let i = 0; i < params.property.length; i++) {
-        body[params.property[i]] = storage[params.property[i]];
+      const storage: any = await this.getLocalStorage(params.key);
+      if (storage) {
+        for (let i = 0; i < params.property.length; i++) {
+          body[params.property[i]] = storage[params.property[i]];
+        }
       }
     }
     return body;
   }
 
-  getSelectedLanguage(check?: boolean) {
-    const config = this.getLocalStorage('config');
+  async getSelectedLanguage(check?: boolean) {
+    const config: any = await this.getLocalStorage('config');
     if (config) {
       if (config.app.appLanguage === 'rs' && check) {
         return 'sr-Latn';
@@ -95,5 +121,20 @@ export class StorageService {
       return config.app.appLanguage;
     }
     return 'de';
+  }
+
+  private safeParse(value: string | null) {
+    if (!value) return null;
+    try {
+      return value.startsWith('{') || value.startsWith('[')
+        ? JSON.parse(value)
+        : value;
+    } catch {
+      return value;
+    }
+  }
+
+  private isNative(): boolean {
+    return !!(window as any).Capacitor?.isNativePlatform?.();
   }
 }
