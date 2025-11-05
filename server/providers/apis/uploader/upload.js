@@ -27,6 +27,8 @@ router.post("/setPredator", multipartMiddleware, auth, function (req, res) {
 
     req.body.id_user = req.user.user.id;
 
+    console.log(req.files);
+
     conn.query(
       "select * from predators where id = ?",
       [req.body.id],
@@ -224,6 +226,9 @@ router.post("/setPredatorFromAdmin", multipartMiddleware, function (req, res) {
             req.body.distance_to_water == "null"
               ? null
               : req.body.distance_to_water;
+
+          req.body.creation_date = new Date(req.body.creation_date);
+          req.body.completed_date = new Date(req.body.completed_date);
 
           conn.query(
             "INSERT INTO predators set ? ON DUPLICATE KEY UPDATE ?",

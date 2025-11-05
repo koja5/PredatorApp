@@ -16,6 +16,7 @@ export class AppIonDatetimeButtonComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.value);
+    this.value = this.value.replace(' ', 'T');
   }
 
   change(event: any) {

@@ -40,7 +40,7 @@
         <app-ion-textarea [label]="'predatorForm.comment'" [value]="data.comment"
           (changeEmit)="changeEmitComment($event)"></app-ion-textarea>
 
-        <app-gallery [value]="data.gallery" (changeEmit)="changeGalleryImage($event)"></app-gallery>
+        <app-gallery [value]="data.gallery" [editable]="true" (changeEmit)="changeGalleryImage($event)"></app-gallery>
         <app-map [longitude]="data.longitude!" [latitude]="data.latitude!"></app-map>
       </div>
     </ion-content>

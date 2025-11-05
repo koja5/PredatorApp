@@ -119,11 +119,7 @@ export class PredatorEditComponent implements OnInit {
     if (!this.data.longitude && !this.data.latitude) {
       const geolocation = await this._helpService.getCurrentLocation();
       this.loader = true;
-      // const geolocation = await Geolocation.getCurrentPosition({
-      //   enableHighAccuracy: true,
-      //   timeout: 5000,
-      //   maximumAge: 0,
-      // });
+      
       if (geolocation && geolocation.coords!) {
         this.data.longitude = geolocation.coords.longitude;
         this.data.latitude = geolocation.coords.latitude;
@@ -131,21 +127,6 @@ export class PredatorEditComponent implements OnInit {
       this.loader = false;
     }
 
-    // const internalGetCurrentPosition = async (
-    //   options: GeolocationOptions = {}
-    // ): Promise<GeolocationPosition> => {
-    //   return new Promise<GeolocationPosition>((resolve, reject) => {
-    //     const id = Geolocation.watchPosition(options, (position, err) => {
-    //       // Geolocation.clearWatch({ id });
-    //       if (err) {
-    //         reject(err);
-    //         return;
-    //       }
-    //       console.log(position);
-    //       // resolve(position);
-    //     });
-    //   });
-    // };
   }
 
   //#endregion

@@ -23,7 +23,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class GalleryComponent implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
@@ -31,11 +31,13 @@ export class GalleryComponent implements OnInit {
   @Input() value: any;
   @Input() images: any;
   @Input() gallery: any[] = [];
+  @Input() editable = false;
   @Output() changeEmit = new EventEmitter();
 
   public isGalleryOpen = false;
   files: any[] = [];
   public imageFromCamera: any;
+  selectedItem: any = null;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -43,7 +45,7 @@ export class GalleryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.value) {
+    if (this.value && this.value != 'undefined') {
       if (typeof this.value == 'string') {
         if (this.value.startsWith('data:image')) {
           this.imageFromCamera = this.b64toBlob(
@@ -53,50 +55,67 @@ export class GalleryComponent implements OnInit {
           this.packImagesToGallery(this.imageFromCamera);
           this.appendFormData();
         } else if (this.value.indexOf(';') != -1) {
-          const gallery = this.convertGalleryStringToGalleryArray();
-          for (let i = 0; i < gallery.length; i++) {
-            this.gallery.push(environment.GALLERY_STORAGE + gallery[i]);
-          }
+          this.packGallery();
         } else if (this.value.startsWith('blob:')) {
           this.gallery.push(this.value);
         } else if (this.value.startsWith('https://localhost')) {
           this.gallery.push(this.value);
         } else {
-          this.gallery.push(environment.GALLERY_STORAGE + this.value);
+          const file = environment.GALLERY_STORAGE + this.value;
+          this.pushToGallery(file);
         }
       } else if (this.value instanceof Blob) {
-        this.gallery.push(window.URL.createObjectURL(this.value));
+        this.pushToGallery(URL.createObjectURL(this.value), this.value.type);
         this.imageFromCamera = this.value;
         this.packImageFromCamera();
+        this.appendFormData();
       }
-
-      this.packImageForPreview();
     }
   }
 
-  ngOnChanges() {
-    // this.gallery = [];
-    // if (this.value) {
-    //   if (this.value.indexOf(';') != -1) {
-    //     const gallery = this.convertGalleryStringToGalleryArray();
-    //     for (let i = 0; i < gallery.length; i++) {
-    //       this.gallery.push(environment.GALLERY_STORAGE + gallery[i]);
-    //     }
-    //   } else {
-    //     if (typeof this.value == 'string') {
-    //       if (this.value.startsWith('data:image')) {
-    //         this.gallery.push(this.value);
-    //         this.changeEmit.emit({
-    //           gallery: this.convertGalleryArrayToGalleryString(),
-    //           uploaded: this.files,
-    //         });
-    //       } else {
-    //         this.gallery.push(environment.GALLERY_STORAGE + this.value);
-    //       }
-    //     }
-    //   }
-    //   this.packImageForPreview();
-    // }
+  packGallery() {
+    this.gallery = [];
+    if (this.value) {
+      const items = this.value.split(';').filter(Boolean);
+      for (const fileName of items) {
+        const fileUrl = environment.GALLERY_STORAGE + fileName;
+        this.pushToGallery(fileUrl);
+      }
+    }
+  }
+
+  pushToGallery(file: any, extension?: string) {
+    const ext = extension ? extension : file.split('.').pop()?.toLowerCase();
+    if (
+      ['jpg', 'jpeg', 'png', 'gif', 'webp'].some((type) => ext.includes(type))
+    ) {
+      this.gallery.push({ type: 'image', src: file });
+    } else if (
+      ['mp4', 'mov', 'avi', 'mkv', 'webm'].some((type) => ext.includes(type))
+    ) {
+      this.gallery.push({ type: 'video', src: file });
+    }
+  }
+
+  openLightbox(item: any) {
+    this.selectedItem = item;
+  }
+
+  closeLightbox() {
+    this.selectedItem = null;
+  }
+
+  prevItem() {
+    if (!this.selectedItem) return;
+    const index = this.gallery.indexOf(this.selectedItem);
+    this.selectedItem =
+      this.gallery[(index - 1 + this.gallery.length) % this.gallery.length];
+  }
+
+  nextItem() {
+    if (!this.selectedItem) return;
+    const index = this.gallery.indexOf(this.selectedItem);
+    this.selectedItem = this.gallery[(index + 1) % this.gallery.length];
   }
 
   close() {
@@ -147,27 +166,18 @@ export class GalleryComponent implements OnInit {
     });
   }
 
-  packImageForPreview() {
-    this.images = [];
-    for (let i = 0; i < this.gallery.length; i++) {
-      this.images.push(
-        new ImageItem({
-          src: this.gallery[i],
-          thumb: this.gallery[i],
-        })
-      );
-    }
-  }
-
   packImagesToGallery(image: any) {
-    this.gallery.push(URL.createObjectURL(image));
+    this.pushToGallery(URL.createObjectURL(image), image.type);
   }
 
   packImageFromCamera() {
     if (this.imageFromCamera) {
+      const mimeType = this.imageFromCamera.type || 'image/jpeg';
+      const extension = mimeType.split('/')[1] || 'jpeg';
+
       this.files.push(
-        new File([this.imageFromCamera], 'fromCamera.jpeg', {
-          type: 'image/jpeg',
+        new File([this.imageFromCamera], `fromCamera.${extension}`, {
+          type: mimeType,
         })
       );
     }
@@ -182,13 +192,6 @@ export class GalleryComponent implements OnInit {
     return false;
   }
 
-  openImage(index: number) {
-    this.modal.isOpen = true;
-    setTimeout(() => {
-      this.galleryPreview.set(index);
-    }, 100);
-  }
-
   removePhoto(index: number) {
     this.gallery.splice(index, 1);
     this.files.splice(index, 1);
@@ -198,15 +201,11 @@ export class GalleryComponent implements OnInit {
     });
   }
 
-  convertGalleryStringToGalleryArray() {
-    return this.value.split(';');
-  }
-
   convertGalleryArrayToGalleryString() {
     let gallery = '';
     for (let i = 0; i < this.gallery.length; i++) {
-      if (this.gallery[i].includes(environment.GALLERY_STORAGE)) {
-        gallery += this.gallery[i].split(environment.GALLERY_STORAGE)[1];
+      if (this.gallery[i].src.includes(environment.GALLERY_STORAGE)) {
+        gallery += this.gallery[i].src.split(environment.GALLERY_STORAGE)[1];
         if (i < this.gallery.length - 1) {
           gallery += ';';
         }

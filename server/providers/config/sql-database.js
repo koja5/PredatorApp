@@ -7,6 +7,8 @@ function createSQLPool() {
     user: process.env.user,
     password: process.env.password,
     database: process.env.database,
+    timezone: "local",
+    dateStrings: true,
   });
 }
 

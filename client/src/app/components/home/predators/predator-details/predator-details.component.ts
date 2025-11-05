@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ImageItem } from 'ng-gallery';
+import { ImageItem, VideoItem } from 'ng-gallery';
 import { CallApiService } from 'src/app/services/call-api.service';
 import { PredatorModel } from '../../models/predator.model';
 import Map from 'ol/Map';
@@ -18,7 +18,8 @@ import { Location } from '@angular/common';
 export class PredatorDetailsComponent implements OnInit {
   @ViewChild(QuestionAlertComponent) alertQuestion: QuestionAlertComponent;
   public data: PredatorModel;
-  public images: any = [];
+  public gallery: any = [];
+  selectedItem: any = null;
   public loader = true;
   public map!: Map;
 
@@ -55,28 +56,40 @@ export class PredatorDetailsComponent implements OnInit {
   }
 
   packGallery() {
-    if (this.data && this.data.gallery) {
-      if (this.data.gallery.indexOf(';')) {
-        const gallery = this.data.gallery.split(';');
-        for (let i = 0; i < gallery.length; i++) {
-          this.images.push(
-            new ImageItem({
-              src: environment.GALLERY_STORAGE + gallery[i],
-              thumb: environment.GALLERY_STORAGE + gallery[i],
-            })
-          );
+    this.gallery = [];
+    if (this.data?.gallery) {
+      const items = this.data.gallery.split(';').filter(Boolean);
+      for (const fileName of items) {
+        const fileUrl = environment.GALLERY_STORAGE + fileName;
+        const ext = fileName.split('.').pop()?.toLowerCase();
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
+          this.gallery.push({ type: 'image', src: fileUrl });
+        } else if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(ext)) {
+          this.gallery.push({ type: 'video', src: fileUrl });
         }
-      } else {
-        this.images.push(
-          new ImageItem({
-            src: environment.GALLERY_STORAGE + this.data.gallery,
-            thumb: environment.GALLERY_STORAGE + this.data.gallery,
-          })
-        );
       }
-    } else {
-      this.images = [];
     }
+  }
+
+  openLightbox(item: any) {
+    this.selectedItem = item;
+  }
+
+  closeLightbox() {
+    this.selectedItem = null;
+  }
+
+  prevItem() {
+    if (!this.selectedItem) return;
+    const index = this.gallery.indexOf(this.selectedItem);
+    this.selectedItem =
+      this.gallery[(index - 1 + this.gallery.length) % this.gallery.length];
+  }
+
+  nextItem() {
+    if (!this.selectedItem) return;
+    const index = this.gallery.indexOf(this.selectedItem);
+    this.selectedItem = this.gallery[(index + 1) % this.gallery.length];
   }
 
   predatorEdit() {
